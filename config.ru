@@ -2,6 +2,5 @@
 
 require ::File.expand_path('../config/environment',  __FILE__)
 use Rack::ETag
-use Rack::Cache
 use Rack::Deflater
 run NimbusWebapp::Application
