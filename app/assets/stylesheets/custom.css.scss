@@ -1,0 +1,48 @@
+@import "bootstrap";
+
+$dark-gray: #333;
+body {
+  min-width: 800px;
+}
+
+header {
+  .nav.pull-right {
+    margin-top: 10px;
+    font-size: 1.2em;
+    li {
+      margin: auto 1px;
+    }
+    .divider-vertical{
+      background-color: #CCC;
+      border-right: solid 1px #CCC;
+      height:42px;
+      margin: auto;
+    }
+  }
+
+  .navbar-inner {
+    background-color: #EEE;
+    background-image:none ;
+  }
+}
+
+footer {
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.4em;
+}
+
+#content {
+  min-height: 500px;
+}
+
+.carousel {
+
+  margin: auto auto;
+  max-width: 1200px;
+  box-shadow: 0 0 10px 2px;
+  background-color: $dark-gray;
+  img {
+    margin: auto auto;
+  }
+}
