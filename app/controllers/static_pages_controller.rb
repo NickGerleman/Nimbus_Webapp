@@ -10,4 +10,8 @@ class StaticPagesController < ApplicationController
   def features
 
   end
+
+  def contribute
+
+  end
 end
