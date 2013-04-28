@@ -2,9 +2,6 @@ NimbusWebapp::Application.routes.draw do
   root to: 'static_pages#home'
   match '/features', to: 'static_pages#features'
   match '/about', to: 'static_pages#about'
-  get '/mu-77096fe6-c06303c9-972cc9d4-a3ca29d3' do
-    '42'
-  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
