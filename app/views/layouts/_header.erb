@@ -41,8 +41,12 @@
                         <li><%= link_to 'About Us', about_path %></li>
                         <li class="divider-vertical"></li>
                     <% end %>
-                    <li><a href="#">Sign In</a></li>
-                    <li class="divider-vertical"></li>
+                    <% if (yield :title_suffix)=='Login' %>
+                        <li><%= link_to 'Login', login_path, class: 'active' %></li>
+                    <% else %>
+                        <li><%= link_to 'Login', login_path %></li>
+                        <li class="divider-vertical"></li>
+                    <% end %>
                 </ul>
             </nav>
         </div>
