@@ -1,4 +1,20 @@
 <header class="navbar">
+
+    <!-- IE Box Shadow Stuff>
+    <!--[if IE]>
+    <script>$(document).ready(function () {
+        ie_selector_shadow()
+    })</script>
+    <![endif]-->
+    <script>
+        if (Function('/*@cc_on return document.documentMode===10@*/')()) {
+            $(document).ready(function () {
+                ie_selector_shadow()
+            })
+        }
+    </script>
+
+
     <div class="navbar-inner">
         <div class="container">
             <nav>
@@ -24,7 +40,7 @@
                     <% else %>
                         <li><%= link_to 'About Us', about_path %></li>
                         <li class="divider-vertical"></li>
-                <% end %>
+                    <% end %>
                     <li><a href="#">Sign In</a></li>
                     <li class="divider-vertical"></li>
                 </ul>
