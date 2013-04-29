@@ -1,0 +1,2 @@
+#not the token used by the actual webapp
+NimbusWebapp::Application.config.secret_token = 'ac99c96c106d81b1786def7b41b4350c162a218bcb49b30f6faf31919da162186b4000165f640315a62df4530bd5a759db2997d0211d66de8ad9ba8c254239d8'

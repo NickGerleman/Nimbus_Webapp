@@ -2,18 +2,30 @@
     <div class="navbar-inner">
         <div class="container">
             <nav>
-                <%= link_to( image_tag('banner.png'), root_path, class: 'brand') %>
+                <%= link_to(image_tag('banner.png'), root_path, class: 'brand') %>
                 <ul class="nav pull-right">
                     <li class="divider-vertical"></li>
-                    <li><%= link_to 'Features', features_path %></li>
-                    <li class="divider-vertical"></li>
+                    <% if (yield :title_suffix)=='Features' %>
+                        <li><%= link_to 'Features', features_path, class: 'active' %></li>
+                    <% else %>
+                        <li><%= link_to 'Features', features_path %></li>
+                        <li class="divider-vertical"></li>
+                    <% end %>
                     <li><a href="#">Download</a></li>
                     <li class="divider-vertical"></li>
-                    <li><%= link_to 'Contribute', contribute_path %></li>
-                    <li class="divider-vertical"></li>
-                    <li><%= link_to 'About Us', about_path %></li>
-                    <li class="divider-vertical"></li>
-                    <li><a href="#">Sign In</a> </li>
+                    <% if (yield :title_suffix)=='Contribute' %>
+                        <li><%= link_to 'Contribute', contribute_path, class: 'active' %></li>
+                    <% else %>
+                        <li><%= link_to 'Contribute', contribute_path %></li>
+                        <li class="divider-vertical"></li>
+                    <% end %>
+                    <% if (yield :title_suffix)=='About Us' %>
+                        <li><%= link_to 'About Us', about_path, class: 'active' %></li>
+                    <% else %>
+                        <li><%= link_to 'About Us', about_path %></li>
+                        <li class="divider-vertical"></li>
+                <% end %>
+                    <li><a href="#">Sign In</a></li>
                     <li class="divider-vertical"></li>
                 </ul>
             </nav>
