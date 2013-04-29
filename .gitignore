@@ -15,7 +15,7 @@
 /tmp
 
 # Ignore secret token
-/config/initializers/secret_token.rb
+/config/initializers/*token.rb
 
 # Ignore IDEA files
 /.idea
