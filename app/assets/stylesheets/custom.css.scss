@@ -21,8 +21,10 @@ header {
   }
 
   .navbar-inner {
+    filter: "progid:DXImageTransform.Microsoft.gradient(enabled=false)";
     background-image: none;
     background-color: #EEE;
+    border-radius: 0px;
   }
 }
 
