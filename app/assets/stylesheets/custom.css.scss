@@ -1,6 +1,10 @@
 @import "bootstrap";
 
 $dark-gray: #333;
+
+.btn{
+  border-radius: 2px;
+}
 body {
   min-width: 770px;
 }
@@ -61,4 +65,12 @@ footer {
   img {
     margin: auto auto;
   }
+}
+
+.debug_dump {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 75%;
+  margin: 30px auto;
 }
