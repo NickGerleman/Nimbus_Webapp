@@ -34,7 +34,7 @@ header {
       padding-bottom: 8px !important;
     }
     .active {
-      -ms-box-shadow: inset 0 0 50px -12px;
+      box-shadow: inset 0 0 50px -12px;
       -moz-box-shadow: inset 0 0 15px -7px;
       -webkit-box-shadow: inset 0 0 15px -3px;
       height: 33px;
