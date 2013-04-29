@@ -14,9 +14,6 @@
 /log/*.log
 /tmp
 
-# Ignore secret token
-/config/initializers/*token.rb
-
 # Ignore IDEA files
 /.idea
 /*.iml
