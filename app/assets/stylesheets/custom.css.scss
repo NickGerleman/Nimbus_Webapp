@@ -24,6 +24,8 @@ header {
     filter: "progid:DXImageTransform.Microsoft.gradient(enabled=false)";
     background-image: none;
     background-color: #EEE;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
     border-radius: 0px;
   }
 }
