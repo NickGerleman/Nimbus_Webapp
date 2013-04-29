@@ -20,7 +20,7 @@ function ignore_warning() {
 }
 
 function ie_warning() {
-    if ($.cookie('ignore_warning') == true) {
+    if ($.cookie('ignore_warning') != true) {
         $('#ie_warning').modal()
     }
 }
