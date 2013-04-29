@@ -6,9 +6,9 @@
     <%= javascript_include_tag 'application' %>
     <%= csrf_meta_tags %>
     <%= render 'layouts/shim' %>
-    <%= render 'layouts/ie_warning' %>
 </head>
 <body>
+<%= render 'layouts/ie_warning' %>
 <%= render 'layouts/header' %>
 <div id="content">
     <%= yield %>
