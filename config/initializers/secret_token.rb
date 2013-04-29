@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-NimbusWebapp::Application.config.secret_token = 'ac99c96c106d81b1786def7b41b4350c162a218bcb49b30f6faf31919da162186b4000165f640315a62df4530bd5a759db2997d0211d66de8ad9ba8c254239d8'
+NimbusWebapp::Application.config.secret_token ='27fd613d8745b235d77f041f339cfd821120d595f5da35ec50b8d332687638e4d6c7fa769d862e756d84dd1869059f7093005b09e5c2126058f421060590768c'

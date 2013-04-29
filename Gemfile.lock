@@ -30,6 +30,7 @@ GEM
       multi_json (~> 1.0)
     arel (3.0.2)
       bigdecimal
+    bcrypt-ruby (3.0.1)
     bigdecimal (1.1.0)
     bootstrap-sass (2.3.1.0)
       sass (~> 3.2)
@@ -62,6 +63,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.23)
+    minitest (4.7.0)
     multi_json (1.7.2)
     pg (0.12.2)
     pg (0.12.2-x86-mingw32)
@@ -124,10 +126,12 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  bcrypt-ruby
   bootstrap-sass
   coffee-rails (~> 3.2.1)
   jquery-cookie-rails
   jquery-rails
+  minitest
   pg
   rack-cache
   rails (= 3.2.13)
