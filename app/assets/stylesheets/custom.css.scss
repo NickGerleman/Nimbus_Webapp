@@ -21,10 +21,9 @@ header {
   }
 
   .navbar-inner {
-    ! important background-color: #EEE;
-    ! important background-image: none;
-    ! important filter: none;
-
+    background-color: #EEE;
+    background-image: none;
+    filter: "progid:DXImageTransform.Microsoft.gradient(enabled=false)";
   }
 }
 
