@@ -23,6 +23,8 @@ header {
   .navbar-inner {
     background-color: #EEE;
     background-image:none ;
+    -ms-filter: none;
+    filter: none;
   }
 }
 
