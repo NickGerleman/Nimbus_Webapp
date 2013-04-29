@@ -16,4 +16,5 @@ class StaticPagesController < ApplicationController
   def contribute
     expires_in 30.days, public: true
   end
+
 end
