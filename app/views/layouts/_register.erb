@@ -12,34 +12,36 @@
             <div class="control-group">
                 <%= f.label :name, 'Name:', class: 'control-label' %>
                 <div class="controls">
-                    <%= f.text_field :name %>
+                    <%= f.text_field :name, placeholder: 'John Doe', required: true %>
                 </div>
             </div>
 
             <div class="control-group">
                 <%= f.label :email, 'Email Address:', class: 'control-label' %>
                 <div class="controls">
-                    <%= f.text_field :name %>
+                    <%= f.text_field :email, placeholder: 'name@example.com', required: true %>
                 </div>
             </div>
 
             <div class="control-group">
                 <%= f.label :password, 'Password:', class: 'control-label' %>
                 <div class="controls">
-                    <%= f.text_field :name %>
+                    <%= f.password_field :password, required: true %>
                 </div>
             </div>
 
             <div class="control-group">
                 <%= f.label :password_confirmation, 'Confirm Password:', class: 'control-label' %>
                 <div class="controls">
-                    <%= f.text_field :name %>
+                    <%= f.password_field :password_confirmation, required: true %>
                 </div>
             </div>
-    </div>
+
+            <%= recaptcha_tags %>
+            </div>
 
             <div class="modal-footer">
                 <%= f.submit 'Submit', class: 'btn btn-large btn-primary' %>
             </div>
         <% end %>
-    </div>
+        </div>
