@@ -12,19 +12,19 @@ header {
     li {
       margin: auto 1px;
     }
-    .divider-vertical{
+    .divider-vertical {
       background-color: #CCC;
       border-right: solid 1px #CCC;
-      height:42px;
+      height: 42px;
       margin: auto;
     }
   }
 
   .navbar-inner {
-    background-color: #EEE;
-    background-image:none ;
-    -ms-filter: none;
-    filter: none;
+    ! important background-color: #EEE;
+    ! important background-image: none;
+    ! important filter: none;
+
   }
 }
 
