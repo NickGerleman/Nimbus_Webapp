@@ -2,9 +2,10 @@
 
 $dark-gray: #333;
 
-.btn{
+.btn {
   border-radius: 2px;
 }
+
 body {
   min-width: 785px;
 }
@@ -72,24 +73,16 @@ footer {
   }
 }
 
-.debug_dump {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  width: 75%;
-  margin: 30px auto;
+.modal-body {
+  padding-top: 40px;
 }
 
-.modal-body{
-  padding-top: 40px;
-  max-height: 100%;
-}
-#recaptcha_widget_div{
+#recaptcha_widget_div {
   width: 450px;
   margin: 60px auto 20px auto;
 }
 
-#error_explanation{
+#error_explanation {
   color: red;
 }
 
@@ -98,6 +91,20 @@ footer {
   @extend .error;
 }
 
-.modal{
-  border-radius: 3px;
+.modal {
+  border-radius: 5px;
+}
+
+.container-fluid {
+  h2 {
+    margin: 0 auto 20px auto;
+  }
+  .hero-unit {
+    min-height: 350px;
+    margin: auto 7%;
+    border-radius: 3px;
+  }
+  button {
+    margin-top: 30px;
+  }
 }
