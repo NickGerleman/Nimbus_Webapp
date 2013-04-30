@@ -87,3 +87,12 @@ footer {
   width: 450px;
   margin: 60px auto 20px auto;
 }
+
+#error_explanation{
+  color: red;
+}
+
+.field with errors {
+  @extend .control-group;
+  @extend .error;
+}
