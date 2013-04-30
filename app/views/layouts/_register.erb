@@ -6,7 +6,10 @@
     </div>
 
     <div class="modal-body">
-        <% @user=User.new %>
+        <% unless flash[:register] %>
+            <% @user=User.new %>
+        <% end %>
+        <% flash[:register]=false %>
         <%= form_for @user, html: {class: 'form-horizontal'} do |f| %>
             <%= render 'shared/error_messages' %>
             <div class="control-group">
@@ -37,7 +40,7 @@
                 </div>
             </div>
 
-            <%= recaptcha_tags(display:{theme: 'clean'}) %>
+            <%= recaptcha_tags(display: {theme: 'clean'}) %>
             </div>
 
             <div class="modal-footer">
