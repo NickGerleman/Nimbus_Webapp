@@ -1,8 +1,14 @@
 <% provide :title_suffix, 'Login' %>
 <%= render 'layouts/register' %>
+<%= render 'layouts/success' %>
 <% if flash[:register] %>
     <script>$(document).ready(function () {
         $('#register').modal()
+    })</script>
+<% end %>
+<% if flash[:success] %>
+    <script>$(document).ready(function () {
+        $('#success').modal()
     })</script>
 <% end %>
 
@@ -14,6 +20,7 @@
         <div class="span7">
             <div class="hero-unit">
                 <h2>Register Now</h2>
+
                 <p>Register now to be able to connect Nimbus to your accounts. All of you personal information is
                     stored securely. Passwords are hashed and salted using the bcrypt library.</p>
                 <button class="btn-large btn-primary btn" onclick="$('#register').modal()">Register</button>

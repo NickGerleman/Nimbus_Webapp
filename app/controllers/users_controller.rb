@@ -11,8 +11,8 @@ class UsersController < ApplicationController
     @user = User.new params[:user]
     if verify_recaptcha(model: @user) && @user.save
       flash[:register]=false
-      redirect_to root_path
-      #handle success
+      flash[:success]=true
+      render 'login'
     else
       flash[:register]=true
       render 'login'
