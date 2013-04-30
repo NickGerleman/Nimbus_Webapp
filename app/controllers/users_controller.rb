@@ -4,7 +4,18 @@ class UsersController < ApplicationController
   end
 
   def new
-    @user = User.new
+  end
 
+  def create
+
+    @user = User.new params[:user]
+    if verify_recaptcha && @user.save
+      flash[:register]=false
+      redirect_to root_path
+      #handle success
+    else
+      flash[:register]=true
+      render 'login'
+    end
   end
 end

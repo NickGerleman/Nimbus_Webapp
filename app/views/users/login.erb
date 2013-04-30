@@ -1,3 +1,7 @@
 <% provide :title_suffix, 'Login' %>
 <%= render 'layouts/register' %>
+<% if flash[:register] %>
+    <script>$(document).ready(function () {$('#register').modal()})</script>
+    <% flash[:register]=false %>
+<% end %>
 <a onclick="$('#register').modal()">Register</a>
