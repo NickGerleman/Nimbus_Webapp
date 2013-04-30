@@ -5,11 +5,13 @@
     <script>$(document).ready(function () {
         $('#register').modal()
     })</script>
+    <% flash[:register]=false %>
 <% end %>
 <% if flash[:success] %>
     <script>$(document).ready(function () {
         $('#success').modal()
     })</script>
+    <% flash[:success]=false %>
 <% end %>
 
 <div class="container-fluid">
