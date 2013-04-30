@@ -82,6 +82,7 @@ footer {
 
 .modal-body{
   padding-top: 40px;
+  max-height: 100%;
 }
 #recaptcha_widget_div{
   width: 450px;
@@ -95,4 +96,8 @@ footer {
 .field with errors {
   @extend .control-group;
   @extend .error;
+}
+
+.modal{
+  border-radius: 3px;
 }
