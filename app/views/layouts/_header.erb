@@ -1,20 +1,4 @@
 <header class="navbar">
-
-    <!-- IE Box Shadow Stuff -->
-    <!--[if IE]>
-    <script>$(document).ready(function () {
-        ie_selector_shadow()
-    })</script>
-    <![endif]-->
-    <script>
-        if (Function('/*@cc_on return document.documentMode===10@*/')()) {
-            $(document).ready(function () {
-                ie_selector_shadow()
-            })
-        }
-    </script>
-
-
     <div class="navbar-inner">
         <div class="container">
             <nav>
@@ -51,4 +35,12 @@
             </nav>
         </div>
     </div>
+
+    <!-- Draw the box shadow differently if using IE -->
+    <script>
+        if (using_ie) {
+            document.getElementsByClassName("active")[0].style.boxShadow = "inset 0px 0px 35px -4px #999"
+        }
+    </script>
+
 </header>

@@ -8,6 +8,7 @@ function ie_warning() {
     }
 }
 
-function ie_selector_shadow() {
-    document.getElementsByClassName("active")[0].style.boxShadow = "inset 0 0 50px -12px"
+function using_ie()
+{
+ return document.documentMode !== undefined
 }
