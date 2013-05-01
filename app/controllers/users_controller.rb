@@ -1,21 +1,13 @@
 class UsersController < ApplicationController
-  def login
-
-  end
-
-  def new
-  end
 
   def create
-
     @user = User.new params[:user]
+    respond_to do |format|
     if verify_recaptcha(model: @user) && @user.save
-      flash[:register]=false
-      flash[:success]=true
-      render 'login'
+      format.js
     else
-      flash[:register]=true
-      render 'login'
+      format.js
+      end
     end
   end
 end

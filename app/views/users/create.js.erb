@@ -1,0 +1,12 @@
+<% if @user.errors.any? %>
+setTimeout(function () {
+    $('#loadingBar').modal('hide');
+    $('#register').modal('show');
+}, 500);
+Recaptcha.reload();
+$('#errors').html('<%= render partial: 'layouts/errors', layout: false%>');
+<% else %>
+$('#loadingBar').modal('hide');
+$('#success').modal('show');
+<% @user=User.new %>
+<% end %>
