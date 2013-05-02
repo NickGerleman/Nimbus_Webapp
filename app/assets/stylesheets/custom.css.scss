@@ -99,12 +99,13 @@ footer {
 
 .container-fluid {
   max-width: 1200px;
+  margin: auto;
   h2 {
     margin: 0 auto 20px auto;
   }
   .hero-unit {
     min-height: 350px;
-    margin: auto 7%;
+    margin: auto;
     border-radius: 3px;
   }
   .btn {
