@@ -3,23 +3,33 @@
   margin: 35px auto 0 auto;
 }
 
+#register {
+  margin-top: -30px;
+
+  .modal-body {
+    padding-top: 10px;
+  }
+  form {
+    margin: 0;
+  }
+}
+
 .errors {
   padding: 10px 0 0 10px;
 }
-#login-container{
-}
-#login{
+
+#login {
   width: 250px;
   height: 350px;
   margin: 40px auto 0 auto;
   padding: 20px;
-  h3{
+  h3 {
     margin-bottom: 20px;
   }
-  #remember-label, #remember-control{
+  #remember-label, #remember-control {
     display: inline;
   }
-  #remember{
+  #remember {
     margin: auto 0 auto 10px;
   }
 }

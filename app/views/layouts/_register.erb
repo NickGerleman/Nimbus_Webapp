@@ -5,11 +5,12 @@
         <h3>Register</h3>
     </div>
 
-    <div class="modal-body">
-        <% if @user.nil? %>
-            <% @user=User.new %>
-        <% end %>
-        <%= form_for @user, remote: true, html: {class: 'form-horizontal'} do |f| %>
+    <% if @user.nil? %>
+        <% @user=User.new %>
+    <% end %>
+    <%= form_for @user, remote: true, html: {class: 'form-horizontal'} do |f| %>
+        <div class="modal-body">
+            <script>$$('.modal-body').css('max-height', Math.floor(screen.height * .6))</script>
             <div id="registration_errors" class="errors alert alert-error hide"></div>
             <div class="control-group">
                 <%= f.label :name, 'Name:', class: 'control-label' %>
@@ -46,10 +47,24 @@
             </div>
 
             <%= recaptcha_tags(display: {theme: 'clean'}) %>
-
-            <div class="modal-footer">
-                <%= f.submit 'Submit', class: 'btn btn-large btn-primary', onclick: 'loadingBar()' %>
-            </div>
-        <% end %>
-    </div>
+        </div>
+        <div class="modal-footer">
+            <%= f.submit 'Submit', class: 'btn btn-large btn-primary', id: 'submit' %>
+            <script>$('#submit').click(function ()
+            {
+                var register = $('#register');
+                register.modal('hide');
+                register.on('hidden', function ()
+                {
+                    displayLoadingBar();
+                    register.off('hidden');
+                });
+            });
+            $('.control-group').each(function ()
+            {
+                $(this).removeClass('error');
+            });
+            </script>
+        </div>
+    <% end %>
 </div>
