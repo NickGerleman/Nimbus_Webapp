@@ -14,6 +14,10 @@ setTimeout(function ()
         list.append('<li><%= error %></li>');
         <% end %>
         errors_list.html(list);
+        $('.control-group').each(function ()
+        {
+            $(this).removeClass('error');
+        });
         <% @user.errors.keys.each do |field| %>
         $('label[for = "<%="user_#{field}" %>"]').parent().addClass('error');
         <% end %>
