@@ -1,12 +1,35 @@
 <% provide :title_suffix, 'Login' %>
 <%= render 'layouts/register' %>
-<div class="container-fluid">
+<div class="container-fluid" xmlns="http://www.w3.org/1999/html">
     <div class="row-fluid">
-        <div class="span5">
-            <h3>Login</h3>
+        <div class="span5" id="login-container">
+            <section id="login" class="well">
+            <%= form_tag sessions_path, remote: true do %>
+                <h3>Login</h3>
+                <div class="control-group">
+                    <%= label_tag :email, 'Email Address:', class: 'control-label' %>
+                    <div class="controls">
+                        <%= email_field_tag :email, nil, placeholder: 'name@example.com' %>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <%= label_tag :password, 'Password:', class: 'control-label' %>
+                    <div class="controls">
+                        <%= password_field_tag :password %>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <%= label_tag :remember, 'Remember Me:', class: 'control-label', id: 'remember-label' %>
+                    <div class="controls" id="remember-control">
+                        <%= check_box_tag :remember %>
+                    </div>
+                </div>
+                <%= submit_tag 'Login', class: 'btn btn-primary' %>
+            <% end %>
+            </section>
         </div>
-        <div class="span7">
-            <div class="hero-unit">
+        <div class="span6 offset1">
+            <div id="register-here">
                 <h2>Register Now</h2>
 
                 <p>Register now to be able to connect Nimbus to your accounts. All of you personal information is

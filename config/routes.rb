@@ -4,7 +4,11 @@ NimbusWebapp::Application.routes.draw do
   match '/about', to: 'static_pages#about'
   match '/contribute', to: 'static_pages#contribute'
   match '/login', to: 'users#login'
-  resource :users, only: [:create]
+  match '/logout', to: 'sessions#destroy', via: :delete
+  match '/user', to: 'users#show'
+  match '/settings', to: 'users#settings'
+  resource :users, only: [:create, :destroy, :show]
+  resource :sessions, only: [:create, :destroy]
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -10,4 +10,16 @@ class UsersController < ApplicationController
       end
     end
   end
+
+  def destroy
+
+  end
+
+  def show
+
+  end
+
+  def settings
+
+  end
 end

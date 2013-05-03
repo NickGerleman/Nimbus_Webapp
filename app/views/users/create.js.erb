@@ -1,12 +1,38 @@
+var register = $('#register')
 <% if @user.errors.any? %>
-setTimeout(function () {
-    $('#loadingBar').modal('hide');
-    $('#register').modal('show');
-}, 500);
+register.on('shown', function ()
+{
+    register.modal('hide');
+});
 Recaptcha.reload();
-$('#errors').html('<%= render partial: 'layouts/errors', layout: false%>');
+var errors_list = $('#registration_errors')
+var list = $('<ul>')
+<% @user.errors.full_messages.each do |error| %>
+list.append(<li>'<%= error %>'</li>);
+<% end %>
+errors_list.html(list);
+<% @user.errors.keys.each do |field| %>
+$('label[for = "<%="user_#{field}" %>"]').parent().addClass('error');
+<% end %>
+errors_list.removeClass('hide');
+register.on('hidden', function ()
+{
+    register.modal('show');
+});
 <% else %>
-$('#loadingBar').modal('hide');
-$('#success').modal('show');
+register.on('shown', function ()
+{
+    register.modal('hide');
+});
+var header = $('#modal-header');
+header.append('<h3>Congratulations!</h3>')
+header.append('<button type="button" class="close" data-dismiss="register">&times;</button>');
+$('#modal-body').html('<p>You have now been successfully registered. Have Fun!</p>');
+register.append('<div class="modal-footer></div>');
+$('modal-footer').append('<button class="btn btn-large btn-primary" data-dismiss="register">Okay</button>')
+$(loadingBar).on('hidden', function ()
+{
+    register.modal('show');
+});
 <% @user=User.new %>
 <% end %>

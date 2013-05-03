@@ -7,8 +7,3 @@ function ie_warning() {
         $('#ie_warning').modal()
     }
 }
-
-function using_ie()
-{
- return document.documentMode !== undefined
-}

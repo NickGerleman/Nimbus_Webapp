@@ -1,9 +1,28 @@
 @import "bootstrap";
 
-$dark-gray: #333;
+.modal {
+  margin-top: -30px;
+}
+
+.modal-body {
+  padding-top: 10px;
+  max-height: 450px;
+}
+
+.modal {
+  border-radius: 5px;
+}
 
 .btn {
   border-radius: 2px;
+}
+
+.hero-unit {
+  border-radius: 3px;
+}
+
+.well {
+  border-radius: 3px;
 }
 
 body {
@@ -58,57 +77,4 @@ footer {
 
 #content {
   min-height: 500px;
-}
-
-.carousel {
-
-  margin: auto auto;
-  max-width: 1200px;
-  box-shadow: 0 0 10px;
-  background-color: $dark-gray;
-  img {
-    margin: auto auto;
-  }
-}
-.modal{
-  margin-top: -30px;
-}
-.modal-body {
-  padding-top: 10px;
-  max-height: 450px;
-}
-
-#recaptcha_widget_div {
-  width: 450px;
-  margin: 35px auto 0 auto;
-}
-
-#errors {
-  color: red;
-  padding-bottom: 20px;
-}
-
-.field with errors {
-  @extend .control-group;
-  @extend .error;
-}
-
-.modal {
-  border-radius: 5px;
-}
-
-.container-fluid {
-  max-width: 1200px;
-  margin: auto;
-  h2 {
-    margin: 0 auto 20px auto;
-  }
-  .hero-unit {
-    min-height: 350px;
-    margin: auto;
-    border-radius: 3px;
-  }
-  .btn {
-    margin-top: 30px;
-  }
 }
