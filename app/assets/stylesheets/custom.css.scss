@@ -1,22 +1,27 @@
-body{
+body {
   min-width: 320px;
 }
-.expanded li{
+
+.expanded li {
   font-size: 1.2em;
 }
 
 .top-bar {
   box-shadow: 0 0 3px #ADADAD;
-  span{
+  span {
     margin-right: 9px;
   }
-  #logo {
-    line-height: 64px;
-    #logo-image {
-      height: 42px;
-      width: 210px;
+  .name {
+    display: table;
+    #logo {
+      display: inline-block;
+      display: table-cell;
       vertical-align: middle;
-      margin-left: 15px;
+      #logo-image {
+        height: 42px;
+        width: 210px;
+        margin-left: 15px;
+      }
     }
   }
   .right {
