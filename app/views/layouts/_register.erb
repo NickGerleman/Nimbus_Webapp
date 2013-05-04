@@ -10,12 +10,6 @@
     <% end %>
     <%= form_for @user, remote: true, html: {class: 'form-horizontal'} do |f| %>
         <div class="modal-body">
-            <script>
-                $(window).resize(function ()
-                {
-                    $('.modal-body').css('max-height', Math.floor(($(window).height() -125) * .8));
-                });
-            </script>
             <div id="registration_errors" class="errors alert alert-error hide"></div>
             <div class="control-group">
                 <%= f.label :name, 'Name:', class: 'control-label' %>
