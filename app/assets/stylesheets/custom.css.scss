@@ -1,13 +1,15 @@
-* {
-  outline: 0;
+body{
+  min-width: 320px;
 }
-
 .expanded li{
-  font-size: 1.4em;
+  font-size: 1.2em;
 }
 
 .top-bar {
   box-shadow: 0 0 3px #ADADAD;
+  span{
+    margin-right: 9px;
+  }
   #logo {
     line-height: 64px;
     img {
