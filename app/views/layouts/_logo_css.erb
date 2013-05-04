@@ -1,0 +1,27 @@
+<!-- Inline style tag is used for ruby injection of asset paths -->
+<style type="text/css">
+    @media only screen {
+        #logo-image {
+            background: url('<%= image_path 'banner.png' %>') no-repeat;
+            background-size: 210px 42px ;
+        }
+    }
+
+    @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+    only screen and (min-device-pixel-ratio: 1.5),
+    only screen and (min-resolution: 1.5dppx) {
+        #logo-image {
+            background: url('<%= image_path 'banner2.png' %>') no-repeat;
+            background-size: 210px 42px ;
+        }
+    }
+
+    @media only screen and (-webkit-min-device-pixel-ratio: 2.5),
+    only screen and (min-device-pixel-ratio: 2.5),
+    only screen and (min-resolution: 2.5dppx) {
+        #logo-image {
+            background: url('<%= image_path 'banner3.png' %>') no-repeat;
+            background-size: 210px 42px ;
+        }
+    }
+</style>
