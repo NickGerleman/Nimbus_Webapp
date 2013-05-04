@@ -1,61 +1,37 @@
-@import "bootstrap";
-
-.modal {
-  border-radius: 5px;
-}
-
-.btn {
-  border-radius: 2px;
-}
-
-.hero-unit {
-  border-radius: 3px;
-}
-
-.well {
-  border-radius: 3px;
-}
-
-header {
-  .brand {
-    margin-top: -3px !important;
-  }
-  .mini-brand{
-    padding-left: 10px !important;
-    padding-right: 10px !important;
-  }
-  .nav {
-    font-size: 1.2em;
-    li {
-      margin-top: 9px;
-    }
-    .divider-vertical {
-      background-color: #CCC;
-      border-right: solid 1px #CCC;
-      height: 62px;
-      margin: auto;
+.top-bar {
+  box-shadow: 0 0 3px #adadad;
+  .name a {
+    line-height: 60px;
+    img {
+      vertical-align: middle;
+      padding-left: 15px;
     }
   }
-
-  .navbar-inner {
-    filter: "progid:DXImageTransform.Microsoft.gradient(enabled=false)";
-    background-image: none;
-    background-color: #EEE;
-    -webkit-border-radius: 0px;
-    -moz-border-radius: 0px;
-    border-radius: 0px;
-    a {
-      padding-top: 12px !important;
-      padding-bottom: 8px !important;
-      text-shadow: none !important;
-      min-width: 65px;
-      text-align: center;
-    }
+  .right {
     .active {
       box-shadow: inset 0 0 10px #adadad;
-      height: 33px;
-      margin-top: -11px;
-      padding: 23px 17px 8px 15px !important;
+    }
+    .divider {
+      border: none;
+      width: 1px;
+      background-color: #DDD;
+    }
+    .end-divider {
+      width: 10px;
+    }
+    li {
+      line-height: 64px;
+      a:not(.button) {
+        min-width: 100px;
+        padding: 0px 15px;
+        text-align: center;
+        vertical-align: middle;
+        &:hover {
+          background-color: #EEE;
+          color: black;
+        }
+      }
+
     }
   }
 }
@@ -67,5 +43,5 @@ footer {
 }
 
 #content {
-  min-height: 500px;
+  min-height: 450px;
 }

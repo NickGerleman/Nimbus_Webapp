@@ -33,8 +33,6 @@ GEM
     bcrypt-ruby (3.0.1)
     bcrypt-ruby (3.0.1-x86-mingw32)
     bigdecimal (1.1.0)
-    bootstrap-sass (2.3.1.0)
-      sass (~> 3.2)
     builder (3.0.4)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -65,6 +63,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.23)
     minitest (4.7.0)
+    modernizr-rails (2.6.2.1)
     multi_json (1.7.2)
     pg (0.12.2)
     pg (0.12.2-x86-mingw32)
@@ -122,6 +121,8 @@ GEM
       rack
       raindrops (~> 0.7)
     version (1.0.0)
+    zurb-foundation (4.0.9)
+      sass (>= 3.2.0)
 
 PLATFORMS
   ruby
@@ -129,11 +130,11 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt-ruby
-  bootstrap-sass
   coffee-rails (~> 3.2.1)
   jquery-cookie-rails
   jquery-rails
   minitest
+  modernizr-rails
   pg
   rack-cache
   rails (= 3.2.13)
@@ -142,3 +143,4 @@ DEPENDENCIES
   sqlite3
   uglifier (>= 1.0.3)
   unicorn
+  zurb-foundation (~> 4.0.0)

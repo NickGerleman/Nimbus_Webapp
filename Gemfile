@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
-gem 'bootstrap-sass'
 gem 'rack-cache', :require => 'rack/cache'
 gem 'bcrypt-ruby'
 gem 'recaptcha', :require => 'recaptcha/rails'
@@ -25,6 +24,8 @@ end
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'uglifier', '>= 1.0.3'
+  gem 'zurb-foundation', '~> 4.0.0'
+  gem 'modernizr-rails'
 end
 
 gem 'jquery-rails'

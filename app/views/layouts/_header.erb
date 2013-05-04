@@ -1,40 +1,45 @@
-<header class="navbar">
-    <div class="navbar-inner">
-        <div class="container">
-            <nav>
-                <%= link_to(image_tag('banner.png'), root_path, class: 'brand normal-brand') %>
-                <%= link_to(image_tag('banner-mini.png'), root_path, class: 'brand mini-brand') %>
-                <ul class="nav pull-right">
-                    <li class="divider-vertical"></li>
-                    <% if (yield :title_suffix)=='Features' %>
-                        <li><%= link_to 'Features', features_path, class: 'active' %></li>
-                    <% else %>
-                        <li><%= link_to 'Features', features_path %></li>
-                        <li class="divider-vertical"></li>
-                    <% end %>
-                    <li><a href="#">Download</a></li>
-                    <li class="divider-vertical"></li>
-                    <% if (yield :title_suffix)=='Contribute' %>
-                        <li><%= link_to 'Contribute', contribute_path, class: 'active' %></li>
-                    <% else %>
-                        <li><%= link_to 'Contribute', contribute_path %></li>
-                        <li class="divider-vertical"></li>
-                    <% end %>
-                    <% if (yield :title_suffix)=='About Us' %>
-                        <li><%= link_to 'About Us', about_path, class: 'active' %></li>
-                    <% else %>
-                        <li><%= link_to 'About Us', about_path %></li>
-                        <li class="divider-vertical"></li>
-                    <% end %>
-                    <% if (yield :title_suffix)=='Login' %>
-                        <li><%= link_to 'Login', login_path, class: 'active' %></li>
-                    <% else %>
-                        <li><%= link_to 'Login', login_path %></li>
-                        <li class="divider-vertical"></li>
-                    <% end %>
-                </ul>
-            </nav>
-        </div>
-    </div>
-
-</header>
+<nav class="top-bar">
+    <ul class="title-area">
+        <li class="name">
+            <%= link_to(image_tag('banner.png'), root_path) %>
+        </li>
+        <li class="toggle-topbar menu-icon">
+            <a href="#">
+                <span></span>
+            </a>
+        </li>
+    </ul>
+    <section class="top-bar-section">
+        <ul class="right">
+            <li class="end-divider"></li>
+            <li class="divider"></li>
+            <% if (yield :title_suffix)=='Features' %>
+                <li><%= link_to 'Features', features_path, class: 'active' %></li>
+            <% else %>
+                <li><%= link_to 'Features', features_path %></li>
+            <% end %>
+            <li class="divider"></li>
+            <li><a href="#">Download</a></li>
+            <li class="divider"></li>
+            <% if (yield :title_suffix)=='Contribute' %>
+                <li><%= link_to 'Contribute', contribute_path, class: 'active' %></li>
+            <% else %>
+                <li><%= link_to 'Contribute', contribute_path %></li>
+            <% end %>
+            <li class="divider"></li>
+            <% if (yield :title_suffix)=='About Us' %>
+                <li><%= link_to 'About Us', about_path, class: 'active' %></li>
+            <% else %>
+                <li><%= link_to 'About Us', about_path %></li>
+            <% end %>
+            <li class="divider"></li>
+            <% if (yield :title_suffix)=='Login' %>
+                <li><%= link_to 'Login', login_path, class: 'active' %></li>
+            <% else %>
+                <li><%= link_to 'Login', login_path %></li>
+            <% end %>
+            <li class="divider"></li>
+            <li class="end-divider"></li>
+        </ul>
+    </section>
+</nav>
