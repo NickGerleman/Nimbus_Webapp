@@ -1,42 +1,46 @@
 <% provide :title_suffix, 'Login' %>
-<%= render 'layouts/register' %>
-<div class="container-fluid" xmlns="http://www.w3.org/1999/html">
-    <div class="row-fluid">
-        <div class="span5" id="login-container">
-            <section id="login" class="well">
-                <%= form_tag sessions_path, remote: true do %>
-                    <h3>Login</h3>
+<div class="row">
+    <div class="large-5 columns" id="login-container">
+        <section id="login" class="panel">
+            <%= form_tag sessions_path, remote: true do %>
+                <h3>Login</h3>
 
-                    <div class="control-group">
-                        <%= label_tag :email, 'Email Address:', class: 'control-label' %>
-                        <div class="controls">
-                            <%= email_field_tag :email, nil, placeholder: 'name@example.com' %>
-                        </div>
+                <div class="control-group">
+                    <%= label_tag :email, 'Email Address:', class: 'control-label' %>
+                    <div class="controls">
+                        <%= email_field_tag :email, nil, placeholder: 'name@example.com' %>
                     </div>
-                    <div class="control-group">
-                        <%= label_tag :password, 'Password:', class: 'control-label' %>
-                        <div class="controls">
-                            <%= password_field_tag :password %>
-                        </div>
+                </div>
+                <div class="control-group">
+                    <%= label_tag :password, 'Password:', class: 'control-label' %>
+                    <div class="controls">
+                        <%= password_field_tag :password %>
                     </div>
-                    <div class="control-group">
-                        <%= label_tag :remember, 'Remember Me:', class: 'control-label', id: 'remember-label' %>
-                        <div class="controls" id="remember-control">
-                            <%= check_box_tag :remember %>
-                        </div>
+                </div>
+                <div class="control-group">
+                    <%= label_tag :remember, 'Remember Me:', class: 'control-label', id: 'remember-label' %>
+                    <div class="controls" id="remember-control">
+                        <%= check_box_tag :remember %>
                     </div>
-                    <%= submit_tag 'Login', class: 'btn btn-primary' %>
-                <% end %>
-            </section>
-        </div>
-        <div class="span6 offset1">
-            <div id="register-here">
-                <h2>Register Now</h2>
+                </div>
+                <div id="links">
+                    <a href="#" >Forgot My Password</a>
+                </div>
+                <%= submit_tag 'Login', class: 'button small' %>
+            <% end %>
+        </section>
+    </div>
+    <div class="large-6 large-offset-1 columns hide-for-small">
+        <div id="register-here">
+            <h2>Register Now</h2>
 
-                <p>Register now to be able to connect Nimbus to your accounts. All of you personal information is
-                    stored securely. Passwords are hashed and salted using the bcrypt library.</p>
-                <button class="btn-large btn-primary btn" id="register-button" onclick="$('#register').modal('show');">Register</button>
-            </div>
+            <p>Register now to be able to connect Nimbus to your accounts. All of you personal information is
+                stored securely. Passwords are hashed and salted using the bcrypt library.</p>
+            <a href="<%= new_users_path %>" class="button large ajax-popup-link"
+               id="register-button">Register</a>
         </div>
     </div>
+    <script>
+        $('.ajax-popup-link').magnificPopup({type: 'ajax', options: {dataType: 'html'}});
+    </script>
 </div>

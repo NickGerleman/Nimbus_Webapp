@@ -6,7 +6,8 @@
     <title><%= title(yield :title_suffix) %></title>
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
-    <%= javascript_include_tag :modernizr %>
+    <%= javascript_include_tag 'vendor/custom.modernizr' %>
+    <script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
     <%= csrf_meta_tags %>
     <%= render 'layouts/ie_head' %>
     <%= render 'layouts/logo_css' %>

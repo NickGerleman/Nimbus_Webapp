@@ -7,7 +7,7 @@ NimbusWebapp::Application.routes.draw do
   match '/logout', to: 'sessions#destroy', via: :delete
   match '/user', to: 'users#show'
   match '/settings', to: 'users#settings'
-  resource :users, only: [:create, :destroy, :show]
+  resource :users, only: [:create, :destroy, :show, :new]
   resource :sessions, only: [:create, :destroy]
   # The priority is based upon order of creation:
   # first created -> highest priority.

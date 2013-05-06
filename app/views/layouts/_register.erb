@@ -1,65 +1,46 @@
-<div class="modal hide fade" id="register" aria-hidden="true">
-
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h3>Register</h3>
-    </div>
-
+<div id="register" class="white-popup">
+    <h3>Register</h3>
     <% if @user.nil? %>
         <% @user=User.new %>
     <% end %>
     <%= form_for @user, remote: true, html: {class: 'form-horizontal'} do |f| %>
-        <div class="modal-body">
-            <div id="registration_errors" class="errors alert alert-error hide"></div>
-            <div class="control-group">
-                <%= f.label :name, 'Name:', class: 'control-label' %>
-                <div class="controls">
-                    <%= f.text_field :name, placeholder: 'John Doe' %>
-                </div>
+        <div id="registration_errors" class="errors alert alert-error hide"></div>
+        <div class="control-group">
+            <%= f.label :name, 'Name:', class: 'control-label' %>
+            <div class="controls">
+                <%= f.text_field :name, placeholder: 'John Doe' %>
             </div>
-
-            <div class="control-group">
-                <%= f.label :email, 'Email Address:', class: 'control-label' %>
-                <div class="controls">
-                    <%= f.text_field :email, placeholder: 'name@example.com' %>
-                </div>
-            </div>
-            <div class="control-group">
-                <%= f.label :email, 'Confirm Email Address:', class: 'control-label' %>
-                <div class="controls">
-                    <%= f.text_field :email_confirmation, placeholder: 'name@example.com' %>
-                </div>
-            </div>
-
-            <div class="control-group">
-                <%= f.label :password, 'Password:', class: 'control-label' %>
-                <div class="controls">
-                    <%= f.password_field :password %>
-                </div>
-            </div>
-
-            <div class="control-group">
-                <%= f.label :password_confirmation, 'Confirm Password:', class: 'control-label' %>
-                <div class="controls">
-                    <%= f.password_field :password_confirmation %>
-                </div>
-            </div>
-
-            <%= recaptcha_tags(display: {theme: 'clean'}) %>
         </div>
-        <div class="modal-footer">
-            <%= f.submit 'Submit', class: 'btn btn-large btn-primary', id: 'submit' %>
-            <script>$('#submit').click(function ()
-            {
-                var register = $('#register');
-                register.modal('hide');
-                register.on('hidden', function ()
-                {
-                    displayLoadingBar();
-                    register.off('hidden');
-                });
-            });
-            </script>
+
+        <div class="control-group">
+            <%= f.label :email, 'Email Address:', class: 'control-label' %>
+            <div class="controls">
+                <%= f.text_field :email, placeholder: 'name@example.com' %>
+            </div>
         </div>
+        <div class="control-group">
+            <%= f.label :email, 'Confirm Email Address:', class: 'control-label' %>
+            <div class="controls">
+                <%= f.text_field :email_confirmation, placeholder: 'name@example.com' %>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <%= f.label :password, 'Password:', class: 'control-label' %>
+            <div class="controls">
+                <%= f.password_field :password %>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <%= f.label :password_confirmation, 'Confirm Password:', class: 'control-label' %>
+            <div class="controls">
+                <%= f.password_field :password_confirmation %>
+            </div>
+        </div>
+
+        <%= recaptcha_tags(display: {theme: 'clean'}, ajax: true) %>
+        <%= f.submit 'Submit', class: 'btn btn-large btn-primary', id: 'submit' %>
+        <button title="Close (Esc)" type="button" class="mfp-close">×</button>
     <% end %>
 </div>
