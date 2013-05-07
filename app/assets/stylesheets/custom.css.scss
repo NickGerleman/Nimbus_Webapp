@@ -7,7 +7,10 @@ body {
   {
     margin-bottom: 1em !important;
   }
+  -moz-box-shadow: 0 0 3px;
+  -webkit-box-shadow: 0 0 3px;
   box-shadow: 0 0 3px;
+
   span {
     margin-right: 9px;
   }
@@ -29,6 +32,8 @@ body {
       font-size: 1.3em;
     }
     .active {
+      -moz-box-shadow: inset 0 0 10px #ADADAD;
+      -webkit-box-shadow: inset 0 0 10px #ADADAD;
       box-shadow: inset 0 0 10px #ADADAD;
     }
     .divider {

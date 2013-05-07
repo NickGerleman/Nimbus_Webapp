@@ -1,6 +1,8 @@
 #slider {
   background-color: black;
   height: 400px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
   border-radius: 5px;
   margin: 10px auto;
 }
@@ -26,6 +28,8 @@
 .wrapper {
   max-height: 460px;
   background-color: #444;
+  -moz-box-shadow: inset 0 0 30px;
+  -webkit-box-shadow: inset 0 0 30px;
   box-shadow: inset 0 0 30px;
   @media only screen and(min-height: 768px) {
     padding: 20px 0;
