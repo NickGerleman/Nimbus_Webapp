@@ -12,8 +12,9 @@ class UsersController < ApplicationController
   end
 
   def new
+    @user = User.new if @user.nil?
     respond_to do |format|
-      format.html{render partial: 'layouts/register', layout: false}
+      format.html { render partial: 'layouts/register', layout: false }
     end
   end
 

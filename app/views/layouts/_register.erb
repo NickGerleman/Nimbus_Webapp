@@ -1,46 +1,59 @@
-<div id="register" class="white-popup">
+<div id="register" class="popup">
+    <button title="Close (Esc)" type="button" class="mfp-close">×</button>
     <h3>Register</h3>
-    <% if @user.nil? %>
-        <% @user=User.new %>
-    <% end %>
     <%= form_for @user, remote: true, html: {class: 'form-horizontal'} do |f| %>
-        <div id="registration_errors" class="errors alert alert-error hide"></div>
-        <div class="control-group">
-            <%= f.label :name, 'Name:', class: 'control-label' %>
-            <div class="controls">
-                <%= f.text_field :name, placeholder: 'John Doe' %>
+        <section class="forms">
+            <div class="row">
+                <div class="large-5 columns">
+                    <%= f.label :name, 'Name:', class: 'inline' %>
+                </div>
+                <div class="large-7 columns">
+                    <%= f.text_field :name, placeholder: 'John Doe' %>
+                </div>
             </div>
-        </div>
 
-        <div class="control-group">
-            <%= f.label :email, 'Email Address:', class: 'control-label' %>
-            <div class="controls">
-                <%= f.text_field :email, placeholder: 'name@example.com' %>
-            </div>
-        </div>
-        <div class="control-group">
-            <%= f.label :email, 'Confirm Email Address:', class: 'control-label' %>
-            <div class="controls">
-                <%= f.text_field :email_confirmation, placeholder: 'name@example.com' %>
-            </div>
-        </div>
+            <div class="row">
+                <div class="large-5 columns">
 
-        <div class="control-group">
-            <%= f.label :password, 'Password:', class: 'control-label' %>
-            <div class="controls">
-                <%= f.password_field :password %>
-            </div>
-        </div>
+                    <%= f.label :email, 'Email Address:', class: 'inline' %>
+                </div>
 
-        <div class="control-group">
-            <%= f.label :password_confirmation, 'Confirm Password:', class: 'control-label' %>
-            <div class="controls">
-                <%= f.password_field :password_confirmation %>
+                <div class="large-7 columns">
+                    <%= f.text_field :email, placeholder: 'name@example.com' %>
+                </div>
             </div>
-        </div>
+            <div class="row">
+                <div class="large-5 columns">
+                    <%= f.label :email, 'Confirm Email Address:', class: 'inline' %>
+                </div>
+
+                <div class="large-7 columns">
+                    <%= f.text_field :email_confirmation, placeholder: 'name@example.com' %>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-5 columns">
+                    <%= f.label :password, 'Password:', class: 'inline' %>
+                </div>
+                <div class="large-7 columns">
+                    <%= f.password_field :password %>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-5 columns">
+                    <%= f.label :password_confirmation, 'Confirm Password:', class: 'inline' %>
+                </div>
+                <div class="large-7 columns">
+                    <%= f.password_field :password_confirmation %>
+                </div>
+            </div>
+        </section>
 
         <%= recaptcha_tags(display: {theme: 'clean'}, ajax: true) %>
-        <%= f.submit 'Submit', class: 'btn btn-large btn-primary', id: 'submit' %>
-        <button title="Close (Esc)" type="button" class="mfp-close">×</button>
+        <footer>
+            <%= f.submit 'Submit', class: 'button', id: 'submit' %>
+        </footer>
     <% end %>
 </div>

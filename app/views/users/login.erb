@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <div id="links">
-                    <a href="#" >Forgot My Password</a>
+                    <a href="#">Forgot My Password</a>
                 </div>
                 <%= submit_tag 'Login', class: 'button small' %>
             <% end %>
@@ -41,6 +41,8 @@
         </div>
     </div>
     <script>
-        $('.ajax-popup-link').magnificPopup({type: 'ajax', options: {dataType: 'html'}});
+        $('.ajax-popup-link').magnificPopup({
+            type: 'ajax', options: {dataType: 'html'}, mainClass: 'modal', removalDelay: 300
+        });
     </script>
 </div>

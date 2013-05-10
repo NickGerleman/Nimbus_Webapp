@@ -1,17 +1,13 @@
-#dynamic_recaptcha {
-  height: 132px;
-  width: 440px;
-  margin: auto;
-}
-
+//Login Box
 #login {
   width: 250px;
   height: 350px;
-  @media only screen and (min-width:"768px") {
+  @media only screen and (min-width: "768px") {
     margin: 40px auto 0 auto;
-  }@media only screen and (max-width:"767px") {
-  margin: 0 auto 0 auto;
-}
+  }
+  @media only screen and (max-width: "767px") {
+    margin: 0 auto 0 auto;
+  }
   padding: 20px;
   h3 {
     margin-bottom: 20px;
@@ -30,8 +26,9 @@
   #remember {
     margin: auto 0 auto 10px;
   }
-}
 
+}
+//Registration Ad/Prompt
 .row {
   margin: auto;
   h2 {
@@ -45,4 +42,27 @@
   .button {
     margin-top: 30px;
   }
+}
+
+//Registration Modal
+#dynamic_recaptcha {
+  height: 132px;
+  width: 440px;
+  margin: 15px auto 25px auto;
+}
+
+.popup {
+  min-width: 500px;
+  width: 40%;
+}
+
+.forms {
+  margin: 40px auto 10px auto;
+}
+
+#register footer{
+  text-align: right;
+  height: 25px;
+  border-top:1px solid #aaa;
+  padding: 10px;
 }
