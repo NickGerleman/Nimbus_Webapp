@@ -129,3 +129,20 @@ footer {
   opacity: 0;
 }
 
+.wrapper {
+  background-image: image-url("noise64.png");
+  background-size: 64px 64px;
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 1.5 pppx) {
+  .wrapper {
+    background-image: image-url("noise128.png");
+    background-size: 64px 64px;
+
+  }
+}
+
+#logo-image {
+  background: image-url("banner.svg") no-repeat;
+  background-size: 210px 42px;
+}
