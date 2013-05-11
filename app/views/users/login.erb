@@ -4,25 +4,12 @@
         <section id="login" class="panel">
             <%= form_tag sessions_path, remote: true do %>
                 <h3>Login</h3>
-
-                <div class="control-group">
-                    <%= label_tag :email, 'Email Address:', class: 'control-label' %>
-                    <div class="controls">
-                        <%= email_field_tag :email, nil, placeholder: 'name@example.com' %>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <%= label_tag :password, 'Password:', class: 'control-label' %>
-                    <div class="controls">
-                        <%= password_field_tag :password %>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <%= label_tag :remember, 'Remember Me:', class: 'control-label', id: 'remember-label' %>
-                    <div class="controls" id="remember-control">
-                        <%= check_box_tag :remember %>
-                    </div>
-                </div>
+                <%= label_tag :email, 'Email Address:', class: 'control-label' %>
+                <%= email_field_tag :email, nil, placeholder: 'name@example.com' %>
+                <%= label_tag :password, 'Password:', class: 'control-label' %>
+                <%= password_field_tag :password %>
+                <%= label_tag :remember, 'Remember Me:', class: 'control-label', id: 'remember-label' %>
+                <%= check_box_tag :remember %>
                 <div id="links">
                     <a href="#">Forgot My Password</a>
                 </div>
@@ -42,7 +29,7 @@
     </div>
     <script>
         $('.ajax-popup-link').magnificPopup({
-            type: 'ajax', options: {dataType: 'html'}, mainClass: 'modal', removalDelay: 300
+            type: 'ajax'
         });
     </script>
 </div>

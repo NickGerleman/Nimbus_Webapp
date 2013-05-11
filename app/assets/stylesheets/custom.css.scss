@@ -2,9 +2,13 @@ body {
   min-width: 320px;
 }
 
+.button{
+  border-radius: 2px;
+  box-shadow: 0 0 1px black;
+}
+
 .top-bar {
-  @media only screen and(max-width: 767px)
-  {
+  @media only screen and(max-width: 767px) {
     margin-bottom: 1em !important;
   }
   -moz-box-shadow: 0 0 3px black;
@@ -86,15 +90,16 @@ footer {
 /* overlay at start */
 .modal.mfp-bg {
   opacity: 0;
-
   -webkit-transition: all 0.2s ease-out;
   -moz-transition: all 0.2s ease-out;
   transition: all 0.2s ease-out;
 }
+
 /* overlay animate in */
 .modal.mfp-bg.mfp-ready {
   opacity: 0.8;
 }
+
 /* overlay animate out */
 .modal.mfp-bg.mfp-removing {
   opacity: 0;
@@ -110,6 +115,7 @@ footer {
   -moz-transition: all 0.2s ease-out;
   transition: all 0.2s ease-out;
 }
+
 /* content animate it */
 .modal.mfp-wrap.mfp-ready .mfp-content {
   opacity: 1;
@@ -117,6 +123,7 @@ footer {
   -moz-transform: scale(1);
   transform: scale(1);
 }
+
 /* content animate out */
 .modal.mfp-wrap.mfp-removing .mfp-content {
   opacity: 0;

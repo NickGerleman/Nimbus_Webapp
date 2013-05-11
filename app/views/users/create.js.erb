@@ -1,46 +1,29 @@
+var modal = $('.modal');
+$('small').remove();
+$('.error').removeClass('error');
+modal.removeClass('mfp-ready');
+Recaptcha.reload();
 setTimeout(function ()
 {
-    var loadingBar = $('#loadingBar');
-    var register = $('#register');
-    loadingBar.modal('hide');
-    loadingBar.on('hidden', function ()
-    {
-        loadingBar.off('hidden');
-        <% if @user.errors.any? %>
-        Recaptcha.reload();
-        var errors_list = $('#registration_errors');
-        var list = $('<ul>');
-        <% @user.errors.full_messages.each do |error| %>
-        list.append('<li><%= error %></li>');
-        <% end %>
-        errors_list.html(list);
-        $('.control-group').each(function ()
-        {
-            $(this).removeClass('error');
-        });
-        <% @user.errors.keys.each do |field| %>
-        $('label[for = "<%="user_#{field}" %>"]').parent().addClass('error');
-        <% end %>
-        <% if @user.errors.has_key?(:password) %>
-        $('label[for = "user_password_confirmation"]').parent().addClass('error');
-        <% end %>
-        register.modal('show');
-        errors_list.removeClass('hide');
-        <% else %>
-        var modal = $('<div class="modal hide fade" id="success" aria-hidden="true">');
-        var header = $('<div class="modal-header"></div>');
-        header.append('<button type="button" class="close" data-dismiss="register">&times;</button>');
-        header.append('<h3>Congratulations!</h3>');
-        var body = $('<div class="modal-body"></div>');
-        body.append('<p>You have now been successfully registered. Have Fun!</p>');
-        var footer = $('<div class="modal-footer"></div>');
-        footer.append('<button class="btn btn-large btn-primary" data-dismiss="register">Okay</button>');
-        modal.append(header);
-        modal.append(body);
-        modal.append(footer);
-        $('body').append(modal);
-        modal.modal('show');
-        <% @user=User.new %>
-        <% end %>
-    });
-}, 700);
+    <% if @user.errors.any?%>
+    <% if @user.errors.has_key? :base %>
+    $('#recaptcha_area').after('<small class="error">Incorrect Response</small>');
+    <% end %>
+    <% if @user.errors.has_key? :email %>
+    <% @user.errors.add :email_confirmation, 'ignore' %>
+    <% end %>
+    <% if @user.errors.has_key? :password %>
+    <% @user.errors.add :password_confirmation, 'ignore' %>
+    <% end %>
+    <% @user.errors.keys.reject{|k| k== :base}.each do |key| %>
+    var field = $('#user_<%= key %>');
+    <% @user.errors.get(key).each do |message| %>
+    <% unless message == 'ignore' %>
+    field.after('<small class="error"><%= @user.errors.full_message key, message %></small>');
+    <% end %>
+    <% end %>
+    field.closest('.row').addClass('error');
+    <% end %>
+    modal.addClass('mfp-ready');
+    <% end %>
+}, 200);
