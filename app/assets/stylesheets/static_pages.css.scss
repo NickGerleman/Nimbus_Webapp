@@ -5,10 +5,10 @@
   }
   background-size: 470px 400px;
   height: 400px;
-  -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
   margin: 10px auto;
+  -webkit-box-shadow: 0 0 10px black;
   box-shadow: 0 0 10px black;
 }
 
@@ -26,6 +26,7 @@
     line-height: 1.2em;
   }
 
+  -webkit-text-shadow: 0 5px 10px black;
   text-shadow: 0 5px 10px black;
 }
 
