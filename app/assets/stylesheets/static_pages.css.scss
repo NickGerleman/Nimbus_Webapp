@@ -1,10 +1,15 @@
-#slider {
-  background-color: black;
+#scene {
+  background: image_url('scene400.jpg');
+  @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 2dppx) {
+    background: image_url('scene800.jpg');
+  }
+  background-size: 470px 400px;
   height: 400px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
   margin: 10px auto;
+  box-shadow: 0 0 10px black;
 }
 
 #intro-text {
