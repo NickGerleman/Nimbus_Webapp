@@ -5,9 +5,9 @@ modal.removeClass('mfp-ready');
 Recaptcha.reload();
 setTimeout(function ()
 {
+    loading.toggleClass('hide');
     <% if @user.errors.any?%>
     submit.toggleClass('hide');
-    loading.toggleClass('hide');
     <% if @user.errors.has_key? :base %>
     $('#recaptcha_area').after('<small class="error">Incorrect Response</small>');
     <% end %>
@@ -26,8 +26,18 @@ setTimeout(function ()
     <% end %>
     field.closest('.row').addClass('error');
     <% end %>
-    modal.addClass('mfp-ready');
     <% else %>
-
+    var header = $('#modal-header');
+    header.html('Success');
+    $('.forms').remove();
+    header.after('<p>You have been successfully registered, have fun!</p>');
+    $('#dynamic_recaptcha').remove();
+    submit.remove();
+    loading.after('<button id="close" class="button">Okay</button>');
+    $('#close').click(function ()
+    {
+        $.magnificPopup.close();
+    });
     <% end %>
+    modal.addClass('mfp-ready');
 }, 200);
