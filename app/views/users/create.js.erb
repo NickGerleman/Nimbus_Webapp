@@ -7,37 +7,37 @@ setTimeout(function ()
 {
     loading.toggleClass('hide');
     <% if @user.errors.any?%>
-    submit.toggleClass('hide');
-    <% if @user.errors.has_key? :base %>
-    $('#recaptcha_area').after('<small class="error">Incorrect Response</small>');
-    <% end %>
-    <% if @user.errors.has_key? :email %>
-    <% @user.errors.add :email_confirmation, 'ignore' %>
-    <% end %>
-    <% if @user.errors.has_key? :password %>
-    <% @user.errors.add :password_confirmation, 'ignore' %>
-    <% end %>
-    <% @user.errors.keys.reject{|k| k== :base}.each do |key| %>
-    var field = $('#user_<%= key %>');
-    <% @user.errors.get(key).each do |message| %>
-    <% unless message == 'ignore' %>
-    field.after('<small class="error"><%= @user.errors.full_message key, message %></small>');
-    <% end %>
-    <% end %>
-    field.closest('.row').addClass('error');
-    <% end %>
+        submit.toggleClass('hide');
+        <% if @user.errors.has_key? :base %>
+            $('#recaptcha_area').after('<small class="error">Incorrect Response</small>');
+        <% end %>
+        <% if @user.errors.has_key? :email %>
+            <% @user.errors.add :email_confirmation, 'ignore' %>
+        <% end %>
+        <% if @user.errors.has_key? :password %>
+            <% @user.errors.add :password_confirmation, 'ignore' %>
+        <% end %>
+        <% @user.errors.keys.reject{|k| k== :base}.each do |key| %>
+            var field = $('#user_<%= key %>');
+            <% @user.errors.get(key).each do |message| %>
+                <% unless message == 'ignore' %>
+                    field.after('<small class="error"><%= @user.errors.full_message key, message %></small>');
+                <% end %>
+            <% end %>
+            field.closest('.row').addClass('error');
+        <% end %>
     <% else %>
-    var header = $('#modal-header');
-    header.html('Success');
-    $('.forms').remove();
-    header.after('<p>You have been successfully registered, have fun!</p>');
-    $('#dynamic_recaptcha').remove();
-    submit.remove();
-    loading.after('<button id="close" class="button">Okay</button>');
-    $('#close').click(function ()
-    {
-        $.magnificPopup.close();
-    });
+        var header = $('#modal-header');
+        header.html('Success');
+        $('.forms').remove();
+        header.after('<p>You have been successfully registered. Please check your email to verify your account.</p>');
+        $('#dynamic_recaptcha').remove();
+        submit.remove();
+        loading.after('<button id="close" class="button">Okay</button>');
+        $('#close').click(function ()
+        {
+            $.magnificPopup.close();
+        });
     <% end %>
     modal.addClass('mfp-ready');
 }, 200);
