@@ -2,7 +2,9 @@ var modal = $('.modal');
 $('small').remove();
 $('.error').removeClass('error');
 modal.removeClass('mfp-ready');
-Recaptcha.reload();
+<% unless Rails.env.test? %>
+    Recaptcha.reload();
+<% end %>
 setTimeout(function ()
 {
     loading.toggleClass('hide');
@@ -32,7 +34,9 @@ setTimeout(function ()
         $('.forms').remove();
         header.after('<p>You have been successfully registered. Please check your email for instructions to verify ' +
                 'your account.</p>');
-        $('#dynamic_recaptcha').remove();
+        <% unless Rails.env.test? %>
+            $('#dynamic_recaptcha').remove();
+        <% end %>
         submit.remove();
         loading.after('<button id="close" class="button">Okay</button>');
         $('#close').click(function ()

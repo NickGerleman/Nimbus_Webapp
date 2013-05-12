@@ -23,6 +23,7 @@ group :test do
   gem 'spork-rails'
   gem 'libnotify'
   gem 'selenium-webdriver'
+  gem 'database_cleaner'
 end
 
 group :production do

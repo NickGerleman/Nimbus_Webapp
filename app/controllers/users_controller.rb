@@ -3,15 +3,17 @@ class UsersController < ApplicationController
   def create
     @user = User.new params[:user]
     respond_to do |format|
-      @user.save if Rails.env.test? or verify_recaptcha(model: @user)
+      if Rails.env.test?
+        @user.save
+      else
+        @user.save if verify_recaptcha(model: @user)
+      end
       format.js
     end
   end
 
   def new
-    if @user.nil?
-      @user = User.new
-    end
+    @user = User.new
     respond_to do |format|
       format.html { render partial: 'layouts/register', layout: false }
     end
