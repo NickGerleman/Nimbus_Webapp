@@ -17,3 +17,5 @@
 # Ignore IDEA files
 /.idea
 /*.iml
+
+/webdriver*
