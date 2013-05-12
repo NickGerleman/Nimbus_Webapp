@@ -1,12 +1,12 @@
 NimbusWebapp::Application.routes.draw do
   root to: 'static_pages#home'
-  match '/features', to: 'static_pages#features'
-  match '/about', to: 'static_pages#about'
-  match '/contribute', to: 'static_pages#contribute'
-  match '/login', to: 'users#login'
-  match '/logout', to: 'sessions#destroy', via: :delete
-  match '/user', to: 'users#show'
-  match '/settings', to: 'users#settings'
+  get '/features', to: 'static_pages#features'
+  get '/about', to: 'static_pages#about'
+  get '/contribute', to: 'static_pages#contribute'
+  get '/login', to: 'users#login'
+  delete '/logout', to: 'sessions#destroy'
+  get '/user', to: 'users#show'
+  get '/settings', to: 'users#settings'
   resource :users, only: [:create, :destroy, :show, :new]
   resource :sessions, only: [:create, :destroy]
   # The priority is based upon order of creation:

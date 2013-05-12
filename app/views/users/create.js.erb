@@ -30,7 +30,8 @@ setTimeout(function ()
         var header = $('#modal-header');
         header.html('Success');
         $('.forms').remove();
-        header.after('<p>You have been successfully registered. Please check your email to verify your account.</p>');
+        header.after('<p>You have been successfully registered. Please check your email for instructions to verify ' +
+                'your account.</p>');
         $('#dynamic_recaptcha').remove();
         submit.remove();
         loading.after('<button id="close" class="button">Okay</button>');

@@ -23,11 +23,11 @@
             </div>
             <div class="row">
                 <div class="large-5 columns">
-                    <%= f.label :email, 'Confirm Email Address:', class: 'inline' %>
+                    <%= f.label :email_confirmation, 'Confirm Email Address:', class: 'inline' %>
                 </div>
 
                 <div class="large-7 columns">
-                    <%= f.text_field :email_confirmation, placeholder: 'name@example.com' %>
+                    <%= f.text_field :email_confirmation, placeholder: 'name@example.com', autocomplete: 'off' %>
                 </div>
             </div>
 

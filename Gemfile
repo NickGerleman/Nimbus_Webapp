@@ -13,7 +13,11 @@ gem 'coffee-rails', '~> 3.2.1'
 group :test, :development do
   gem 'jdbc-sqlite3'
   gem 'activerecord-jdbcsqlite3-adapter'
-  gem 'minitest'
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  gem 'capybara'
+  gem 'guard-rspec'
+  gem 'spork-rails'
 end
 
 group :production do
