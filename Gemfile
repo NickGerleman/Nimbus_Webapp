@@ -15,8 +15,9 @@ gem 'minitest'
 end
 
 group :production do
+  ruby '1.9.3', :engine => 'jruby', :engine_version => '1.7.3'
   gem 'pg'
-  gem 'unicorn'
+  gem 'puma'
 end
 
 # Gems used only for assets and not required
