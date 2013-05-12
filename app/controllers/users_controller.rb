@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new params[:user]
     respond_to do |format|
-      @user.save if verify_recaptcha(model: @user)
+      @user.save if Rails.env.test? or verify_recaptcha(model: @user)
       format.js
     end
   end

@@ -1,6 +1,7 @@
 # A sample Guardfile
 # More info at https://github.com/guard/guard#readme
 
+notification :libnotify, timeout: 5, transient: false, append: true, urgency: :critical
 guard :rspec, cli: '--drb' do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
@@ -15,9 +16,10 @@ guard :rspec, cli: '--drb' do
   watch('app/controllers/application_controller.rb')  { "spec/controllers" }
 
   # Capybara features specs
-  watch(%r{^app/views/(.+)/.*\.(erb|haml)$})          { |m| "spec/features/#{m[1]}_spec.rb" }
+  watch(%r{^app/views/(.+)/(.+)\.(erb|haml)$})          { |m| "spec/features/#{m[1]}/#{m[2]}_spec.rb" }
 
   # Turnip features and steps
   watch(%r{^spec/acceptance/(.+)\.feature$})
   watch(%r{^spec/acceptance/steps/(.+)_steps\.rb$})   { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'spec/acceptance' }
 end
+
