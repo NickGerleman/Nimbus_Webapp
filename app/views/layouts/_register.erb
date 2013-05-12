@@ -52,7 +52,17 @@
 
         <%= recaptcha_tags(display: {theme: 'clean'}, ajax: true) %>
         <footer>
+            <span class="hide" id="loading">Loading...</span>
             <%= f.submit 'Submit', class: 'button', id: 'submit' %>
         </footer>
     <% end %>
+    <script>
+        var submit = $('#submit');
+        var loading = $('#loading');
+        submit.click(function ()
+        {
+            submit.toggleClass('hide');
+            loading.toggleClass('hide');
+        });
+    </script>
 </div>

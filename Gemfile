@@ -1,29 +1,30 @@
 source 'https://rubygems.org'
 
+ruby '1.9.3', :engine => 'jruby', :engine_version => '1.7.3'
 gem 'rails', '3.2.13'
-gem 'rack-cache', :require => 'rack/cache'
+gem 'rack-cache', require: 'rack/cache'
 gem 'bcrypt-ruby'
-gem 'recaptcha', :require => 'recaptcha/rails'
+gem 'recaptcha', require: 'recaptcha/rails'
 gem 'coffee-rails', '~> 3.2.1'
 
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 group :test, :development do
-gem 'sqlite3'
-gem 'minitest'
+  gem 'jdbc-sqlite3'
+  gem 'activerecord-jdbcsqlite3-adapter'
+  gem 'minitest'
 end
 
 group :production do
-  ruby '1.9.3', :engine => 'jruby', :engine_version => '1.7.3'
-  gem 'activerecord-jdbcpostgresql-adapter'
   gem 'puma'
+  gem 'activerecord-jdbcpostgresql-adapter'
 end
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
+  gem 'sass-rails', '~> 3.2.3'
   gem 'uglifier', '>= 1.0.3'
   gem 'zurb-foundation', '~> 4.0.0'
 end

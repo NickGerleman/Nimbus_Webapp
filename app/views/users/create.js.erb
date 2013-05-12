@@ -6,6 +6,8 @@ Recaptcha.reload();
 setTimeout(function ()
 {
     <% if @user.errors.any?%>
+    submit.toggleClass('hide');
+    loading.toggleClass('hide');
     <% if @user.errors.has_key? :base %>
     $('#recaptcha_area').after('<small class="error">Incorrect Response</small>');
     <% end %>
@@ -25,5 +27,7 @@ setTimeout(function ()
     field.closest('.row').addClass('error');
     <% end %>
     modal.addClass('mfp-ready');
+    <% else %>
+
     <% end %>
 }, 200);
