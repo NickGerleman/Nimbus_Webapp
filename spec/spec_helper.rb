@@ -23,6 +23,7 @@ Spork.prefork do
     # config.mock_with :mocha
     # config.mock_with :flexmock
     # config.mock_with :rr
+    config.include FactoryGirl::Syntax::Methods
     config.before(:suite) do
       DatabaseCleaner.clean_with(:truncation)
     end

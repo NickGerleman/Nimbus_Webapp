@@ -2,19 +2,30 @@
 <div class="row">
     <div class="large-5 columns" id="login-container">
         <section id="login" class="panel">
-            <%= form_tag sessions_path, remote: true do %>
+            <%= form_tag sessions_path, remote: true, onsubmit: 'toggle_load()' do %>
                 <h3>Login</h3>
                 <%= label_tag :email, 'Email Address:', class: 'control-label' %>
-                <%= email_field_tag :email, nil, placeholder: 'name@example.com' %>
-                <%= label_tag :password, 'Password:', class: 'control-label' %>
+                <%= email_field_tag :email, nil, placeholder: 'name@example.com', required: true %>
+                <%= label_tag :password, 'Password:', class: 'control-label', required: true %>
                 <%= password_field_tag :password %>
                 <%= label_tag :remember, 'Remember Me:', class: 'control-label', id: 'remember-label' %>
                 <%= check_box_tag :remember %>
                 <div id="links">
                     <a href="#">Forgot My Password</a>
                 </div>
+                <div id="wait" class="hide">Please wait...</div>
                 <%= submit_tag 'Login', class: 'button small', id: 'login-button' %>
             <% end %>
+            <script>
+                function toggle_load()
+                    {
+                        var login = $('#login-button');
+                        var wait = $('#wait');
+
+                        wait.toggleClass('hide');
+                        login.toggleClass('hide');
+                    }
+            </script>
         </section>
     </div>
     <div class="large-6 large-offset-1 columns hide-for-small">

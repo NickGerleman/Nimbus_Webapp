@@ -15,6 +15,66 @@ describe 'Login Page' do
   it { should have_selector 'h3', text: 'Login' }
 end
 
+describe 'Correct Login', js: true do
+
+  subject { page }
+
+  before do
+    User.find_by_email('name@example.com').destroy unless User.find_by_email('name@example.com').nil?
+    create(:user)
+    visit login_path
+    fill_in 'email', with: 'name@example.com'
+    fill_in 'password', with: 'password'
+    click_button 'login-button'
+  end
+  it { should_not have_selector '.error' }
+end
+
+describe 'Fully Incorrect Login', js: true do
+
+  subject { page }
+
+  before do
+    User.find_by_email('name@example.com').destroy unless User.find_by_email('name@example.com').nil?
+    create(:user)
+    visit login_path
+    fill_in 'email', with: 'invalidcom@bla.n'
+    fill_in 'password', with: 'invalidpass'
+    click_button 'login-button'
+  end
+  it { should have_selector '.error' }
+end
+
+describe 'Incorrect Email', js: true do
+
+  subject { page }
+
+  before do
+    User.find_by_email('name@example.com').destroy unless User.find_by_email('name@example.com').nil?
+    create(:user)
+    visit login_path
+    fill_in 'email', with: 'invalidcom@bla.n'
+    fill_in 'password', with: 'password'
+    click_button 'login-button'
+  end
+  it { should have_selector '.error' }
+end
+
+describe 'Incorrect Password', js: true do
+
+  subject { page }
+
+  before do
+    User.find_by_email('name@example.com').destroy unless User.find_by_email('name@example.com').nil?
+    create(:user)
+    visit login_path
+    fill_in 'email', with: 'name@example.com'
+    fill_in 'password', with: 'invalidpass'
+    click_button 'login-button'
+  end
+  it { should have_selector '.error' }
+end
+
 describe 'Register Page', js: true do
 
   subject { page }
@@ -58,7 +118,7 @@ describe 'Valid Registration', js: true do
   it 'should increment the user count' do
     expect do
       click_button 'Submit'
-      sleep(3)
+      sleep(1)
     end.to change(User, :count).by 1
   end
 
@@ -220,7 +280,7 @@ describe 'existing_email', js: true do
       fill_in 'Confirm Password', with: 'password'
       @initial_count = User.count
       click_button 'Submit'
-      sleep(3)
+      sleep(1)
     end
   end
 

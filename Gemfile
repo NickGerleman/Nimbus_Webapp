@@ -7,7 +7,6 @@ gem 'bcrypt-ruby'
 gem 'recaptcha', require: 'recaptcha/rails'
 gem 'coffee-rails', '~> 3.2.1'
 
-
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 group :test, :development do
