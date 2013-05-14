@@ -1,5 +1,4 @@
 class StaticPagesController < ApplicationController
-  caches_action(:home, :about, :features, :contribute)
 
   def home
 
