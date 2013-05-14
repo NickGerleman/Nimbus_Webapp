@@ -24,7 +24,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    redirect_to login_path if (@user).nil?
+    redirect_to login_path if current_user.nil?
   end
 
   def settings
