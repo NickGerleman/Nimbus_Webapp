@@ -1,3 +1,3 @@
 bundle exec clockwork lib/clock.rb &
-script/delayed_job start
+rake jobs:work &
 bundle exec puma -p $PORT
