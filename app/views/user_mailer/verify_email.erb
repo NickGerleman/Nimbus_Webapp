@@ -8,7 +8,7 @@
 
 <p>
     You have been successfully registered for Nimbus.
-    Please click this <a href="https://nimbus-web.herokuapp.com/verify/<%= @token %>">link</a> to verify your account.
+    Please click this <%= link_to 'link', controller: 'users', action: 'verify', id: @token %> to verify your account.
 </p>
 </body>
 </html>
