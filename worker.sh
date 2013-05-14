@@ -1,1 +1,1 @@
-rake jobs:work
+bundle exec sidekiq

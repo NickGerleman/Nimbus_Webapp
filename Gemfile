@@ -6,7 +6,9 @@ gem 'rack-cache', require: 'rack/cache'
 gem 'bcrypt-ruby'
 gem 'recaptcha', require: 'recaptcha/rails'
 gem 'coffee-rails', '~> 3.2.1'
-gem 'delayed_job_active_record'
+gem 'clockwork'
+gem 'redis'
+gem 'sidekiq'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -29,7 +31,7 @@ end
 group :production do
   gem 'puma'
   gem 'activerecord-jdbcpostgresql-adapter'
-  gem 'clockwork'
+  gem 'newrelic_rpm'
 end
 
 # Gems used only for assets and not required
