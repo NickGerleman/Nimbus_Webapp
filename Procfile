@@ -1,1 +1,2 @@
-web: bundle exec puma -p $PORT
+master: sh master.sh
+slave: sh slave.sh

@@ -1,26 +1,33 @@
 var modal = $('.modal');
 var submit = $('#submit');
-var loading = $('#loading')
+var loading = $('#loading');
+//Remove Previous Errors
 $('small').remove();
 $('.error').removeClass('error');
+//Hide Modal
 modal.removeClass('mfp-ready');
+//No Recaptcha in test env
 <% unless Rails.env.test? %>
     Recaptcha.reload();
 <% end %>
+//Wait for fade-out to complete
 setTimeout(function ()
 {
     loading.toggleClass('hide');
     <% if @user.errors.any?%>
         submit.toggleClass('hide');
+        //Recaptcha errors have key of :base
         <% if @user.errors.has_key? :base %>
             $('#recaptcha_area').after('<small class="error">Incorrect Response</small>');
         <% end %>
+        //Highlight Confirmattion fields if normal field is invalid
         <% if @user.errors.has_key? :email %>
             <% @user.errors.add :email_confirmation, 'ignore' %>
         <% end %>
         <% if @user.errors.has_key? :password %>
             <% @user.errors.add :password_confirmation, 'ignore' %>
         <% end %>
+        //ignore base as it doesn't have a form
         <% @user.errors.keys.reject{|k| k== :base}.each do |key| %>
             var field = $('#user_<%= key %>');
             <% @user.errors.get(key).each do |message| %>
@@ -31,6 +38,7 @@ setTimeout(function ()
             field.closest('.row').addClass('error');
         <% end %>
     <% else %>
+        //Create success modal
         var header = $('#modal-header');
         header.html('Success');
         $('.forms').remove();

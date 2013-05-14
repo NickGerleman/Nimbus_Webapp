@@ -280,7 +280,6 @@ describe 'existing_email', js: true do
       fill_in 'Confirm Password', with: 'password'
       @initial_count = User.count
       click_button 'Submit'
-      sleep(1)
     end
   end
 
