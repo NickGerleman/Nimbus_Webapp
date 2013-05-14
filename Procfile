@@ -1,2 +1,3 @@
-master: sh master.sh
-slave: sh slave.sh
+web: sh all_in_one.sh
+clock_worker: sh clock_worker.sh
+worker: sh worker.sh
