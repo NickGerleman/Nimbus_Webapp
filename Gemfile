@@ -8,6 +8,7 @@ gem 'coffee-rails', '~> 3.2.1'
 gem 'clockwork'
 gem 'redis'
 gem 'sidekiq'
+gem 'puma'
 
 group :test, :development do
   platforms :jruby do
@@ -32,7 +33,6 @@ group :test do
 end
 
 group :production do
-  gem 'puma'
   platform :jruby do
     gem 'activerecord-jdbcpostgresql-adapter'
   end

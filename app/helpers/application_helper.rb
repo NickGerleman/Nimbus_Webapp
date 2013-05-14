@@ -4,4 +4,5 @@ module ApplicationHelper
     return title_base if title_suffix.empty?
     "#{title_base} | #{title_suffix}"
   end
+
 end
