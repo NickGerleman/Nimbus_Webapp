@@ -9,7 +9,7 @@
 <p>
     You have been successfully registered for Nimbus.
     Please click this <a href="<%= url_for controller: 'users', action: 'verify', id: @token,
-        only_path: false, protocol: 'https' %>">link</a> to verify your account.
+        only_path: false, protocol: 'https', host: 'nimbus-web.heroku.app.com' %>">link</a> to verify your account.
 </p>
 </body>
 </html>
