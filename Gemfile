@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
+ruby '1.9.3', :engine => 'rbx', :engine_version => '2.0.0.rc1'
 
-ruby '1.9.3', :engine => 'jruby', :engine_version => '1.7.3'
 gem 'rails', '3.2.13'
 gem 'rack-cache', require: 'rack/cache'
 gem 'bcrypt-ruby'
@@ -10,11 +10,15 @@ gem 'clockwork'
 gem 'redis'
 gem 'sidekiq'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
 group :test, :development do
-  gem 'jdbc-sqlite3'
-  gem 'activerecord-jdbcsqlite3-adapter'
+  platforms :jruby do
+    gem 'jdbc-sqlite3'
+    gem 'activerecord-jdbc-adapter'
+  end
+
+  platforms :ruby, :rbx do
+    gem 'sqlite3'
+  end
 end
 
 group :test do
@@ -30,7 +34,14 @@ end
 
 group :production do
   gem 'puma'
-  gem 'activerecord-jdbcpostgresql-adapter'
+  platform :jruby do
+    gem 'activerecord-jdbcpostgresql-adapter'
+  end
+
+  platform :ruby do
+    gem 'pg'
+  end
+
   gem 'newrelic_rpm'
 end
 
