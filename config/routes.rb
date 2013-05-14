@@ -7,7 +7,7 @@ NimbusWebapp::Application.routes.draw do
   get '/logout', to: 'sessions#destroy'
   get '/user', to: 'users#show'
   get '/settings', to: 'users#settings'
-  get 'verify/:id', to: 'users#verify'
+  get '/verify/:id', to: 'users#verify'
   resource :users, only: [:create, :destroy, :show, :new]
   resource :sessions, only: [:create, :destroy]
   # The priority is based upon order of creation:

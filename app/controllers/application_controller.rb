@@ -23,7 +23,9 @@ class ApplicationController < ActionController::Base
 
   def logged_in
     return @logged_in unless @logged_in.nil?
-    @logged_in = true if current_user else false
+    @logged_in = true if current_user
+  else
+    @logged_in = false
   end
 
   helper_method :current_user, :user_name, :user_email, :logged_in
