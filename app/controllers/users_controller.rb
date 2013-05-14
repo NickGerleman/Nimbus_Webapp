@@ -8,6 +8,7 @@ class UsersController < ApplicationController
       else
         @user.save if verify_recaptcha(model: @user)
       end
+      UserMailer.delay.verify_email(@user) unless @user.errors.any?
       format.js
     end
   end
@@ -25,6 +26,10 @@ class UsersController < ApplicationController
 
   def show
     redirect_to login_path if current_user.nil?
+  end
+
+  def verify
+    id = params[:id]
   end
 
   def settings

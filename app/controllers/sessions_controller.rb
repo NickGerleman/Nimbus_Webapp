@@ -2,14 +2,14 @@ class SessionsController < ApplicationController
   def create
     respond_to do |format|
       user = User.find_by_email params[:email]
-      token = SecureRandom.urlsafe_base64 32, false
       if user and user.authenticate params[:password]
+        token = SecureRandom.urlsafe_base64 32, false
         if params[:remember]
           user.sessions.create token: token, expiration: DateTime.current.advance(months: 1)
-          cookies[:session_token] = {value: token, expires_in: 1.month}
+          cookies[:session_token] = {value: token, expires_in: 1.month, secure: Rails.env.production?}
         else
           user.sessions.create token: token, expiration: DateTime.current.advance(hours: 1)
-          cookies[:session_token] = {value: token, expires_in: 1.hour}
+          session[:session_token] = token
         end
         format.js
       else
@@ -22,8 +22,9 @@ class SessionsController < ApplicationController
   def destroy
     token = cookies[:session_token]
     cookies.delete :session_token
-    Session.find_by_token(token).destroy
+    Session.find_by_token(token).destroy if token
     @user=nil
+    session.clear
     redirect_to root_url
   end
 end

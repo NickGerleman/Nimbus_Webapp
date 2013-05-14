@@ -4,5 +4,5 @@ require 'clockwork'
 
 include Clockwork
 
-every(5.minutes, 'Remove Expired Sessions') { RemoveExpiredSessionsWorker.perform_async }
+every(2.minutes, 'Remove Expired Sessions') { RemoveExpiredSessionsWorker.perform_async }
 every(1.day, 'Remove Unvalidated Users') { RemoveUnverifiedUsersWorker.perform_async }
