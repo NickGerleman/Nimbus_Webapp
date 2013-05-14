@@ -21,7 +21,9 @@ class SessionsController < ApplicationController
 
   def destroy
     token = cookies[:session_token]
+    cookies.delete :session_token
     Session.find_by_token(token).destroy
+    @user=nil
     redirect_to root_url
   end
 end
