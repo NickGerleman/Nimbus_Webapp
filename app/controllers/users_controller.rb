@@ -7,7 +7,7 @@ class UsersController < ApplicationController
         @user.save
       else
         if  verify_recaptcha(model: @user) and @user.save
-          UserMailer.delay.verify_email(@user).deliver
+          UserMailer.delay.verify_email(@user)
         end
       end
       format.js
