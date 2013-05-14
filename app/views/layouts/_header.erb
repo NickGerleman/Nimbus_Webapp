@@ -38,12 +38,12 @@
             <li class="has-dropdown">
                 <% if current_user %>
                     <% if (yield :title_suffix)=='Account' %>
-                        <%= link_to 'Account', user_path, class: 'active' %>
+                        <%= link_to 'Account', users_path, class: 'active' %>
                     <% else %>
-                        <%= link_to 'Account', user_path %>
+                        <%= link_to 'Account', users_path %>
                     <% end %>
                     <ul class="dropdown">
-                        <li><%= link_to 'Logout', sessions_path, method: :delete %></li>
+                        <li><%= link_to 'Logout', logout_path %></li>
                     </ul>
                     </li>
                 <% else %>

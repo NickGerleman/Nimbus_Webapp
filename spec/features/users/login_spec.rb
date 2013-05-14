@@ -26,8 +26,25 @@ describe 'Correct Login', js: true do
     fill_in 'email', with: 'name@example.com'
     fill_in 'password', with: 'password'
     click_button 'login-button'
+    sleep(1)
   end
+
+  after { Session.last.destroy unless Session.last.nil? }
+
   it { should_not have_selector '.error' }
+  it { should_not have_content 'Login' }
+  it { should have_content 'Account' }
+
+  it do
+    visit users_path
+    should have_content 'Bob'
+  end
+
+  it do
+    visit logout_path
+    should have_content 'Login'
+    should_not have_content 'Account'
+  end
 end
 
 describe 'Fully Incorrect Login', js: true do

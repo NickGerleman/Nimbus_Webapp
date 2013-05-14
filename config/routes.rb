@@ -4,7 +4,7 @@ NimbusWebapp::Application.routes.draw do
   get '/about', to: 'static_pages#about'
   get '/contribute', to: 'static_pages#contribute'
   get '/login', to: 'users#login'
-  delete '/logout', to: 'sessions#destroy'
+  get '/logout', to: 'sessions#destroy'
   get '/user', to: 'users#show'
   get '/settings', to: 'users#settings'
   resource :users, only: [:create, :destroy, :show, :new]
