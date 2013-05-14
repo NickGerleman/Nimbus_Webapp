@@ -1,3 +1,3 @@
-web: sh all_in_one.sh
+web: sh web.sh
 clock_worker: sh clock_worker.sh
 worker: sh worker.sh
