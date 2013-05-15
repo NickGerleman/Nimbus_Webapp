@@ -35,7 +35,7 @@ class UsersController < ApplicationController
     if user.nil?
       flash_now[:incorrect]=true
     else
-      user.update_attribute verified, true
+      user.update_attribute 'verified', true
     end
   end
 

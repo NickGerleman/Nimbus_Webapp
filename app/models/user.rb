@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   has_many :sessions
   has_secure_password
 
-  before_save do |user|
+  before_create do |user|
     user.email = email.downcase
     user.verified = false
     user.email_token = SecureRandom.urlsafe_base64 32, false
