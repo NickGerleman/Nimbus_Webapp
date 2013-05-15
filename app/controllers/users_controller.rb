@@ -32,7 +32,7 @@ class UsersController < ApplicationController
   def verify
     id = params[:id]
     user = User.find_by_email_token id
-    if user.nil
+    if user.nil?
       flash_now[:incorrect]=true
     else
       user.update_attribute verified, true
