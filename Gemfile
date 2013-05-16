@@ -12,37 +12,21 @@ gem 'sidekiq'
 gem 'puma'
 
 group :test, :development do
-  platforms :jruby do
-    gem 'jdbc-sqlite3'
-    gem 'activerecord-jdbc-adapter'
-  end
-
-  platforms :ruby, :rbx do
-    gem 'sqlite3'
-  end
+  gem 'sqlite3'
 end
 
 group :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
-  gem 'capybara'
-  gem 'guard-rspec'
+  gem 'capybara', '>= 2.1.0'
   gem 'spork-rails'
-  gem 'libnotify'
-  gem 'selenium-webdriver'
+  gem 'rb-inotify'
+  gem 'capybara-webkit', github: 'thoughtbot/capybara-webkit', branch: 'master'
   gem 'database_cleaner'
 end
 
 group :production do
-  platform :jruby do
-    gem 'activerecord-jdbcpostgresql-adapter'
-  end
-
-  platform :ruby do
-    gem 'pg'
-  end
-
-  gem 'newrelic_rpm'
+  gem 'pg'
 end
 
 # Gems used only for assets and not required

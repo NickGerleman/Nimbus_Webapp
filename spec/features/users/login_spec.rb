@@ -146,11 +146,13 @@ describe 'Valid Registration', js: true do
 
   it do
     click_button 'Submit'
+    sleep(1)
     should have_content 'Success'
   end
 
   it 'should close correctly' do
     click_button 'Close'
+    sleep(1)
     should_not have_selector '#register'
   end
 

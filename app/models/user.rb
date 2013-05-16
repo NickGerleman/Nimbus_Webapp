@@ -17,4 +17,9 @@ class User < ActiveRecord::Base
   validates :name, length: {maximum: 50, minimum: 2}
   validates :password, length: {minimum: 6, maximum: 50}
   validates :password_confirmation, presence: true
+
+  def verify
+    update_attribute 'verified', true
+    update_attribute 'email_token', nil
+  end
 end

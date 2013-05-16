@@ -22,10 +22,7 @@ class ApplicationController < ActionController::Base
   end
 
   def logged_in
-    return @logged_in unless @logged_in.nil?
-    @logged_in = true if current_user
-  else
-    @logged_in = false
+    current_user.any?
   end
 
   helper_method :current_user, :user_name, :user_email, :logged_in
