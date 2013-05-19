@@ -66,7 +66,7 @@ common: &default_settings
   # encryption involved in SSL communication, but this work is done
   # asynchronously to the threads that process your application code,
   # so it should not impact response times.
-  ssl: false
+  ssl: true
 
   # EXPERIMENTAL: enable verification of the SSL certificate sent by
   # the server. This setting has no effect unless SSL is enabled
@@ -99,7 +99,7 @@ common: &default_settings
   browser_monitoring:
       # By default the agent automatically injects the monitoring JavaScript
       # into web pages. Set this attribute to false to turn off this behavior.
-      auto_instrument: true
+      auto_instrument: false
 
   # Proxy settings for connecting to the service.
   #
