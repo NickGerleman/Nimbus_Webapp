@@ -10,6 +10,9 @@ NimbusWebapp::Application.routes.draw do
   get '/verify/:id', to: 'users#verify'
   resource :users, only: [:create, :destroy, :show, :new]
   resource :sessions, only: [:create, :destroy]
+  get '/mu-c480b215-1f18b692-ac11b7c3-2d3951f6' do
+    '42'
+  end
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
