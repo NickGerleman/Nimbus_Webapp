@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+
   def current_user
     return @user unless @user.nil?
     token = session[:session_token]
@@ -21,9 +22,54 @@ class ApplicationController < ActionController::Base
     @email = current_user.name
   end
 
-  def logged_in
-    current_user.any?
+  def logged_in?
+    if current_user.nil? then
+      false
+    else
+      true
+    end
   end
 
-  helper_method :current_user, :user_name, :user_email, :logged_in
+  def outdated_browser?
+    user_agent = AgentOrange::UserAgent.new request.env['HTTP_USER_AGENT']
+    browser = user_agent.device.engine.browser
+    name = browser.name
+    version = browser.version.to_s.to_f
+    case name
+      when 'Chrome'
+        if version < 4 then
+          true
+        else
+          false
+        end
+      when 'MSIE'
+        if version < 10 then
+          true
+        else
+          false
+        end
+      when 'Opera'
+        if version < 11.6 then
+          true
+        else
+          false
+        end
+      when 'Firefox'
+        if version < 4 then
+          true
+        else
+          false
+        end
+      when 'Safari'
+        if version < 4 then
+          true
+        else
+          false
+        end
+      else
+        false
+    end
+  end
+
+  helper_method :current_user, :user_name, :user_email, :logged_in?, :outdated_browser?
 end

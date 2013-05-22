@@ -36,7 +36,7 @@
             <% end %>
             <li class="divider"></li>
             <li class="has-dropdown">
-                <% if current_user %>
+                <% if logged_in? %>
                     <% if (yield :title_suffix)=='Account' %>
                         <%= link_to 'Account', users_path, class: 'active' %>
                     <% else %>

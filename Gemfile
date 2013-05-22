@@ -11,6 +11,7 @@ gem 'clockwork'
 gem 'redis'
 gem 'sidekiq'
 gem 'puma'
+gem 'agent_orange'
 
 group :test, :development do
   gem 'sqlite3'

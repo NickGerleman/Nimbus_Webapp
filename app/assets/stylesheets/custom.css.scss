@@ -86,14 +86,19 @@ footer {
 .popup {
   position: relative;
   background: #FFF;
-  padding: 20px;
+  padding: 20px 20px 0 20px;
   width: auto;
   margin: 20px auto;
+}
+
+#warning ul {
+  margin-left: 30px;
 }
 
 /* overlay at start */
 .modal.mfp-bg {
   opacity: 0;
+  -o-transition: all 0.2s ease-out;
   -webkit-transition: all 0.2s ease-out;
   -moz-transition: all 0.2s ease-out;
   transition: all 0.2s ease-out;
@@ -112,12 +117,28 @@ footer {
 /* content at start */
 .modal.mfp-wrap .mfp-content {
   opacity: 0;
+  -o-transform: scale(.7);
   -webkit-transform: scale(.7);
   -moz-transform: scale(.7);
   transform: scale(.7);
+  -o-transition: all 0.2s ease-out;
   -webkit-transition: all 0.2s ease-out;
   -moz-transition: all 0.2s ease-out;
   transition: all 0.2s ease-out;
+}
+
+.popup footer {
+  text-align: right;
+  border-top: 1px solid #aaa;
+  font-size: 16px;
+  min-height: 50px;
+  line-height: 50px;
+  .button, span {
+    display: inline-block;
+    top: 10px;
+    right: 0;
+    vertical-align: middle;
+  }
 }
 
 /* content animate it */

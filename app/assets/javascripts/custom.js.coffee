@@ -17,6 +17,9 @@ adjust_footer = ->
 init_popups = ->
   $('.ajax-popup').magnificPopup({ type: 'ajax'})
 
+window.ie_warning = ->
+
+
 window.forms =
   toggle_load: ->
     $('.load:first, .submit:first').toggleClass('hide')

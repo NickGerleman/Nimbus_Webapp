@@ -8,16 +8,9 @@
     <%= javascript_include_tag 'application' %>
     <%= javascript_include_tag 'vendor/custom.modernizr' %>
     <%= csrf_meta_tags %>
-    <!--[if lt IE 9]>
-    <script>
-        jQuery(function ()
-        {
-            ie_warning();
-        });
-    </script>
-    <![endif]-->
 </head>
 <body>
+<%= render 'application/browser_warning' if outdated_browser? %>
 <%= render 'header' %>
 <div id="content">
     <%= yield %>
