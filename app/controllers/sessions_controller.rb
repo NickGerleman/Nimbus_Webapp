@@ -4,6 +4,9 @@ class SessionsController < ApplicationController
       user = User.find_by_email params[:email]
       if user and user.authenticate params[:password]
         token = SecureRandom.urlsafe_base64 32, false
+        if user.sessions.count > 2
+          user.sessions.first.destroy
+        end
         if params[:remember]
           user.sessions.create token: token, expiration: DateTime.current.advance(months: 1)
           cookies[:session_token] = {value: token, expires_in: 1.month, secure: Rails.env.production?}
