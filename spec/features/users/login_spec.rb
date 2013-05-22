@@ -26,7 +26,7 @@ describe 'Correct Login', js: true do
     fill_in 'email', with: 'name@example.com'
     fill_in 'password', with: 'password'
     click_button 'login-button'
-    sleep(1)
+    sleep 0.5
   end
 
   after { Session.last.destroy unless Session.last.nil? }
@@ -110,8 +110,10 @@ describe 'Register Page', js: true do
   it { should have_field 'Confirm Password' }
   it { should have_button 'Submit' }
   it 'should close correctly' do
+    sleep 0.5
     click_button 'Close'
-    should_not have_selector '#register'
+    sleep 0.5
+    should_not have_content 'Confirm Email Address'
   end
 
 end
@@ -135,7 +137,7 @@ describe 'Valid Registration', js: true do
   it 'should increment the user count' do
     expect do
       click_button 'Submit'
-      sleep(1)
+      sleep 0.5
     end.to change(User, :count).by 1
   end
 
@@ -146,14 +148,13 @@ describe 'Valid Registration', js: true do
 
   it do
     click_button 'Submit'
-    sleep(1)
+    sleep 0.5
     should have_content 'Success'
   end
 
   it 'should close correctly' do
     click_button 'Close'
-    sleep(1)
-    should_not have_selector '#register'
+    should_not have_content 'Confirm Email Address'
   end
 
 end
@@ -179,7 +180,7 @@ describe 'invalid_name', js: true do
   it { should have_selector '.error' }
   it 'should close correctly' do
     click_button 'Close'
-    should_not have_selector '#register'
+    should_not have_content 'Confirm Email Address'
   end
 end
 
@@ -204,7 +205,7 @@ describe 'invalid_email', js: true do
   it { should have_selector '.error' }
   it 'should close correctly' do
     click_button 'Close'
-    should_not have_selector '#register'
+    should_not have_content 'Confirm Email Address'
   end
 end
 
@@ -229,7 +230,7 @@ describe 'non_matching_email', js: true do
   it { should have_selector '.error' }
   it 'should close correctly' do
     click_button 'Close'
-    should_not have_selector '#register'
+    should_not have_content 'Confirm Email Address'
   end
 end
 
@@ -254,7 +255,7 @@ describe 'invalid_password', js: true do
   it { should have_selector '.error' }
   it 'should close correctly' do
     click_button 'Close'
-    should_not have_selector '#register'
+    should_not have_content 'Confirm Email Address'
   end
 end
 
@@ -279,7 +280,7 @@ describe 'non_matching_password', js: true do
   it { should have_selector '.error' }
   it 'should close correctly' do
     click_button 'Close'
-    should_not have_selector '#register'
+    should_not have_content 'Confirm Email Address'
   end
 
 end
@@ -306,6 +307,6 @@ describe 'existing_email', js: true do
   it { should have_selector '.error' }
   it 'should close correctly' do
     click_button 'Close'
-    should_not have_selector '#register'
+    should_not have_content 'Confirm Email Address'
   end
 end
