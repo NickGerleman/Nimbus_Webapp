@@ -1,3 +1,3 @@
 #!/bin/sh
-bundle exec sidekiq &
-bundle exec puma -p $PORT
+bundle exec puma -p $PORT -t 0:4 &
+bundle exec sidekiq

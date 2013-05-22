@@ -1,11 +1,12 @@
 source 'https://rubygems.org'
 
-ruby "1.9.3", :engine => "rbx", :engine_version => "2.0.0.rc1"
+ruby '1.9.3', :engine => 'rbx', :engine_version => '2.0.0.rc1'
 gem 'rails', '3.2.13'
 gem 'rack-cache', require: 'rack/cache'
 gem 'bcrypt-ruby'
 gem 'recaptcha', require: 'recaptcha/rails'
 gem 'coffee-rails', '~> 3.2.1'
+gem 'jquery-rails'
 gem 'clockwork'
 gem 'redis'
 gem 'sidekiq'
@@ -21,7 +22,7 @@ group :test do
   gem 'capybara', '>= 2.1.0'
   gem 'spork-rails'
   gem 'rb-inotify'
-  gem 'capybara-webkit', github: 'thoughtbot/capybara-webkit', branch: 'master'
+  gem 'capybara-webkit', '~> 1.0.0'
   gem 'database_cleaner'
 end
 
@@ -37,9 +38,6 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
   gem 'zurb-foundation', '~> 4.0.0'
 end
-
-gem 'jquery-rails'
-
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'

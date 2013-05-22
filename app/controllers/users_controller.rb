@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   def new
     @user = User.new
     respond_to do |format|
-      format.html { render partial: 'layouts/register', layout: false }
+      format.html { render partial: 'register', layout: false }
     end
   end
 

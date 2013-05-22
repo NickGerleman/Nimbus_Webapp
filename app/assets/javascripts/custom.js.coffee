@@ -1,6 +1,14 @@
-this.ignore_warning = ->
-  $.cookie("ignore_warning", true, { expires: 30 })
+"use strict"
 
-this.ie_warning = ->
-  $('#ie_warning').modal() if $.cookie("ignore_warning") != "true"
-$(document).ready -> $(document).foundation()
+jQuery ->
+  refresh_layout()
+
+$(window).resize ->
+  refresh_layout()
+
+refresh_layout = ->
+  adjust_footer()
+
+adjust_footer = ->
+  height = $(window).height()
+  $('#content').css('min-height', (height - 175) + 'px')

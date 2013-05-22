@@ -4,19 +4,20 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title><%= title(yield :title_suffix) %></title>
-    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= stylesheet_link_tag 'application'%>
     <%= javascript_include_tag 'application' %>
     <%= javascript_include_tag 'vendor/custom.modernizr' %>
     <%= csrf_meta_tags %>
-    <%= render 'layouts/ie_head' %>
+    <!--[if lt IE 9]>
+    <script>jQuery(function () { ie_warning();});</script>
+    <![endif]-->
 </head>
-
 <body>
-<%= render 'layouts/header' %>
+<%= render 'header' %>
 <div id="content">
     <%= yield %>
 </div>
-<%= render 'layouts/footer' %>
+<%= render 'footer' %>
 
 
 </body>
