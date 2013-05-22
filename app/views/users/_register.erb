@@ -1,7 +1,7 @@
 <div id="register" class="popup">
     <button title="Close (Esc)" type="button" class="mfp-close">×</button>
     <h3 id="modal-header">Register</h3>
-    <%= form_for @user, remote: true, html: {class: 'form-horizontal', onsubmit: 'register_load_toggle()'} do |f| %>
+    <%= form_for @user, remote: true, html: {class: 'form-horizontal', onsubmit: 'forms.toggle_load();'} do |f| %>
         <section class="forms">
             <div class="row">
                 <div class="large-5 columns">
@@ -53,15 +53,8 @@
 
         <%= recaptcha_tags(display: {theme: 'clean'}, ajax: true) unless Rails.env.test? %>
         <footer>
-            <span class="hide" id="loading">Loading...</span>
-            <%= f.submit 'Submit', class: 'button', id: 'submit' %>
+            <span class="hide load" id="loading">Loading...</span>
+            <%= f.submit 'Submit', class: 'button submit', id: 'submit' %>
         </footer>
     <% end %>
-    <script>
-        function register_load_toggle()
-            {
-                $('#submit').toggleClass('hide');
-                $('#loading').toggleClass('hide');
-            }
-    </script>
 </div>

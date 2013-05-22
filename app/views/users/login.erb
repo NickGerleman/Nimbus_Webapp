@@ -2,7 +2,7 @@
 <div class="row">
     <div class="large-5 columns" id="login-container">
         <section id="login" class="panel">
-            <%= form_tag sessions_path, remote: true, onsubmit: 'toggle_load()' do %>
+            <%= form_tag sessions_path, remote: true, onsubmit: 'forms.toggle_load();' do %>
                 <h3>Login</h3>
                 <%= label_tag :email, 'Email Address:', class: 'control-label' %>
                 <%= email_field_tag :email, nil, placeholder: 'name@example.com', required: true %>
@@ -13,19 +13,9 @@
                 <div id="links">
                     <a href="#">Forgot My Password</a>
                 </div>
-                <div id="wait" class="hide">Please wait...</div>
-                <%= submit_tag 'Login', class: 'button small', id: 'login-button' %>
+                <div id="wait" class="hide load">Please wait...</div>
+                <%= submit_tag 'Login', class: 'button small submit'%>
             <% end %>
-            <script>
-                function toggle_load()
-                    {
-                        var login = $('#login-button');
-                        var wait = $('#wait');
-
-                        wait.toggleClass('hide');
-                        login.toggleClass('hide');
-                    }
-            </script>
         </section>
     </div>
     <div class="large-6 large-offset-1 columns hide-for-small">
@@ -34,13 +24,8 @@
 
             <p>Register now to be able to connect Nimbus to your accounts. All of you personal information is
                 stored securely. Passwords are hashed and salted using the bcrypt library.</p>
-            <a href="<%= new_users_path %>" class="button large ajax-popup-link"
+            <a href="<%= new_users_path %>" class="button large ajax-popup"
                id="register-button">Register</a>
         </div>
     </div>
-    <script>
-        $('.ajax-popup-link').magnificPopup({
-            type: 'ajax'
-        });
-    </script>
 </div>
