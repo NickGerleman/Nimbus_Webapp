@@ -1,4 +1,5 @@
 #!/bin/sh
-bundle exec puma -p $PORT -t 0:4 &
+bin/start-nginx
+bundle exec unicorn -c config/unicorn.rb &
 bundle exec clockwork lib/clock.rb &
 bundle exec sidekiq

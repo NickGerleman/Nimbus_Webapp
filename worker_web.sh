@@ -1,3 +1,4 @@
 #!/bin/sh
-bundle exec puma -p $PORT -t 0:4 &
+bbin/start-nginx
+bundle exec unicorn -c config/unicorn.rb &
 bundle exec sidekiq
