@@ -1,6 +1,7 @@
 "use strict"
 
 jQuery ->
+  $(document).foundation()
   refresh_layout()
   init_popups()
 
