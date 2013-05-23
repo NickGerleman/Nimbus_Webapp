@@ -1,5 +1,9 @@
-<% if flash[:incorrect] %>
-<h2>Incorrect Code</h2>
-<% else %>
-<h2>Successfully Verified</h2>
-<% end %>
+<% provide :title_suffix, 'Verify' %>
+
+<div class="row">
+    <% if flash[:incorrect] %>
+        <h2>Incorrect Code</h2>
+    <% else %>
+        <h2>Successfully Verified</h2>
+    <% end %>
+</div>

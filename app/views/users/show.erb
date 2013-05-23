@@ -1,8 +1,11 @@
 <% provide :title_suffix, 'Account' %>
-<h1>Welcome <%= user_name %>!</h1>
-<% if current_user.verified
-     verified = '' %>
-<% else
-     verified = ' not' %>
-<% end %>
-<h2>You are<%= verified %> verified</h2>
+
+<div class="row">
+    <h1>Welcome <%= user_name %>!</h1>
+    <% if current_user.verified
+         verified = '' %>
+    <% else
+         verified = ' not' %>
+    <% end %>
+    <h2>You are<%= verified %> verified</h2>
+</div>
