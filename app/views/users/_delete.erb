@@ -1,0 +1,14 @@
+<div class="popup">
+    <header>
+        <h3>Delete My Account</h3>
+    </header>
+    <p>Please confirm your password. Note that there is no way to undo this action.</p>
+    <%= form_tag users_path, method: :delete, onsubmit: 'forms.toggle_load();' do %>
+        <%= password_field_tag 'password' %>
+
+        <footer>
+            <span class="load hide">Loading...</span>
+            <%= submit_tag 'Delete', class: 'button submit' %>
+        </footer>
+    <% end %>
+</div>

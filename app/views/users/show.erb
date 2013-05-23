@@ -8,4 +8,5 @@
          verified = ' not' %>
     <% end %>
     <h2>You are<%= verified %> verified</h2>
+    <%= link_to 'Delete My Account', {controller: :users, action: :delete}, class: 'ajax-popup'  %>
 </div>

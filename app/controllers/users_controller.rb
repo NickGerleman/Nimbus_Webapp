@@ -21,8 +21,16 @@ class UsersController < ApplicationController
     end
   end
 
-  def destroy
+  def delete
+    render partial: 'delete', layout: false
+  end
 
+  def destroy
+    user = current_user
+    if current_user.authenticate params[:password]
+      user.destroy
+      redirect_to root_path
+    end
   end
 
   def show
