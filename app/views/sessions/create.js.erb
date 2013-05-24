@@ -1,6 +1,6 @@
 $('small').remove();
 <% if flash[:errors] %>
-forms.toggle_load();
+form_methods.toggle_load();
 $('#login').after('<small id="error-box" class="error">Incorrect Username or Password</small>');
 <% else %>
 window.location.replace('<%= root_url %>');

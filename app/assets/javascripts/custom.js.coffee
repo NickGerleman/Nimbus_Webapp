@@ -18,6 +18,6 @@ adjust_footer = ->
 init_popups = ->
   $('.ajax-popup').magnificPopup({ type: 'ajax'})
 
-window.forms =
+window.form_methods =
   toggle_load: ->
     $('.load:first, .submit:first').toggleClass('hide')

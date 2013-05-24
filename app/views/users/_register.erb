@@ -1,7 +1,8 @@
 <div id="register" class="popup">
     <button title="Close (Esc)" type="button" class="mfp-close">×</button>
     <h3 id="modal-header">Register</h3>
-    <%= form_for @user, remote: true, html: {class: 'form-horizontal', onsubmit: 'forms.toggle_load();'} do |f| %>
+    <%= form_for @user, remote: true, html: {class: 'form-horizontal', onsubmit: 'form_methods.toggle_load();'} do |f|
+    %>
         <section class="forms">
             <div class="row">
                 <div class="large-5 columns">
