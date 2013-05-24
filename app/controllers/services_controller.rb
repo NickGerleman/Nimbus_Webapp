@@ -19,6 +19,6 @@ class ServicesController < ApplicationController
     session.get_request_token
     @dropbox = session.get_authorize_url url_for(controller: :services, action: :confirm, id: 'Dropbox',
                                                  only_path: false, host: 'nimbus-web.herokuapp.com', protocol: 'https')
-    current_user.dropbox_connections.create session: session.serialize
+    current_user.dropbox_connection.create session: session.serialize
   end
 end
