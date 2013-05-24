@@ -39,19 +39,13 @@ setTimeout(function ()
     <% end %>
     <% else %>
     //Create success modal
-    var header = $('#modal-header');
-    header.html('Success');
-    $('.forms').remove();
+    var header = $('.popup header');
+    header.html('<h3>Success</h3>');
+    $('.popup form').remove();
     header.after('<p>You have been successfully registered. Please check your email for instructions to verify your account.</p>');
-    <% unless Rails.env.test? %>
-    $('#dynamic_recaptcha').remove();
-    <% end %>
-    submit.remove();
-    loading.after('<button id="close" class="button">Okay</button>');
-    $('#close').click(function ()
-    {
-        $.magnificPopup.close();
-    });
+    footer = $('<footer>');
+    footer.append('<button class="button" onclick="$.magnificPopup.close();">Okay</button>');
+    $('.popup').append(footer);
     <% end %>
     modal.addClass('mfp-ready');
 }, 200);
