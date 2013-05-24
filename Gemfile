@@ -12,6 +12,7 @@ gem 'redis'
 gem 'sidekiq'
 gem 'puma'
 gem 'agent_orange'
+gem 'dropbox-sdk'
 
 group :test, :development do
   gem 'sqlite3'

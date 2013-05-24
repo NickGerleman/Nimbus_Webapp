@@ -56,6 +56,8 @@ GEM
     database_cleaner (1.0.1)
     diff-lcs (1.2.4)
     dotenv (0.7.0)
+    dropbox-sdk (1.5.1)
+      json
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
@@ -175,6 +177,7 @@ DEPENDENCIES
   clockwork
   coffee-rails (~> 3.2.1)
   database_cleaner
+  dropbox-sdk
   factory_girl_rails
   foreman
   jquery-rails
