@@ -30,6 +30,10 @@ class UsersController < ApplicationController
     if current_user.authenticate params[:password]
       user.destroy
       redirect_to root_path
+      respond_to { |f| f.js }
+    else
+      flash.now[:errors]=true
+      respond_to { |f| f.js }
     end
   end
 
