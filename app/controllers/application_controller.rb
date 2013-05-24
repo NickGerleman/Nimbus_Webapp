@@ -31,42 +31,55 @@ class ApplicationController < ActionController::Base
   end
 
   def outdated_browser?
+    return true if session[:outdated]
+    return false if session[:modern]
     user_agent = AgentOrange::UserAgent.new request.env['HTTP_USER_AGENT']
     browser = user_agent.device.engine.browser
     name = browser.name
     version = browser.version.to_s.to_f
     case name
       when 'Chrome'
-        if version < 4 then
+        if version < 4
+          session[:outdated] = true
           true
         else
+          session[:modern] = true
           false
         end
       when 'MSIE'
-        if version < 10 then
+        if version < 10
+          session[:outdated] = true
           true
         else
+          session[:modern] = true
           false
         end
       when 'Opera'
-        if version < 11.6 then
+        if version < 11.6
+          session[:outdated] = true
           true
         else
+          session[:modern] = true
           false
         end
       when 'Firefox'
-        if version < 4 then
+        if version < 4
+          session[:outdated] = true
           true
         else
+          session[:modern] = true
           false
         end
       when 'Safari'
-        if version < 4 then
+        if version < 4
+          session[:outdated] = true
           true
         else
+          session[:modern] = true
           false
         end
       else
+        session[:modern] = true
         false
     end
   end
