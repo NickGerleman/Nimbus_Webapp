@@ -11,7 +11,11 @@ class ServicesController < ApplicationController
   end
 
   def new
-    session = DropboxSession.new ENV['DROPBOX_APP_KEY'], ENV['DROPBOX_APP_SECRET']
+    if current_user.dropbox_connection.nil?
+      session = DropboxSession.new ENV['DROPBOX_APP_KEY'], ENV['DROPBOX_APP_SECRET']
+    else
+      session = current_user.dropbox_connection.session
+    end
     session.get_request_token
     @dropbox = session.get_authorize_url url_for(controller: :services, action: :confirm, id: 'Dropbox',
                                                  only_path: false, host: 'nimbus-web.herokuapp.com', protocol: 'https')
