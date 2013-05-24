@@ -1,8 +1,20 @@
 //Show Page
-#gravatar{
-  float: left;
-  margin-right: 30px;
+@media only screen and (min-width: "768px") {
+  #gravatar {
+    float: left;
+    margin-right: 30px;
+  }
 }
+
+@media only screen and (max-width: "767px") {
+  #gravatar {
+    float: right;
+    height: 100px;
+    width: 100px;
+  }
+
+}
+
 //Login Box
 #login {
   width: 250px;
@@ -33,15 +45,16 @@
   }
 }
 
-#error-box{
+#error-box {
   width: 250px;
   margin: -21px auto auto auto;
 }
 
-#wait{
+#wait {
   font-size: 14px;
   margin-top: 40px;
 }
+
 //Registration Ad/Prompt
 .row {
   margin: auto;
@@ -69,7 +82,8 @@
   min-width: 500px;
   width: 40%;
 }
-h3{
+
+h3 {
   margin-top: 0;
 }
 

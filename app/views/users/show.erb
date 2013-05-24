@@ -2,7 +2,7 @@
 
 <div class="row">
     <h1>Welcome <%= user_name %>!</h1>
-    <%= image_tag(gravatar(current_user), id: 'gravatar') %>
+    <%= image_tag(gravatar(current_user), id: 'gravatar', alt: 'Gravatar') %>
     <% if current_user.verified
          verified = '' %>
     <% else
