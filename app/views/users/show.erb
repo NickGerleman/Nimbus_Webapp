@@ -2,11 +2,12 @@
 
 <div class="row">
     <h1>Welcome <%= user_name %>!</h1>
+    <%= image_tag(gravatar(current_user), id: 'gravatar') %>
     <% if current_user.verified
          verified = '' %>
     <% else
          verified = ' not' %>
     <% end %>
     <h2>You are<%= verified %> verified</h2>
-    <%= link_to 'Delete My Account', {controller: :users, action: :delete}, class: 'ajax-popup'  %>
+    <%= link_to 'Delete My Account', {controller: :users, action: :delete}, class: 'ajax-popup' %>
 </div>
