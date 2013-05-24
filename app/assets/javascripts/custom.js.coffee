@@ -16,7 +16,15 @@ adjust_footer = ->
   $('#content').css('min-height', (height - 175) + 'px')
 
 init_popups = ->
-  $('.ajax-popup').magnificPopup({ type: 'ajax'})
+  popup = $('.ajax-popup')
+  popup.magnificPopup({ type: 'ajax'})
+  popup.on 'mfpUpdateStatus', ->
+    max_height = 0
+    footer = $('.popup footer')
+    height = footer.height()
+    max_height = height if height > max_height
+    footer.css('min-height', max_height + 'px')
+    footer.css('line-height', max_height + 'px')
 
 window.form_methods =
   toggle_load: ->
