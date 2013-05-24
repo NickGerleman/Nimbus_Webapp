@@ -1,13 +1,13 @@
 class UsersController < ApplicationController
 
   def create
-    @user = User.new params[:user]
+    user = User.new params[:user]
     respond_to do |format|
       if Rails.env.test?
-        @user.save
+        user.save
       else
-        if  verify_recaptcha(model: @user) and @user.save
-          UserMailer.delay.verify_email(@user)
+        if  verify_recaptcha(model: user) and user.save
+          UserMailer.delay.verify_email(user)
         end
       end
       format.js
