@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   attr_accessible :email, :email_confirmation, :name, :password, :password_confirmation
   has_many :sessions
-  has_many :dropbox_connections
+  has_one :dropbox_connection
   has_secure_password
 
   before_create do |user|

@@ -3,11 +3,11 @@ ACCESS_TYPE = :dropbox
 
 class ServicesController < ApplicationController
   def confirm
-    serialized_session = current_user.dropbox_connections.last.session
+    serialized_session = current_user.dropbox_connection.session
     session = DropboxSession.deserialize serialized_session
     @token = session.get_access_token
     serialized_session = session.serialize
-    current_user.dropbox_connections.last.update_attribute :session, serialized_session
+    current_user.dropbox_connection.update_attribute :session, serialized_session
   end
 
   def new
