@@ -1,4 +1,3 @@
-require 'dropbox_sdk'
 ACCESS_TYPE = :dropbox
 
 class ServicesController < ApplicationController
@@ -8,17 +7,9 @@ class ServicesController < ApplicationController
   # @param [Hash] params Parameters Given
   # @option params [String] :id the service to use
   def confirm
-    #TODO: move to background task
+    redirect_to root_path
     if params[:id]== 'Dropbox'
-      serialized_session = current_user.dropbox_connection.session
-      session = DropboxSession.deserialize serialized_session
-      token = session.get_access_token
-      if token.nil?
-        current_user.dropbox_connection.update_attribute :completed, false
-      end
-      serialized_session = session.serialize
-      current_user.dropbox_connection.update_attribute :session, serialized_session
-      current_user.dropbox_connection.update_attribute :completed, true
+      ConfirmDropboxSessionWorker.perform_async current_user.id
     end
   end
 
