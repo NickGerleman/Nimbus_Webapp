@@ -1,5 +1,11 @@
 class SessionsController < ApplicationController
-  def create
+
+  # Create a new session
+  #
+  # @param [Hash] params paramters given in POST
+  # @option params [String] :email the user's email address
+  # @option params [String] :password the user's password
+def create
     respond_to do |format|
       user = User.find_by_email params[:email]
       if user and user.authenticate params[:password]
@@ -22,6 +28,7 @@ class SessionsController < ApplicationController
     end
   end
 
+  # Destroys the current user's session
   def destroy
     token = cookies[:session_token]
     cookies.delete :session_token

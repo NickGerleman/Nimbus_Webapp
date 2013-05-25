@@ -1,9 +1,10 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-
+  # The object representing the current user or nil if no user is logged in
   def current_user
     return @user unless @user.nil?
+    #session can be stored in session cookie or independently depending on whether remember me was checked
     token = session[:session_token]
     token = cookies[:session_token] unless cookies[:session_token].blank?
     return nil if token.blank?
@@ -12,21 +13,34 @@ class ApplicationController < ActionController::Base
     @user = session.user
   end
 
+  # The name of the current user
+  #
+  # @raise [RuntimeError] if there is no current user
   def user_name
+    raise 'No user' unless logged_in?
     return @name unless @name.blank?
     @name = current_user.name
   end
 
+  # The email address of the current user
+  #
+  # @raise [RuntimeError] if there is no current user
   def user_email
+    raise 'No user' unless logged_in?
     return @email unless @email.blank?
     @email = current_user.name
   end
 
+  # Whether the user has verified their email address
+  #
+  # @raise [RuntimeError] if there is no current user
   def user_verified
+    raise 'No user' unless logged_in?
     return @verified unless @verified.nil?
     @verified = current_user.verified
   end
 
+  #Whether there is a user logged in
   def logged_in?
     if current_user.nil?
       false
@@ -35,7 +49,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  #whether the browser is outdated
   def outdated_browser?
+    #cache results in the session cookie in order to avoid needless recomputation on every visit
     return true if session[:outdated]
     return false if session[:modern]
     user_agent = AgentOrange::UserAgent.new request.env['HTTP_USER_AGENT']

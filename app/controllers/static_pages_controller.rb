@@ -8,16 +8,4 @@ class StaticPagesController < ApplicationController
     end
   end
 
-  def about
-
-  end
-
-  def features
-
-  end
-
-  def contribute
-
-  end
-
 end

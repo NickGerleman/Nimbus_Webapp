@@ -2,6 +2,11 @@ require 'dropbox_sdk'
 ACCESS_TYPE = :dropbox
 
 class ServicesController < ApplicationController
+
+  # Gets and stores access tokens after the user has allowed access
+  #
+  # @param [Hash] params Parameters Given
+  # @option params [String] :id the service to use
   def confirm
     #TODO: move to background task
     if params[:id]== 'Dropbox'
@@ -17,6 +22,10 @@ class ServicesController < ApplicationController
     end
   end
 
+  # Creates initial session and redirects user to authorize use
+  #
+  # @param [Hash] params Parameters Given
+  # @option params [String] :id the service to use
   def new
     if params[:id] == 'Dropbox'
       if current_user.dropbox_connection.nil? or !current_user.dropbox_connection.completed
