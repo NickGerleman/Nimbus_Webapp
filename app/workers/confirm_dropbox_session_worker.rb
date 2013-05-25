@@ -4,7 +4,7 @@ class ConfirmDropboxSessionWorker
   include Sidekiq::Worker
 
   def perform(user_id)
-    user = User.fin user_id
+    user = User.find user_id
     serialized_session = user.dropbox_connection.session
     session = DropboxSession.deserialize serialized_session
     token = session.get_access_token

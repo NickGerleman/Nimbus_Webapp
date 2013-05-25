@@ -20,6 +20,7 @@ class ServicesController < ApplicationController
   # @option params [String] :id the service to use
   def new
     if params[:id] == 'Dropbox'
+      current_user.dropbox_connection.destroy
       session = DropboxSession.new ENV['DROPBOX_APP_KEY'], ENV['DROPBOX_APP_SECRET']
       session.get_request_token
       redirect_to session.get_authorize_url url_for(controller: :services, action: :confirm, id: 'Dropbox',
