@@ -22,8 +22,13 @@ class ApplicationController < ActionController::Base
     @email = current_user.name
   end
 
+  def user_verified
+    return @verified unless @verified.nil?
+    @verified = current_user.verified
+  end
+
   def logged_in?
-    if current_user.nil? then
+    if current_user.nil?
       false
     else
       true
@@ -84,5 +89,5 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  helper_method :current_user, :user_name, :user_email, :logged_in?, :outdated_browser?
+  helper_method :current_user, :user_name, :user_email, :user_verified, :logged_in?, :outdated_browser?
 end
