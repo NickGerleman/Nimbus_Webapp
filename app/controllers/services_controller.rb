@@ -1,3 +1,4 @@
+require 'dropbox_sdk'
 ACCESS_TYPE = :dropbox
 
 class ServicesController < ApplicationController

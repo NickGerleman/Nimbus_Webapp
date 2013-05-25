@@ -1,3 +1,5 @@
+require 'dropbox_sdk'
+
 class ConfirmDropboxSessionWorker
   include Sidekiq::Worker
 
