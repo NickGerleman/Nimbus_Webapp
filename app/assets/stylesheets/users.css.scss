@@ -1,18 +1,11 @@
 //Show Page
-@media only screen and (min-width: "768px") {
-  #gravatar {
-    float: left;
-    margin-right: 30px;
-  }
+#gravatar {
+  float: left;
+  margin-right: 30px;
 }
 
-@media only screen and (max-width: "767px") {
-  #gravatar {
-    float: right;
-    height: 100px;
-    width: 100px;
-  }
-
+#services {
+  margin-top: 20px;
 }
 
 //Login Box
