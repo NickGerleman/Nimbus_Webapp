@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   #
   # @param [Hash] params form parameters
   def create
-    @user = User.new params[:user]
+    @user = User.new user_params
     respond_to do |format|
       if Rails.env.test?
         @user.save
@@ -64,5 +64,11 @@ class UsersController < ApplicationController
 
   def settings
 
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:email, :email_confirmation, :name, :password, :password_confirmation)
   end
 end
