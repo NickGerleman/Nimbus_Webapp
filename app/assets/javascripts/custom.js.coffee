@@ -17,7 +17,14 @@ adjust_footer = ->
 
 init_popups = ->
   popup = $('.ajax-popup')
-  popup.magnificPopup({ mainClass: 'modal', type: 'ajax', tLoading: '', removalDelay: 200, closeBtnInside: true})
+  popup.magnificPopup({
+    mainClass: 'modal',
+    type: 'ajax',
+    preloader: false,
+    removalDelay: 200,
+    closeBtnInside: true,
+
+  })
   popup.on 'mfpUpdateStatus', ->
     max_height = 0
     footer = $('.popup footer')
