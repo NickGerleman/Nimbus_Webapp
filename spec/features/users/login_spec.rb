@@ -241,7 +241,7 @@ describe 'invalid_password', js: true do
   before :each do
     num = rand(100000)
     visit login_path
-    click_link 'Register'
+    click_link 'register-button'
     fill_in 'Name', with: 'Bob'
     fill_in 'user_email', exact: true, with: "#{num}@example.com"
     fill_in 'Confirm Email Address', with: "#{num}@example.com"
