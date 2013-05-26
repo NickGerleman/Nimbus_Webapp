@@ -26,7 +26,11 @@
             $.magnificPopup.open({
                 items: {
                     src: '#warning',
-                    type: 'inline'
+                    type: 'inline',
+                    mainClass: 'modal',
+                    tLoading: '',
+                    removalDelay: 200,
+                    closeBtnInside: true
                 }
             });
         });
