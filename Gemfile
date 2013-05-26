@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '1.9.3'
+ruby '2.0.0'
 gem 'rails', '3.2.13'
 gem 'rack-cache', require: 'rack/cache'
 gem 'bcrypt-ruby'
@@ -25,7 +25,7 @@ group :test do
   gem 'capybara', '>= 2.1.0'
   gem 'spork-rails'
   gem 'rb-inotify'
-  gem 'capybara-webkit', '~> 1.0.0'
+  gem 'capybara-webkit', '>= 1.0.0'
   gem 'database_cleaner'
 end
 
