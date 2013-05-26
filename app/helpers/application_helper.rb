@@ -68,8 +68,7 @@ module ApplicationHelper
   # @raise [RuntimeError] if there is no current user
   def user_name
     raise 'No user' unless logged_in?
-    return @name unless @name.blank?
-    @name = current_user.name
+    @name ||= current_user.name
   end
 
   # The email address of the current user
@@ -77,8 +76,7 @@ module ApplicationHelper
   # @raise [RuntimeError] if there is no current user
   def user_email
     raise 'No user' unless logged_in?
-    return @email unless @email.blank?
-    @email = current_user.name
+    @email ||= current_user.name
   end
 
   # Whether the user has verified their email address
@@ -86,8 +84,7 @@ module ApplicationHelper
   # @raise [RuntimeError] if there is no current user
   def user_verified
     raise 'No user' unless logged_in?
-    return @verified unless @verified.nil?
-    @verified = current_user.verified
+    @verified ||= current_user.verified
   end
 
 
