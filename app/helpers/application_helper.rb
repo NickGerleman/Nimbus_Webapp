@@ -13,9 +13,7 @@ module ApplicationHelper
     token = session[:session_token]
     token = cookies[:session_token] unless cookies[:session_token].blank?
     return nil if token.blank?
-    session = Session.find_by_token token
-    return nil if session.nil?
-    @user = session.user
+    @user = Session.get_user token
   end
 
   #whether the browser is outdated
