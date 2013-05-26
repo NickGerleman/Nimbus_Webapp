@@ -8,6 +8,7 @@ module ApplicationHelper
 
   #whether the browser is outdated
   def outdated_browser?
+    return false if Rails.env.test?
     #cache results in the session cookie in order to avoid needless recomputation on every visit
     return true if session[:outdated]
     return false if session[:modern]
