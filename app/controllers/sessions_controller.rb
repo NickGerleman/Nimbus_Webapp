@@ -2,7 +2,6 @@ class SessionsController < ApplicationController
 
   # Create a new session
   #
-  # @param [Hash] params paramters given in POST
   # @option params [String] :email the user's email address
   # @option params [String] :password the user's password
 def create

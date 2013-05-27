@@ -1,8 +1,6 @@
 class UsersController < ApplicationController
 
   # Create a new user and send a verification email
-  #
-  # @param [Hash] params form parameters
   def create
     @user = User.new user_params
     respond_to do |format|
@@ -32,7 +30,6 @@ class UsersController < ApplicationController
 
   # Delete the current user if authentication successful, otherwise show errors
   #
-  # @param [Hash] params parameters given by POST
   # @option params [String] :password the password of the current user
   def destroy
     user = current_user
@@ -50,7 +47,6 @@ class UsersController < ApplicationController
 
   # Verifies the email address of a user
   #
-  # @param [Hash] params parameters provided by url
   # @option params [String] :id the emailed verification token
   def verify
     id = params[:id]

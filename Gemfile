@@ -10,13 +10,16 @@ gem 'jquery-rails'
 gem 'clockwork'
 gem 'redis'
 gem 'sidekiq'
-gem 'puma'
 gem 'agent_orange'
 gem 'dropbox-sdk'
 gem 'sass-rails', '~> 4.0.0.rc1'
 gem 'uglifier', '>= 2.1.1'
 gem 'zurb-foundation', '~> 4.0.0'
 gem 'magnific-popup-rails'
+
+platform :ruby do
+  gem 'puma'
+end
 
 group :test, :development do
   gem 'sqlite3'

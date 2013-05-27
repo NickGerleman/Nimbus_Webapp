@@ -5,7 +5,6 @@ class ServicesController < ApplicationController
 
   # Gets and stores access tokens after the user has allowed access
   #
-  # @param [Hash] params Parameters Given
   # @option params [String] :id the service to use
   def confirm
     redirect_to root_path
@@ -16,7 +15,6 @@ class ServicesController < ApplicationController
 
   # Creates initial session and redirects user to authorize use
   #
-  # @param [Hash] params Parameters Given
   # @option params [String] :id the service to use
   def new
     if params[:id] == 'Dropbox'
