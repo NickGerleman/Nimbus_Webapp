@@ -1,6 +1,16 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  def default_url_options(opts={})
+    ENV['host'] = '127.0.0.1:3000' if ENV['host'].blank?
+    Rails.env.production? ? protocol = 'https' : protocol = 'http'
+    opts.merge(
+        {
+            protocol: protocol,
+            host: ENV['host']
+        })
+  end
+
   # The object representing the current user or nil if no user is logged in
   def current_user
     return @user unless @user.nil?

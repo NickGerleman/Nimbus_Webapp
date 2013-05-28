@@ -1,2 +1,14 @@
 <h4>Dropbox:</h4>
-<%= state(:dropbox) %>
+<% case state(:dropbox)
+     when :none %>
+    <p>No Account Connected (<%= link_to 'Connect One Now', controller: :services, action: :new, id: 'Dropbox' %>)</p>
+<% when :in_progress %>
+    <p>Connecting Your Account, Please Wait...</p>
+<% when :error %>
+    <p>Error Connecting Your Account, Your Token May Have Expired (<%= link_to 'Try Again?', controller: :services,
+                                                                               action: :new, id: 'Dropbox' %>)</p>
+<% when :success %>
+    <p>Connected</p>
+<% else
+     raise 'Invalid State'
+   end %>
