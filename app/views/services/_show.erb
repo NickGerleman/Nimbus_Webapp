@@ -1,14 +1,30 @@
-<h4>Dropbox:</h4>
-<% case state(:dropbox)
-     when 'none' %>
-    <p>No Account Connected (<%= link_to 'Connect One Now', controller: :services, action: :new, id: 'Dropbox' %>)</p>
-<% when 'in_progress' %>
-    <p>Connecting Your Account, Please Wait...</p>
-<% when 'error' %>
-    <p>Error Connecting Your Account, Your Token May Have Expired (<%= link_to 'Try Again?', controller: :services,
-                                                                               action: :new, id: 'Dropbox' %>)</p>
-<% when 'success' %>
-    <p>Connected</p>
-<% else
-     raise 'Invalid State'
-   end %>
+<% [{name: 'Dropbox', key: :dropbox}, {name: 'Google Drive', key: :google}].each do |service| %>
+    <h4><%= service[:name] + ':' %></h4>
+    <% case state(service[:key])
+         when 'none' %>
+        <p>
+            No Account Connected (<%= link_to 'Connect One Now', controller: :services, action: :new,
+                                              id: service[:key] %>)
+        </p>
+    <% when 'in_progress' %>
+        <p>
+            Connecting Your Account, Please Wait...
+        </p>
+    <% when 'error' %>
+        <p>
+            Error Connecting Your Account
+            (<%= link_to 'Try Again?', controller: :services, action: :new, id: service[:key] %>)
+        </p>
+    <% when 'expired' %>
+        <p>
+            Your Session Has Expired
+            (<%= link_to 'Reconnect', controller: :services, action: :new, id: service[:key] %>)
+        </p>
+    <% when 'success' %>
+        <p>
+            Connected
+        </p>
+    <% else
+         raise 'Invalid State'
+       end
+       end %>

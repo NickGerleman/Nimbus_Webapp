@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_many :sessions
   has_one :dropbox_connection
+  has_one :google_connection
   has_secure_password
 
   before_create do |user|

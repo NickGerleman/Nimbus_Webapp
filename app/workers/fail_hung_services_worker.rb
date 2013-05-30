@@ -1,8 +1,8 @@
-class FailDropboxConnectionsWorker
+class FailHungServicesWorker
   include Sidekiq::Worker
 
   def perform
-    DropboxConnection.hung.each do |c|
+    DropboxConnection.hung.joins(GoogleConnection.hung).each do |c|
       c.update_attribute :state, 'error'
     end
   end

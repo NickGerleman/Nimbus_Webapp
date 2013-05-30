@@ -11,17 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130530093615) do
+ActiveRecord::Schema.define(version: 20130530194204) do
 
   create_table "dropbox_connections", force: true do |t|
     t.integer  "user_id"
     t.string   "session"
-    t.datetime "created_at",   null: false
+    t.datetime "created_at"
     t.string   "state"
-    t.string   "access_token"
   end
 
   add_index "dropbox_connections", ["state"], name: "index_dropbox_connections_on_state"
+
+  create_table "google_connections", force: true do |t|
+    t.string   "auth_key"
+    t.string   "refresh_key"
+    t.string   "state"
+    t.datetime "created_at"
+    t.integer  "user_id"
+  end
+
+  add_index "google_connections", ["state"], name: "index_google_connections_on_state"
 
   create_table "sessions", force: true do |t|
     t.string   "token"
@@ -29,13 +38,14 @@ ActiveRecord::Schema.define(version: 20130530093615) do
     t.integer  "user_id"
   end
 
-  add_index "sessions", ["token", "expiration"], name: "index_sessions_on_token_and_expiration"
+  add_index "sessions", ["expiration"], name: "index_sessions_on_expiration"
+  add_index "sessions", ["token"], name: "index_sessions_on_token"
 
   create_table "users", force: true do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "password_digest"
     t.boolean  "verified"
     t.string   "email_token"
