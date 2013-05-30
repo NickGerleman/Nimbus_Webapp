@@ -9,36 +9,39 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130525141248) do
+ActiveRecord::Schema.define(version: 20130530093615) do
 
-  create_table "dropbox_connections", :force => true do |t|
+  create_table "dropbox_connections", force: true do |t|
     t.integer  "user_id"
     t.string   "session"
-    t.datetime "created_at", :null => false
-    t.boolean  "completed"
+    t.datetime "created_at",   null: false
+    t.string   "state"
+    t.string   "access_token"
   end
 
-  create_table "sessions", :force => true do |t|
+  add_index "dropbox_connections", ["state"], name: "index_dropbox_connections_on_state"
+
+  create_table "sessions", force: true do |t|
     t.string   "token"
     t.datetime "expiration"
     t.integer  "user_id"
   end
 
-  add_index "sessions", ["token", "expiration"], :name => "index_sessions_on_token_and_expiration"
+  add_index "sessions", ["token", "expiration"], name: "index_sessions_on_token_and_expiration"
 
-  create_table "users", :force => true do |t|
+  create_table "users", force: true do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.string   "password_digest"
     t.boolean  "verified"
     t.string   "email_token"
   end
 
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["email_token"], :name => "index_users_on_email_token"
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["email_token"], name: "index_users_on_email_token"
 
 end

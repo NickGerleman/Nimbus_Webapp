@@ -3,7 +3,7 @@ class FailDropboxConnectionsWorker
 
   def perform
     DropboxConnection.hung.each do |c|
-      c.update_attribute :completed, false
+      c.update_attribute :state, 'error'
     end
   end
 end

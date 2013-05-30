@@ -1,22 +1,11 @@
 module ServicesHelper
 
   def state(service)
-    user = current_user
     case service
       when :dropbox
-        if user.dropbox_connection.nil?
-          return :none
-        end
-        if user.dropbox_connection.completed.nil?
-          return :in_progress
-        end
-        if user.dropbox_connection.completed
-          return :success
-        else
-          return :error
-        end
+        current_user.dropbox_connection.state.nil? ? 'none' : current_user.dropbox_connection.state
       else
-        raise ArgumentError
+        raise 'Invalid Service'
     end
   end
 end

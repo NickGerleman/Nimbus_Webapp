@@ -1,4 +1,4 @@
 class DropboxConnection < ActiveRecord::Base
   belongs_to :user
-  scope :hung, -> { where('completed IS null AND created_at < ?', Time.current.ago(5.minutes)) }
+  scope :hung, -> { where('state IS ? AND created_at < ?', 'in_progress', Time.current.ago(5.minutes)) }
 end

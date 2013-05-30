@@ -9,10 +9,10 @@ class ConfirmDropboxSessionWorker
     session = DropboxSession.deserialize serialized_session
     token = session.get_access_token
     if token.nil?
-      user.dropbox_connection.update_attribute :completed, false
+      user.dropbox_connection.update_attribute :state, 'error'
     end
     serialized_session = session.serialize
     user.dropbox_connection.update_attribute :session, serialized_session
-    user.dropbox_connection.update_attribute :completed, true
+    user.dropbox_connection.update_attribute :state, 'success'
   end
 end
