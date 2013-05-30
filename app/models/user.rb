@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
     user.email_token = SecureRandom.urlsafe_base64 32, false
   end
 
-  scope :old_unverified, -> { where('verified = ? AND created_at < ?', false, Time.current.ago(1.week)) }
+  scope :old_unverified, -> { where('verified = ? AND created_at < ?', false, Time.now.ago(1.week)) }
 
   #Taken from Rails Tutorial
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

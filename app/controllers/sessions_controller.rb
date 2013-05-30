@@ -13,10 +13,10 @@ def create
           user.sessions.first.destroy
         end
         if params[:remember]
-          user.sessions.create token: token, expiration: DateTime.current.advance(months: 1)
+          user.sessions.create token: token, expiration: Time.now.advance(months: 1)
           cookies[:session_token] = {value: token, expires_in: 1.month, secure: Rails.env.production?}
         else
-          user.sessions.create token: token, expiration: DateTime.current.advance(hours: 1)
+          user.sessions.create token: token, expiration: Time.now.advance(hours: 1)
           session[:session_token] = token
         end
         format.js
