@@ -35,6 +35,7 @@ class ServicesController < ApplicationController
         client.authorization.scope = 'https://www.googleapis.com/auth/drive'
         uri = client.authorization.authorization_uri
         redirect_to uri.to_s
+        current_user.create_google_connection state: 'in_progress'
       else
         raise 'Invalid Service'
     end
