@@ -30,7 +30,7 @@ class ServicesController < ApplicationController
         session.get_request_token
         redirect_to session.get_authorize_url url_for(controller: :services, action: :confirm, id: 'dropbox',
                                                       only_path: false)
-        current_user.create_dropbox_connection session: Marshal.dump(session), state: 'in_progress'
+        current_user.create_dropbox_connection session: session.serialize, state: 'in_progress'
       when 'google'
         client = Google::APIClient.new
         client.authorization.client_id = ENV['GOOGLE_CLIENT_ID']
