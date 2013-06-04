@@ -11,11 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130530194204) do
+ActiveRecord::Schema.define(version: 20130604091703) do
 
   create_table "dropbox_connections", force: true do |t|
     t.integer  "user_id"
-    t.string   "session"
+    t.binary   "session",    limit: 255
     t.datetime "created_at"
     t.string   "state"
   end
@@ -23,11 +23,10 @@ ActiveRecord::Schema.define(version: 20130530194204) do
   add_index "dropbox_connections", ["state"], name: "index_dropbox_connections_on_state"
 
   create_table "google_connections", force: true do |t|
-    t.string   "auth_key"
-    t.string   "refresh_key"
     t.string   "state"
     t.datetime "created_at"
     t.integer  "user_id"
+    t.binary   "session",    limit: 255
   end
 
   add_index "google_connections", ["state"], name: "index_google_connections_on_state"

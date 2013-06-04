@@ -9,8 +9,13 @@ class ServicesController < ApplicationController
   # @option params [String] :id the service to use
   def confirm
     redirect_to root_path
-    if params[:id]== 'dropbox'
-      ConfirmDropboxSessionWorker.perform_async current_user.id
+    case params[:id]
+      when 'dropbox'
+        ConfirmDropboxSessionWorker.perform_async current_user.id
+      when 'google'
+        ConfirmGoogleSessionWorker.perform_async current_user.id, params[:code]
+      else
+        raise 'Invalid Service'
     end
   end
 
@@ -25,7 +30,7 @@ class ServicesController < ApplicationController
         session.get_request_token
         redirect_to session.get_authorize_url url_for(controller: :services, action: :confirm, id: 'dropbox',
                                                       only_path: false)
-        current_user.create_dropbox_connection session: session.serialize, state: 'in_progress'
+        current_user.create_dropbox_connection session: Marshal.dump(session), state: 'in_progress'
       when 'google'
         client = Google::APIClient.new
         client.authorization.client_id = ENV['GOOGLE_CLIENT_ID']
@@ -35,7 +40,8 @@ class ServicesController < ApplicationController
         client.authorization.scope = 'https://www.googleapis.com/auth/drive'
         uri = client.authorization.authorization_uri
         redirect_to uri.to_s
-        current_user.create_google_connection state: 'in_progress'
+        serialized_session=Marshal.dump(client)
+        current_user.create_google_connection session: serialized_session ,state: 'in_progress'
       else
         raise 'Invalid Service'
     end
