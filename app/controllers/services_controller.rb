@@ -11,9 +11,17 @@ class ServicesController < ApplicationController
     redirect_to root_path
     case params[:id]
       when 'dropbox'
-        ConfirmDropboxSessionWorker.perform_async current_user.id
+        if params[:not_approved]
+          current_user.dropbox_connection.update_attribute :state, 'error'
+        else
+          ConfirmDropboxSessionWorker.perform_async current_user.id
+        end
       when 'google'
-        ConfirmGoogleSessionWorker.perform_async current_user.id, params[:code]
+        if params[:code].nil?
+          current_user.google_connection.update_attribute :state, 'error'
+        else
+          ConfirmGoogleSessionWorker.perform_async current_user.id, params[:code]
+        end
       else
         raise 'Invalid Service'
     end
@@ -41,7 +49,7 @@ class ServicesController < ApplicationController
         uri = client.authorization.authorization_uri
         redirect_to uri.to_s
         serialized_session=Marshal.dump(client)
-        current_user.create_google_connection session: serialized_session ,state: 'in_progress'
+        current_user.create_google_connection session: serialized_session, state: 'in_progress'
       else
         raise 'Invalid Service'
     end
