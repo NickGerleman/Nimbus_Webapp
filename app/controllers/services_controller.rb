@@ -1,12 +1,8 @@
-require 'google/api_client'
-require 'dropbox_sdk'
-ACCESS_TYPE = :dropbox
+require 'signet/oauth_1/client'
+require 'signet/oauth_2/client'
 
 class ServicesController < ApplicationController
 
-  # Gets and stores access tokens after the user has allowed access
-  #
-  # @option params [String] :id the service to use
   def confirm
     redirect_to root_path
     case params[:id]
@@ -34,25 +30,30 @@ class ServicesController < ApplicationController
     case params[:id]
       when 'dropbox'
         current_user.dropbox_connection.destroy unless current_user.dropbox_connection.nil?
-        session = DropboxSession.new ENV['DROPBOX_APP_KEY'], ENV['DROPBOX_APP_SECRET']
-        session.get_request_token
-        redirect_to session.get_authorize_url url_for(controller: :services, action: :confirm, id: 'dropbox',
-                                                      only_path: false)
-        current_user.create_dropbox_connection session: session.serialize, state: 'in_progress'
+        client = Signet::OAuth1::Client.new(
+            client_credential_key: ENV['DROPBOX_APP_KEY'],
+            client_credential_secret: ENV['DROPBOX_APP_SECRET'],
+            temporary_credential_uri: 'https://api.dropbox.com/1/oauth/request_token',
+            authorization_uri: 'https://api.dropbox.com/1/oauth/authorize',
+            token_credential_uri: 'https://api.dropbox.com/1/oauth/access_token',
+            callback: url_for(controller: :services, action: :confirm, id: 'dropbox', only_path: false)
+        )
+        client.fetch_request_token!
+        current_user.create_dropbox_connection(session: client, state: 'in_progress')
       when 'google'
-        client = Google::APIClient.new
-        client.authorization.client_id = ENV['GOOGLE_CLIENT_ID']
-        client.authorization.client_secret = ENV['GOOGLE_CLIENT_SECRET']
-        client.authorization.redirect_uri = url_for(controller: :services, action: :confirm, id: 'google',
-                                                    only_path: false)
-        client.authorization.scope = 'https://www.googleapis.com/auth/drive'
-        uri = client.authorization.authorization_uri
-        redirect_to uri.to_s
-        serialized_session=Marshal.dump(client)
-        current_user.create_google_connection session: serialized_session, state: 'in_progress'
+        current_user.google_connection.destroy unless current_user.google_connection.nil?
+        client = Signet::OAuth2::Client.new(
+            token_credential_uri: 'https://accounts.google.com/o/oauth2/token',
+            authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
+            client_id: ENV['GOOGLE_CLIENT_ID'],
+            client_secret: ENV['GOOGLE_CLIENT_SECRET'],
+            scope: 'https://www.googleapis.com/auth/drive',
+            redirect_uri: url_for(controller: :services, action: :confirm, id: 'google', only_path: false)
+        )
+        current_user.create_google_connection(session: client, state: 'in_progress')
       else
         raise 'Invalid Service'
     end
-
+    redirect_to client.authorization_uri.to_s
   end
 end

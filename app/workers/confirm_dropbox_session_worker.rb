@@ -1,14 +1,12 @@
-require 'dropbox_sdk'
+require 'signet/oauth_1/client'
 
 class ConfirmDropboxSessionWorker
   include Sidekiq::Worker
 
   def perform(user_id)
-    user = User.find user_id
-    serialized_session = user.dropbox_connection.session
-    session = DropboxSession.deserialize serialized_session
-    serialized_session = session.serialize
-    user.dropbox_connection.update_attribute :session, serialized_session
-    user.dropbox_connection.update_attribute :state, 'success'
+    connection = User.find(user_id).dropbox_connection
+    client = connection.session
+    client.fetch_access_token! verifier: client.request_token_secret
+    connection.update_attributes session: client, state: 'success'
   end
 end
