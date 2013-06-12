@@ -1,5 +1,3 @@
-require 'signet/oauth_1/client'
-
 class ConfirmDropboxSessionWorker
   include Sidekiq::Worker
 

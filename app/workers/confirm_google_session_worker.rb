@@ -1,5 +1,3 @@
-require 'signet/oauth_2/client'
-
 class ConfirmGoogleSessionWorker
   include Sidekiq::Worker
 

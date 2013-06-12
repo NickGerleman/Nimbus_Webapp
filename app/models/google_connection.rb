@@ -1,5 +1,3 @@
-require 'signet/oauth_2/client'
-
 class GoogleConnection < ActiveRecord::Base
   belongs_to :user
   serialize :session, Signet::OAuth2::Client

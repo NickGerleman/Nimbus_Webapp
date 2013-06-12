@@ -1,5 +1,3 @@
-require 'signet/oauth_1/client'
-
 class DropboxConnection < ActiveRecord::Base
   belongs_to :user
   serialize :session, Signet::OAuth1::Client

@@ -1,6 +1,3 @@
-require 'signet/oauth_1/client'
-require 'signet/oauth_2/client'
-
 class ServicesController < ApplicationController
 
   def confirm
