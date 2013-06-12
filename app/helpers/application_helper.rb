@@ -1,4 +1,5 @@
 module ApplicationHelper
+
   # The page title created from a title suffix
   def title(title_suffix)
     title_base='Nimbus'

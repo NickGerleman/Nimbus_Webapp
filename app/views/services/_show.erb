@@ -1,30 +1,31 @@
 <% [{name: 'Dropbox', key: :dropbox}, {name: 'Google Drive', key: :google}].each do |service| %>
     <h4><%= service[:name] + ':' %></h4>
-    <% case state(service[:key])
-         when 'none' %>
+    <% state = state(service[:key])
+       case state
+         when :none %>
         <p>
             No Account Connected (<%= link_to 'Connect One Now', controller: :services, action: :new,
                                               id: service[:key] %>)
         </p>
-    <% when 'in_progress' %>
+    <% when :in_progress %>
         <p>
             Connecting Your Account, Please Wait...
         </p>
-    <% when 'error' %>
+    <% when :error %>
         <p>
             Error Connecting Your Account
             (<%= link_to 'Try Again?', controller: :services, action: :new, id: service[:key] %>)
         </p>
-    <% when 'expired' %>
+    <% when :expired %>
         <p>
             Your Session Has Expired
             (<%= link_to 'Reconnect', controller: :services, action: :new, id: service[:key] %>)
         </p>
-    <% when 'success' %>
+    <% when :success %>
         <p>
             Connected
         </p>
     <% else
-         raise 'Invalid State'
+         raise "Invalid State (was #{state})"
        end
        end %>

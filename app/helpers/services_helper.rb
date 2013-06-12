@@ -3,9 +3,11 @@ module ServicesHelper
   def state(service)
     case service
       when :dropbox
-        current_user.dropbox_connection.nil? ? 'none' : current_user.dropbox_connection.state
+        connection = current_user.dropbox_connection
+        @dropbox_state ||= connection.nil? ? :none : connection.state.to_sym
       when :google
-        current_user.google_connection.nil? ? 'none' : current_user.google_connection.state
+        connection = current_user.google_connection
+        @google_state ||= connection.nil? ? :none : connection.state.to_sym
       else
         raise 'Invalid Service'
     end
