@@ -1,7 +1,7 @@
 class StaticPagesController < ApplicationController
 
   def home
-    if logged_in?
+    if current_user
       render 'users/show'
     else
       render 'home'
