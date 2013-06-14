@@ -1,8 +1,8 @@
 class ConfirmGoogleSessionWorker
   include Sidekiq::Worker
 
-  def perform(user_id, code)
-    connection = User.find(user_id).google_connection
+  def perform(connection_id, code)
+    connection = GoogleConnection.find(connection_id)
     client = connection.session
     client.code=code
     client.fetch_access_token!
