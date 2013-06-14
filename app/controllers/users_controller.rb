@@ -49,8 +49,7 @@ class UsersController < ApplicationController
   #
   # @option params [String] :id the emailed verification token
   def verify
-    id = params[:id]
-    user = User.find_by_email_token id
+    user = User.find_by_email_token(params[:token])
     if user.nil?
       flash.now[:incorrect]=true
     else

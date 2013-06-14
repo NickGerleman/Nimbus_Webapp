@@ -8,9 +8,9 @@ NimbusWebapp::Application.routes.draw do
   get '/user', to: 'users#show'
   get '/user/delete', to: 'users#delete'
   get '/settings', to: 'users#settings'
-  get '/verify/:id', to: 'users#verify'
-  get '/services/new/:id', to: 'services#new'
-  get '/services/confirm/:id', to: 'services#confirm'
+  get '/verify/:token', to: 'users#verify'
+  get '/services/confirm/:service', to: 'services#confirm'
+  resource :services, only: [:new]
   resource :users, only: [:create, :show, :new, :destroy]
   resource :sessions, only: [:create, :destroy]
 

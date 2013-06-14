@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   has_many :sessions
-  has_one :dropbox_connection
-  has_one :google_connection
+  has_many :dropbox_connections
+  has_many :google_connections
   has_secure_password
 
   before_create do |user|
@@ -24,5 +24,9 @@ class User < ActiveRecord::Base
   def verify
     update_attribute 'verified', true
     update_attribute 'email_token', nil
+  end
+
+  def connections
+    self.dropbox_connections + self.google_connections
   end
 end

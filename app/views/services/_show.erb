@@ -1,11 +1,10 @@
-<% [{name: 'Dropbox', key: :dropbox}, {name: 'Google Drive', key: :google}].each do |service| %>
-    <h4><%= service[:name] + ':' %></h4>
-    <% state = state(service[:key])
-       case state
+<% (current_user.connections).each do |connection| %>
+    <h4><%= connection.service_name + ':' %></h4>
+    <% case connection.state.to_sym
          when :none %>
         <p>
             No Account Connected (<%= link_to 'Connect One Now', controller: :services, action: :new,
-                                              id: service[:key] %>)
+                                              service: connection.short_service_name %>)
         </p>
     <% when :in_progress %>
         <p>
@@ -14,12 +13,13 @@
     <% when :error %>
         <p>
             Error Connecting Your Account
-            (<%= link_to 'Try Again?', controller: :services, action: :new, id: service[:key] %>)
+            (<%= link_to 'Try Again?', controller: :services, action: :new, service: connection.short_service_name,
+                         id: connection.id %>)
         </p>
     <% when :expired %>
         <p>
             Your Session Has Expired
-            (<%= link_to 'Reconnect', controller: :services, action: :new, id: service[:key] %>)
+            (<%= link_to 'Reconnect', controller: :services, action: :new, service: connection.short_service_name %>)
         </p>
     <% when :success %>
         <p>
