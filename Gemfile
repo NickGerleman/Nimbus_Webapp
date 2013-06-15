@@ -16,10 +16,8 @@ gem 'sass-rails', '~> 4.0.0.rc2'
 gem 'uglifier', '>= 2.1.1'
 gem 'zurb-foundation', '~> 4.2.2'
 gem 'magnific-popup-rails', '>= 0.8.9'
-
-platform :ruby do
-  gem 'puma'
-end
+gem 'puma'
+gem 'draper'
 
 group :test, :development do
   gem 'sqlite3'
@@ -35,6 +33,5 @@ group :test do
 end
 
 group :production do
-  gem 'pg'
   gem 'newrelic_rpm'
 end

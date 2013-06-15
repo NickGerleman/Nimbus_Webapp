@@ -51,7 +51,7 @@ module ApplicationHelper
           false
         end
       when 'Safari'
-        if version < 4
+        if version < 4.1
           session[:outdated] = true
           true
         else

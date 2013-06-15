@@ -18,7 +18,7 @@ class ServicesController < ApplicationController
           ConfirmGoogleSessionWorker.perform_async connection.id, params[:code]
         end
       else
-        raise 'Invalid Service'
+        render file: 'public/404.html', layout: false
     end
   end
 
@@ -64,7 +64,7 @@ class ServicesController < ApplicationController
             client.redirect_uri = url_for(controller: :services, action: :confirm, service: 'google',
                                           only_path: false, id: connection.id)
           else
-            raise 'Invalid Service'
+            render file: 'public/404.html', layout: false
         end
         redirect_to client.authorization_uri.to_s
           #render error page if user tries to use connection that doesn't belong to them

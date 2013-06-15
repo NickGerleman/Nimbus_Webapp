@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_many :sessions
+  has_many :connections
   has_many :dropbox_connections
   has_many :google_connections
   has_secure_password
@@ -26,7 +27,4 @@ class User < ActiveRecord::Base
     update_attribute 'email_token', nil
   end
 
-  def connections
-    self.dropbox_connections + self.google_connections
-  end
 end

@@ -11,25 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130607230546) do
+ActiveRecord::Schema.define(version: 20130614112617) do
 
-  create_table "dropbox_connections", force: true do |t|
-    t.integer  "user_id"
-    t.text     "session",    limit: 255
-    t.datetime "created_at"
+  create_table "connections", force: true do |t|
+    t.string   "type"
     t.string   "state"
-  end
-
-  add_index "dropbox_connections", ["state"], name: "index_dropbox_connections_on_state"
-
-  create_table "google_connections", force: true do |t|
-    t.string   "state"
-    t.datetime "created_at"
+    t.text     "session"
     t.integer  "user_id"
-    t.text     "session",    limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
-
-  add_index "google_connections", ["state"], name: "index_google_connections_on_state"
 
   create_table "sessions", force: true do |t|
     t.string   "token"

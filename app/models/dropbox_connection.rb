@@ -1,7 +1,5 @@
-class DropboxConnection < ActiveRecord::Base
-  belongs_to :user
+class DropboxConnection < Connection
   serialize :session, Signet::OAuth1::Client
-  scope :hung, -> { where('state = ? AND created_at < ?', 'in_progress', Time.now.ago(2.minutes)) }
 
   def service_name
     'Dropbox'
