@@ -17,7 +17,6 @@ gem 'uglifier', '>= 2.1.1'
 gem 'zurb-foundation', '~> 4.2.2'
 gem 'magnific-popup-rails', '>= 0.8.9'
 gem 'puma'
-gem 'draper'
 
 group :test, :development do
   gem 'sqlite3'

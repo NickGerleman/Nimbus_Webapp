@@ -27,7 +27,7 @@ class ServicesController < ApplicationController
 
   # Creates initial session and redirects user to authorize use
   def new
-    if current_user.connections.count > 5
+    if current_user.has_max_connections
       render file: 'public/500.html', layout: false
     else
         connection = current_user.connections.find(params[:id]) if params[:id]

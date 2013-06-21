@@ -27,4 +27,8 @@ class User < ActiveRecord::Base
     update_attribute 'email_token', nil
   end
 
+  def has_max_connections
+    self.connections.count >= 5
+  end
+
 end

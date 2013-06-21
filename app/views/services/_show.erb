@@ -1,11 +1,5 @@
-<% (current_user.connections).each do |connection| %>
-    <h4><%= connection.service_name + ':' %></h4>
-    <% case connection.state.to_sym
-         when :none %>
-        <p>
-            No Account Connected (<%= link_to 'Connect One Now', controller: :services, action: :new,
-                                              service: connection.short_service_name %>)
-        </p>
+<% decorate_connection = ->(connection) do %>
+    <% case connection.state.to_sym %>
     <% when :in_progress %>
         <p>
             Connecting Your Account, Please Wait...
@@ -28,4 +22,18 @@
     <% else
          raise "Invalid State (was #{state})"
        end
-       end %>
+    end
+%>
+
+<% new_connection = ->(name) do %>
+    <p>
+        <%= link_to 'Create New Connection', controller: :services, action: :new, service: name %>
+    </p>
+<% end %>
+<% max_connections = current_user.has_max_connections %>
+<h4>Dropbox:</h4>
+<% current_user.dropbox_connections.each &decorate_connection
+   new_connection['dropbox'] unless max_connections %>
+<h4>Google:</h4>
+<% current_user.google_connections.each &decorate_connection
+   new_connection['google'] unless max_connections %>
