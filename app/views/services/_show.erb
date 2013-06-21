@@ -40,3 +40,6 @@
 <h4>Google Drive:</h4>
 <% current_user.google_connections.each &decorate_connection
    new_connection['google'] unless max_connections %>
+<h4>SkyDrive:</h4>
+<% current_user.skydrive_connections.each &decorate_connection
+   new_connection['skydrive'] unless max_connections %>

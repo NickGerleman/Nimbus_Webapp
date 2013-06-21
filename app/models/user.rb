@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   has_many :dropbox_connections, dependent: :destroy
   has_many :google_connections, dependent: :destroy
   has_many :box_connections, dependent: :destroy
+  has_many :skydrive_connections, dependent: :destroy
 
   has_secure_password
 

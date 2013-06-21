@@ -66,6 +66,18 @@ class ServicesController < ApplicationController
                 state: connection.id.to_s,
                 redirect_uri: url_for(controller: :services, action: :authorize, only_path: false, oauth: 'oauth2')
             )
+          when 'skydrive'
+            connection = current_user.skydrive_connections.create(state: 'in_progress') unless params[:id]
+            @client = Signet::OAuth2::Client.new(
+                token_credential_uri: 'https://login.live.com/oauth20_token.srf',
+                authorization_uri: 'https://login.live.com/oauth20_authorize.srf',
+                client_id: ENV['SKYDRIVE_CLIENT_ID'],
+                client_secret: ENV['SKYDRIVE_CLIENT_SECRET'],
+                response_type: 'code',
+                scope: 'wl.offline_access',
+                state: connection.id.to_s,
+                redirect_uri: url_for(controller: :services, action: :authorize, only_path: false, oauth: 'oauth2')
+            )
           else
             render file: 'public/404.html', layout: false
             return
