@@ -55,6 +55,17 @@ class ServicesController < ApplicationController
                 state: connection.id.to_s,
                 redirect_uri: url_for(controller: :services, action: :authorize, only_path: false, oauth: 'oauth2')
             )
+          when 'box'
+            connection = current_user.box_connections.create(state: 'in_progress') unless params[:id]
+            @client = Signet::OAuth2::Client.new(
+                token_credential_uri: 'https://www.box.com/api/oauth2/token',
+                authorization_uri: 'https://www.box.com/api/oauth2/authorize',
+                client_id: ENV['BOX_CLIENT_ID'],
+                client_secret: ENV['BOX_CLIENT_SECRET'],
+                response_type: 'code',
+                state: connection.id.to_s,
+                redirect_uri: url_for(controller: :services, action: :authorize, only_path: false, oauth: 'oauth2')
+            )
           else
             render file: 'public/404.html', layout: false
             return

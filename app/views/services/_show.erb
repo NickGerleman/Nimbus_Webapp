@@ -7,12 +7,13 @@
     <% when :error %>
         <p>
             Error Connecting Your Account
-            (<%= link_to 'Try Again?', new_service_path, service: connection.short_service_name, id: connection.id %>)
+            (<%= link_to 'Try Again?', controller: :services, action: :new, service: connection.short_service_name,
+                         id: connection.id %>)
         </p>
     <% when :expired %>
         <p>
             Your Session Has Expired
-            (<%= link_to 'Reconnect', new_service_path, service: connection.short_service_name, id: connection.id %>)
+            (<%= link_to 'Reconnect', controller: :services, action: :new, service: connection.short_service_name, id: connection.id %>)
         </p>
     <% when :success %>
         <p>
@@ -30,9 +31,12 @@
     </p>
 <% end %>
 <% max_connections = current_user.has_max_connections %>
+<h4>Box:</h4>
+<% current_user.box_connections.each &decorate_connection
+   new_connection['box'] unless max_connections %>
 <h4>Dropbox:</h4>
 <% current_user.dropbox_connections.each &decorate_connection
    new_connection['dropbox'] unless max_connections %>
-<h4>Google:</h4>
+<h4>Google Drive:</h4>
 <% current_user.google_connections.each &decorate_connection
    new_connection['google'] unless max_connections %>
