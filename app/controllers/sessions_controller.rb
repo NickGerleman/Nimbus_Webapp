@@ -1,9 +1,6 @@
 class SessionsController < ApplicationController
 
   # Create a new session
-  #
-  # @option params [String] :email the user's email address
-  # @option params [String] :password the user's password
   def create
     respond_to do |format|
       user = User.find_by_email params[:email]

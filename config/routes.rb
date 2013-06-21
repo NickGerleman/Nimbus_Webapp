@@ -9,7 +9,7 @@ NimbusWebapp::Application.routes.draw do
   get '/user/delete', to: 'users#delete'
   get '/settings', to: 'users#settings'
   get '/verify', to: 'users#verify'
-  get '/services/confirm/', to: 'services#confirm'
+  get '/services/authorize/:oauth', to: 'services#authorize'
   resource :services, only: [:new]
   resource :users, only: [:create, :show, :new, :destroy]
   resource :sessions, only: [:create, :destroy]

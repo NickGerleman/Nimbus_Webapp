@@ -1,8 +1,8 @@
 class User < ActiveRecord::Base
-  has_many :sessions
-  has_many :connections
-  has_many :dropbox_connections
-  has_many :google_connections
+  has_many :sessions, dependent: :destroy
+  has_many :connections, dependent: :destroy
+  has_many :dropbox_connections, dependent: :destroy
+  has_many :google_connections, dependent: :destroy
   has_secure_password
 
   before_create do |user|
