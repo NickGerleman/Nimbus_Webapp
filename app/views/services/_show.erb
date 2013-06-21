@@ -7,13 +7,12 @@
     <% when :error %>
         <p>
             Error Connecting Your Account
-            (<%= link_to 'Try Again?', controller: :services, action: :new, service: connection.short_service_name,
-                         id: connection.id %>)
+            (<%= link_to 'Try Again?', new_service_path, service: connection.short_service_name, id: connection.id %>)
         </p>
     <% when :expired %>
         <p>
             Your Session Has Expired
-            (<%= link_to 'Reconnect', controller: :services, action: :new, service: connection.short_service_name %>)
+            (<%= link_to 'Reconnect', new_service_path, service: connection.short_service_name, id: connection.id %>)
         </p>
     <% when :success %>
         <p>

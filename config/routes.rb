@@ -10,9 +10,9 @@ NimbusWebapp::Application.routes.draw do
   get '/settings', to: 'users#settings'
   get '/verify', to: 'users#verify'
   get '/services/authorize/:oauth', to: 'services#authorize'
-  resource :services, only: [:new]
-  resource :users, only: [:create, :show, :new, :destroy]
-  resource :sessions, only: [:create, :destroy]
+  resources :services, only: [:new, :destroy]
+  resources :users, only: [:create, :show, :new, :destroy]
+  resources :sessions, only: [:create, :destroy]
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
