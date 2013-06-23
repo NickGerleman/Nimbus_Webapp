@@ -15,7 +15,7 @@ module ApplicationHelper
     version = browser.full_version.to_f
     case
       when browser.chrome?
-        if version < 4
+        if version < 5
           session[:outdated] = true
           true
         else
@@ -47,7 +47,7 @@ module ApplicationHelper
           false
         end
       when browser.safari?
-        if version < 4.1
+        if version < 5
           session[:outdated] = true
           true
         else
