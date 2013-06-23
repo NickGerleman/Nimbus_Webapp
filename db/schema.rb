@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130614112617) do
+ActiveRecord::Schema.define(version: 20130623111640) do
 
   create_table "connections", force: true do |t|
     t.string   "type"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20130614112617) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name",       default: "Unnamed Connection"
   end
 
   create_table "sessions", force: true do |t|

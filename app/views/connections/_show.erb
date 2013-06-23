@@ -1,35 +1,40 @@
+<% delete_connection = ->(id) do %>
+<%= form_tag(connection_path(id), method: :delete) {submit_tag('Delete', class: 'submit_link')} %>
+<% end %>
+
 <% decorate_connection = ->(connection) do %>
     <% case connection.state.to_sym %>
     <% when :in_progress %>
-        <p>
+        <div>
             Connecting Your Account, Please Wait...
-        </p>
+        </div>
     <% when :error %>
-        <p>
-            Error Connecting Your Account
-            (<%= link_to 'Try Again?', controller: :services, action: :new, service: connection.short_service_name,
-                         id: connection.id %>)
-        </p>
+        <div>
+            Error
+            (<%= link_to 'Try Again?', controller: :connections, action: :new, service: connection.short_service_name,
+                         id: connection.id %>) - <% delete_connection[connection.id] %>
+        </div>
     <% when :expired %>
-        <p>
+        <div>
             Your Session Has Expired
-            (<%= link_to 'Reconnect', controller: :services, action: :new, service: connection.short_service_name, id: connection.id %>)
-        </p>
+            (<%= link_to 'Reconnect', controller: :connections, action: :new, service: connection.short_service_name,
+                         id: connection.id %>) - <% delete_connection[connection.id] %>
+        </div>
     <% when :success %>
-        <p>
-            Connected
-        </p>
+        <div>
+            <%= connection.name %> - <% delete_connection[connection.id] %>
+        </div>
     <% else
          raise "Invalid State (was #{state})"
        end
-    end
-%>
+    end %>
 
 <% new_connection = ->(name) do %>
     <p>
-        <%= link_to 'Create New Connection', controller: :services, action: :new, service: name %>
+        <%= link_to 'Create New Connection', controller: :connections, action: :new, service: name %>
     </p>
 <% end %>
+
 <% max_connections = current_user.has_max_connections %>
 <h4>Box:</h4>
 <% current_user.box_connections.each &decorate_connection

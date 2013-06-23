@@ -91,6 +91,9 @@ h3 {
   p{
     margin: 0;
   }
+  form{
+    display: inline;
+  }
   h4:not(:first-child){
     margin-top: 20px;
   }

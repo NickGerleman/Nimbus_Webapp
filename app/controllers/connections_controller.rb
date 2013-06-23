@@ -1,7 +1,7 @@
-class ServicesController < ApplicationController
+class ConnectionsController < ApplicationController
 
+  #Get Ttoken after OAuth Callback
   def authorize
-    redirect_to root_path
     case params[:oauth]
       when 'oauth1'
         connection = current_user.connections.find(params[:id])
@@ -20,7 +20,18 @@ class ServicesController < ApplicationController
         end
       else
         render file: 'public/404.html', layout: false
+        return
     end
+    redirect_to root_path
+  rescue ActiveRecord::RecordNotFound
+    render file: 'public/500.html', layout: false
+  end
+
+  #Delete the Connection
+  def destroy
+    connection = current_user.connections.find(params[:id])
+    connection.destroy
+    redirect_to root_path
   rescue ActiveRecord::RecordNotFound
     render file: 'public/500.html', layout: false
   end
@@ -33,7 +44,11 @@ class ServicesController < ApplicationController
         connection = current_user.connections.find(params[:id]) if params[:id]
         case params[:service]
           when 'dropbox'
-            connection = current_user.dropbox_connections.create(state: 'in_progress') unless params[:id]
+            unless params[:id]
+              connections = current_user.dropbox_connections
+              name = "Connection #{connections.count + 1}"
+              connection = connections.create(state: 'in_progress', name: name)
+            end
             @client = Signet::OAuth1::Client.new(
                 client_credential_key: ENV['DROPBOX_APP_KEY'],
                 client_credential_secret: ENV['DROPBOX_APP_SECRET'],
@@ -42,10 +57,14 @@ class ServicesController < ApplicationController
                 token_credential_uri: 'https://api.dropbox.com/1/oauth/access_token'
             )
             @client.fetch_request_token!
-            @client.callback = url_for(controller: :services, action: :authorize, service: 'dropbox', only_path: false,
-                                      id: connection.id, oauth: 'oauth1')
+            @client.callback = url_for(controller: :connections, action: :authorize, service: 'dropbox',
+                                       only_path: false, id: connection.id, oauth: 'oauth1')
           when 'google'
-            connection = current_user.google_connections.create(state: 'in_progress') unless params[:id]
+            unless params[:id]
+              connections = current_user.google_connections
+              name = "Connection #{connections.count + 1}"
+              connection = connections.create(state: 'in_progress', name: name)
+            end
             @client = Signet::OAuth2::Client.new(
                 token_credential_uri: 'https://accounts.google.com/o/oauth2/token',
                 authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
@@ -53,10 +72,14 @@ class ServicesController < ApplicationController
                 client_secret: ENV['GOOGLE_CLIENT_SECRET'],
                 scope: 'https://www.googleapis.com/auth/drive',
                 state: connection.id.to_s,
-                redirect_uri: url_for(controller: :services, action: :authorize, only_path: false, oauth: 'oauth2')
+                redirect_uri: url_for(controller: :connections, action: :authorize, only_path: false, oauth: 'oauth2')
             )
           when 'box'
-            connection = current_user.box_connections.create(state: 'in_progress') unless params[:id]
+            unless params[:id]
+              connections = current_user.box_connections
+              name = "Connection #{connections.count + 1}"
+              connection = connections.create(state: 'in_progress', name: name)
+            end
             @client = Signet::OAuth2::Client.new(
                 token_credential_uri: 'https://www.box.com/api/oauth2/token',
                 authorization_uri: 'https://www.box.com/api/oauth2/authorize',
@@ -64,10 +87,14 @@ class ServicesController < ApplicationController
                 client_secret: ENV['BOX_CLIENT_SECRET'],
                 response_type: 'code',
                 state: connection.id.to_s,
-                redirect_uri: url_for(controller: :services, action: :authorize, only_path: false, oauth: 'oauth2')
+                redirect_uri: url_for(controller: :connections, action: :authorize, only_path: false, oauth: 'oauth2')
             )
           when 'skydrive'
-            connection = current_user.skydrive_connections.create(state: 'in_progress') unless params[:id]
+            unless params[:id]
+              connections = current_user.skydrive_connections
+              name = "Connection #{connections.count + 1}"
+              connection = connections.create(state: 'in_progress', name: name)
+            end
             @client = Signet::OAuth2::Client.new(
                 token_credential_uri: 'https://login.live.com/oauth20_token.srf',
                 authorization_uri: 'https://login.live.com/oauth20_authorize.srf',
@@ -76,7 +103,7 @@ class ServicesController < ApplicationController
                 response_type: 'code',
                 scope: 'wl.offline_access',
                 state: connection.id.to_s,
-                redirect_uri: url_for(controller: :services, action: :authorize, only_path: false, oauth: 'oauth2')
+                redirect_uri: url_for(controller: :connections, action: :authorize, only_path: false, oauth: 'oauth2')
             )
           else
             render file: 'public/404.html', layout: false
