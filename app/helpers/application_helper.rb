@@ -9,16 +9,12 @@ module ApplicationHelper
 
   #whether the browser is outdated
   def outdated_browser?
-    return false if Rails.env.test?
     #cache results in the session cookie in order to avoid needless recomputation on every visit
     return true if session[:outdated]
     return false if session[:modern]
-    user_agent = AgentOrange::UserAgent.new request.env['HTTP_USER_AGENT']
-    browser = user_agent.device.engine.browser
-    name = browser.name
-    version = browser.version.to_s.to_f
-    case name
-      when 'Chrome'
+    version = browser.full_version.to_f
+    case
+      when browser.chrome?
         if version < 4
           session[:outdated] = true
           true
@@ -26,7 +22,7 @@ module ApplicationHelper
           session[:modern] = true
           false
         end
-      when 'MSIE'
+      when browser.ie?
         if version < 10
           session[:outdated] = true
           true
@@ -34,15 +30,15 @@ module ApplicationHelper
           session[:modern] = true
           false
         end
-      when 'Opera'
-        if version < 11.6
+      when browser.opera?
+        if version < 12
           session[:outdated] = true
           true
         else
           session[:modern] = true
           false
         end
-      when 'Firefox'
+      when browser.firefox?
         if version < 4
           session[:outdated] = true
           true
@@ -50,7 +46,7 @@ module ApplicationHelper
           session[:modern] = true
           false
         end
-      when 'Safari'
+      when browser.safari?
         if version < 4.1
           session[:outdated] = true
           true

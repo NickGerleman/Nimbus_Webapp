@@ -26,10 +26,10 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     addressable (2.3.4)
-    agent_orange (0.1.6)
     arel (4.0.0)
     atomic (1.1.9)
     bcrypt-ruby (3.0.1)
+    browser (0.1.6)
     builder (3.1.4)
     capybara (2.1.0)
       mime-types (>= 1.16)
@@ -179,8 +179,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  agent_orange
   bcrypt-ruby
+  browser
   capybara (>= 2.1.0)
   capybara-webkit (>= 1.0.0)
   clockwork
