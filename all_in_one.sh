@@ -1,4 +1,4 @@
 #!/bin/sh
-bundle exec unicorn -p $PORT -c ./config/unicorn.rb &
+bundle exec puma -p $PORT -w 3 -t 0:4 &
 bundle exec clockwork lib/clock.rb &
 bundle exec sidekiq
