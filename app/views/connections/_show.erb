@@ -37,14 +37,14 @@
 
 <% max_connections = current_user.has_max_connections %>
 <h4>Box:</h4>
-<% current_user.box_connections.each &decorate_connection
+<% current_user.box_connections.order('id').each &decorate_connection
    new_connection['box'] unless max_connections %>
 <h4>Dropbox:</h4>
-<% current_user.dropbox_connections.each &decorate_connection
+<% current_user.dropbox_connections.order('id').each &decorate_connection
    new_connection['dropbox'] unless max_connections %>
 <h4>Google Drive:</h4>
-<% current_user.google_connections.each &decorate_connection
+<% current_user.google_connections.order('id').each &decorate_connection
    new_connection['google'] unless max_connections %>
 <h4>SkyDrive:</h4>
-<% current_user.skydrive_connections.each &decorate_connection
+<% current_user.skydrive_connections.order('id').each &decorate_connection
    new_connection['skydrive'] unless max_connections %>
