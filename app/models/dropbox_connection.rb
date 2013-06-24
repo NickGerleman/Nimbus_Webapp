@@ -1,5 +1,5 @@
 class DropboxConnection < Connection
-  serialize :session, Signet::OAuth1::Client
+  serialize :session, Signet::OAuth2::Client
 
   def service_name
     'Dropbox'

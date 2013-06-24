@@ -49,16 +49,18 @@ class ConnectionsController < ApplicationController
               name = "Connection #{connections.count + 1}"
               connection = connections.create(state: 'in_progress', name: name)
             end
-            @client = Signet::OAuth1::Client.new(
-                client_credential_key: ENV['DROPBOX_APP_KEY'],
-                client_credential_secret: ENV['DROPBOX_APP_SECRET'],
-                temporary_credential_uri: 'https://api.dropbox.com/1/oauth/request_token',
-                authorization_uri: 'https://api.dropbox.com/1/oauth/authorize',
-                token_credential_uri: 'https://api.dropbox.com/1/oauth/access_token'
+            @client = Signet::OAuth2::Client.new(
+                client_id: ENV['DROPBOX_APP_KEY'],
+                client_secret: ENV['DROPBOX_APP_SECRET'],
+                authorization_uri: 'https://www.dropbox.com/1/oauth2/authorize',
+                token_credential_uri: 'https://api.dropbox.com/1/oauth2/token',
+                state: connection.id.to_s,
+                redirect_uri: url_for(controller: :connections, action: :authorize, only_path: false, oauth: 'oauth2')
             )
-            @client.fetch_request_token!
-            @client.callback = url_for(controller: :connections, action: :authorize, service: 'dropbox',
-                                       only_path: false, id: connection.id, oauth: 'oauth1')
+            #Workaround for Dropbox refusing code if access_type or approval_prompt is present
+            connection.update_attributes(session: @client, state: 'in_progress')
+            redirect_to @client.authorization_uri.to_s.gsub('access_type=offline&approval_prompt=force&', '')
+            return
           when 'google'
             unless params[:id]
               connections = current_user.google_connections
@@ -109,7 +111,7 @@ class ConnectionsController < ApplicationController
             render file: 'public/404.html', layout: false
             return
         end
-      connection.update_attributes(session: @client, state: 'in_progress')
+        connection.update_attributes(session: @client, state: 'in_progress')
         redirect_to @client.authorization_uri.to_s
     end
 
