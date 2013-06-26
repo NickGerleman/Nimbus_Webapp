@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.0.0'
+ruby '2.0.0', :engine => "rbx", :engine_version => "2.0.0.rc1"
 gem 'rails', '4.0.0'
 gem 'rack-cache', require: 'rack/cache'
 gem 'bcrypt-ruby'
