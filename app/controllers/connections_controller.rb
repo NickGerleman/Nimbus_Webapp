@@ -50,8 +50,8 @@ class ConnectionsController < ApplicationController
               connection = connections.create(state: 'in_progress', name: name)
             end
             @client = Signet::OAuth2::Client.new(
-                client_id: ENV['DROPBOX_APP_KEY'],
-                client_secret: ENV['DROPBOX_APP_SECRET'],
+                client_id: ENV['DROPBOX_CLIENT_ID'],
+                client_secret: ENV['DROPBOX_CLIENT_SECRET'],
                 authorization_uri: 'https://www.dropbox.com/1/oauth2/authorize',
                 token_credential_uri: 'https://api.dropbox.com/1/oauth2/token',
                 state: connection.id.to_s,
