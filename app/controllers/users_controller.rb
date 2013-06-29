@@ -32,7 +32,7 @@ class UsersController < ApplicationController
   #
   # @option params [String] :password the password of the current user
   def destroy
-    user = current_user
+    user = User.find(params[:id])
     if current_user.authenticate params[:password]
       user.destroy
     else

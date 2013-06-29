@@ -1,7 +1,9 @@
-<% provide :title_suffix, 'About Us' %>
-<div class="row">
-    <p>
-        Nimbus is the creation of <%= link_to 'Nick Gerleman(Me)', 'http://www.nickgerleman.com' %> a sophomore at Iowa
-        State University. I have been working on this project in my spare time because I couldn't find anything like it.
-    </p>
-</div>
+<% cache do %>
+    <% provide :title_suffix, 'About Us' %>
+        <div class="row">
+            <p>
+                Nimbus is the creation of <%= link_to 'Nick Gerleman(Me)', 'http://www.nickgerleman.com' %> a sophomore at Iowa
+                State University. I have been working on this project in my spare time because I couldn't find anything like it.
+            </p>
+        </div>
+<% end %>

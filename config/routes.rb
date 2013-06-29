@@ -1,4 +1,7 @@
 NimbusWebapp::Application.routes.draw do
+  resources :connections, only: [:new, :destroy]
+  resources :users, only: [:create, :show, :new, :destroy]
+  resources :sessions, only: [:create, :destroy]
   root to: 'static_pages#home'
   get '/features', to: 'static_pages#features'
   get '/about', to: 'static_pages#about'
@@ -10,9 +13,6 @@ NimbusWebapp::Application.routes.draw do
   get '/settings', to: 'users#settings'
   get '/verify', to: 'users#verify'
   get '/connections/authorize/:oauth', to: 'connections#authorize'
-  resources :connections, only: [:new, :destroy]
-  resources :users, only: [:create, :show, :new, :destroy]
-  resources :sessions, only: [:create, :destroy]
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

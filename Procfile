@@ -1,3 +1,4 @@
-web: sh all_in_one.sh
-clock_worker: sh clock_worker.sh
-worker: sh worker.sh
+redis: redis-server
+clock: bundle exec clockwork lib/clock.rb
+worker: bundle exec sidekiq
+web: bundle exec puma -p 3000 -w 2 -t 1:8

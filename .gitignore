@@ -21,3 +21,6 @@
 
 /webdriver*
 /.rbx
+/*.rdb
+/Capfile
+/config/deploy.rb

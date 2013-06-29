@@ -1,63 +1,65 @@
-<div id="register" class="popup">
-    <button title="Close (Esc)" type="button" class="mfp-close">×</button>
-    <header>
-        <h3>Register</h3>
-    </header>
-    <%= form_for @user, remote: true, html: {class: 'form-horizontal', onsubmit: 'form_methods.toggle_load();'} do |f|
-    %>
-        <section class="forms">
-            <div class="row">
-                <div class="large-5 columns">
-                    <%= f.label :name, 'Name:', class: 'inline' %>
-                </div>
-                <div class="large-7 columns">
-                    <%= f.text_field :name, placeholder: 'John Doe', required: true %>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="large-5 columns">
-                    <%= f.label :email, 'Email Address:', class: 'inline' %>
+<% cache do %>
+    <div id="register" class="popup">
+        <button title="Close (Esc)" type="button" class="mfp-close">×</button>
+        <header>
+            <h3>Register</h3>
+        </header>
+        <%= form_for @user, remote: true, html: {class: 'form-horizontal', onsubmit: 'form_methods.toggle_load();'} do |f|
+        %>
+            <section class="forms">
+                <div class="row">
+                    <div class="large-5 columns">
+                        <%= f.label :name, 'Name:', class: 'inline' %>
+                    </div>
+                    <div class="large-7 columns">
+                        <%= f.text_field :name, placeholder: 'John Doe', required: true %>
+                    </div>
                 </div>
 
-                <div class="large-7 columns">
-                    <%= f.text_field :email, placeholder: 'name@example.com', required: true %>
+                <div class="row">
+                    <div class="large-5 columns">
+                        <%= f.label :email, 'Email Address:', class: 'inline' %>
+                    </div>
+
+                    <div class="large-7 columns">
+                        <%= f.text_field :email, placeholder: 'name@example.com', required: true %>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="large-5 columns">
-                    <%= f.label :email_confirmation, 'Confirm Email Address:', class: 'inline' %>
+                <div class="row">
+                    <div class="large-5 columns">
+                        <%= f.label :email_confirmation, 'Confirm Email Address:', class: 'inline' %>
+                    </div>
+
+                    <div class="large-7 columns">
+                        <%= f.text_field :email_confirmation, placeholder: 'name@example.com', autocomplete: 'off',
+                                         required: true %>
+                    </div>
                 </div>
 
-                <div class="large-7 columns">
-                    <%= f.text_field :email_confirmation, placeholder: 'name@example.com', autocomplete: 'off',
-                                     required: true %>
+                <div class="row">
+                    <div class="large-5 columns">
+                        <%= f.label :password, 'Password:', class: 'inline' %>
+                    </div>
+                    <div class="large-7 columns">
+                        <%= f.password_field :password, required: true %>
+                    </div>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="large-5 columns">
-                    <%= f.label :password, 'Password:', class: 'inline' %>
+                <div class="row">
+                    <div class="large-5 columns">
+                        <%= f.label :password_confirmation, 'Confirm Password:', class: 'inline' %>
+                    </div>
+                    <div class="large-7 columns">
+                        <%= f.password_field :password_confirmation, requred: true %>
+                    </div>
                 </div>
-                <div class="large-7 columns">
-                    <%= f.password_field :password, required: true %>
-                </div>
-            </div>
+            </section>
 
-            <div class="row">
-                <div class="large-5 columns">
-                    <%= f.label :password_confirmation, 'Confirm Password:', class: 'inline' %>
-                </div>
-                <div class="large-7 columns">
-                    <%= f.password_field :password_confirmation, requred: true %>
-                </div>
-            </div>
-        </section>
-
-        <%= recaptcha_tags(display: {theme: 'clean'}, ajax: true) unless Rails.env.test? %>
-        <footer>
-            <span class="hide load" id="loading">Loading...</span>
-            <%= f.submit 'Submit', class: 'button submit', id: 'submit' %>
-        </footer>
-    <% end %>
-</div>
+            <%= recaptcha_tags(display: {theme: 'clean'}, ajax: true) unless Rails.env.test? %>
+            <footer>
+                <span class="hide load" id="loading">Loading...</span>
+                <%= f.submit 'Submit', class: 'button submit', id: 'submit' %>
+            </footer>
+        <% end %>
+    </div>
+<% end %>
