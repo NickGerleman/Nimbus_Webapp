@@ -18,11 +18,11 @@ gem 'zurb-foundation', '~> 4.2.2'
 gem 'magnific-popup-rails', '>= 0.8.9'
 gem 'cache_digests'
 gem 'capistrano'
+gem 'foreman'
+gem 'unicorn'
 
 group :test, :development do
   gem 'sqlite3'
-  gem 'foreman'
-  gem 'puma'
 end
 
 group :test do

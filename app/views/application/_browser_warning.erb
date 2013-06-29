@@ -1,5 +1,4 @@
 <% unless session[:warning_shown] %>
-    <% cache do %>
         <div id="warning" class="popup mfp-hide">
             <button title="Close (Esc)" type="button" class="mfp-close">×</button>
             <header>
@@ -36,6 +35,5 @@
                 });
             });
         </script>
-    <% end %>
     <% session[:warning_shown] = true %>
 <% end %>
