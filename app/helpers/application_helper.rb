@@ -8,7 +8,7 @@ module ApplicationHelper
   end
 
   def secure_protocol
-    Rails.env.production ? 'https' : 'http'
+    Rails.env.production? ? 'https' : 'http'
   end
 
   #whether the browser is outdated
