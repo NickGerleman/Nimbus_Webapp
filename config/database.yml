@@ -20,7 +20,7 @@ test:
 
 production:
   adapter: postgresql
-  pool: 10
+  pool: 3
   database: <%= ENV['DB_NAME'] %>
   username: <%= ENV['DB_USER'] %>
   password: <%= ENV['DB_PASSWORD'] %>
