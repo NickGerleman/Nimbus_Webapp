@@ -1,8 +1,10 @@
 NimbusWebapp::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
+  ENV['HOST'] = ENV['HOST'] || '127.0.0.1:3000'
+  Rails.env.production? ? protocol = 'https' : protocol = 'http'
   config.action_mailer.default_url_options = {
-      host: 'nimbus-web.herokuapp.com',
-      protocol: 'https'
+      host: ENV['HOST'],
+      protocol: protocol
   }
   # Code is not reloaded between requests
   config.cache_classes = true
@@ -14,7 +16,7 @@ NimbusWebapp::Application.configure do
   config.action_controller.perform_caching = true
   config.static_cache_control = 'public, max-age=86400'
   # Disable Rails's static asset server (Apache or nginx will already do this)
-  config.serve_static_assets = false
+  config.serve_static_assets = true
   # Compress JavaScripts and CSS
   config.js_compressor = :uglifier
 
@@ -32,7 +34,7 @@ NimbusWebapp::Application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
+  config.force_ssl = false
 
   # See everything in the log (default is :info)
   # config.log_level = :debug

@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  force_ssl if Rails.env.production?
 
   # Create a new session
   def create
@@ -23,11 +24,11 @@ class SessionsController < ApplicationController
 
   # Destroys the current user's session
   def destroy
-    token = cookies[:session_token]
+    token = session[:session_token] || cookies[:session_token]
+    session.clear
     cookies.delete :session_token
     Session.find_by_token(token).destroy unless token.blank?
     @user=nil
-    session.clear
     redirect_to root_url
   end
 end

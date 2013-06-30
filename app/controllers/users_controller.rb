@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  force_ssl(except: :verify) if Rails.env.production?
 
   # Create a new user and send a verification email
   def create
@@ -29,8 +30,6 @@ class UsersController < ApplicationController
   end
 
   # Delete the current user if authentication successful, otherwise show errors
-  #
-  # @option params [String] :password the password of the current user
   def destroy
     user = User.find(params[:id])
     if current_user.authenticate params[:password]
@@ -46,8 +45,6 @@ class UsersController < ApplicationController
   end
 
   # Verifies the email address of a user
-  #
-  # @option params [String] :id the emailed verification token
   def verify
     user = User.find_by_email_token(params[:token])
     if user.nil?
