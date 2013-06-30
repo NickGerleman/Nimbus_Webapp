@@ -39,9 +39,9 @@
                 <li><%= link_to 'Logout', logout_path %></li>
             <% else %>
                 <% if (yield :title_suffix)=='Login' %>
-                    <li><%= link_to 'Login', login_path, class: 'active' %></li>
+                    <li><%= link_to 'Login', login_url(protocol: secure_protocol), class: 'active' %></li>
                 <% else %>
-                    <li><%= link_to 'Login', login_path %></li>
+                    <li><%= link_to 'Login', login_url(protocol: secure_protocol) %></li>
                 <% end %>
             <% end %>
             <li class="divider"></li>

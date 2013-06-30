@@ -7,6 +7,10 @@ module ApplicationHelper
     "#{title_base} | #{title_suffix}"
   end
 
+  def secure_protocol
+    Rails.env.production ? 'https' : 'http'
+  end
+
   #whether the browser is outdated
   def outdated_browser?
     #cache results in the session cookie in order to avoid needless recomputation on every visit
