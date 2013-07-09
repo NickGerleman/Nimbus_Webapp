@@ -1,8 +1,5 @@
-<% delete_connection = ->(id) do %>
-<%= form_tag(connection_path(id), method: :delete) {submit_tag('Delete', class: 'submit_link')} %>
-<% end %>
-
 <% decorate_connection = ->(connection) do %>
+    <% id = connection.id %>
     <% case connection.state.to_sym %>
     <% when :in_progress %>
         <div>
@@ -12,17 +9,17 @@
         <div>
             Error
             (<%= link_to 'Try Again?', controller: :connections, action: :new, service: connection.short_service_name,
-                         id: connection.id %>) - <% delete_connection[connection.id] %>
+                         id: id %>) - <%= link_to('Delete', connection_path(id), method: :delete) %>
         </div>
     <% when :expired %>
         <div>
             Your Session Has Expired
             (<%= link_to 'Reconnect', controller: :connections, action: :new, service: connection.short_service_name,
-                         id: connection.id %>) - <% delete_connection[connection.id] %>
+                         id: id %>) - <%= link_to('Delete', connection_path(id), method: :delete) %>
         </div>
     <% when :success %>
         <div>
-            <%= connection.name %> - <% delete_connection[connection.id] %>
+            <%= connection.name %> - <%= link_to('Delete', connection_path(id), method: :delete) %>
         </div>
     <% else
          raise "Invalid State (was #{state})"

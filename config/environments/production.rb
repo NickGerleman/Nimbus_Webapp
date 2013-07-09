@@ -1,4 +1,5 @@
 NimbusWebapp::Application.configure do
+  require 'syslog/logger'
   # Settings specified here will take precedence over those in config/application.rb
   ENV['HOST'] = ENV['HOST'] || '127.0.0.1:3000'
   Rails.env.production? ? protocol = 'https' : protocol = 'http'
@@ -16,7 +17,7 @@ NimbusWebapp::Application.configure do
   config.action_controller.perform_caching = true
   config.static_cache_control = 'public, max-age=86400'
   # Disable Rails's static asset server (Apache or nginx will already do this)
-  config.serve_static_assets = true
+  config.serve_static_assets = false
   # Compress JavaScripts and CSS
   config.js_compressor = :uglifier
 
@@ -34,16 +35,16 @@ NimbusWebapp::Application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = false
+  # config.force_ssl = true
 
   # See everything in the log (default is :info)
-  # config.log_level = :debug
+  config.log_level = :warn
 
   # Prepend all log lines with the following tags
   # config.log_tags = [ :subdomain, :uuid ]
 
   # Use a different logger for distributed setups
-  # config.logger = ActiveSupport::TaggedLogging.login(SyslogLogger.login)
+  config.logger = Syslog::Logger.new('rails')
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store

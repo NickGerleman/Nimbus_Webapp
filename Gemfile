@@ -17,13 +17,18 @@ gem 'uglifier', '>= 2.1.1'
 gem 'zurb-foundation', '~> 4.2.2'
 gem 'magnific-popup-rails', '>= 0.8.9'
 gem 'cache_digests'
-gem 'capistrano'
-gem 'foreman'
 gem 'unicorn'
+
+group :development do
+  gem 'capistrano'
+end
 
 group :test, :development do
   gem 'sqlite3'
+  gem 'foreman'
+  gem 'yard'
 end
+
 
 group :test do
   gem 'rspec-rails'

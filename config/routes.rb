@@ -1,4 +1,7 @@
 NimbusWebapp::Application.routes.draw do
+  constraints subsomain: 'api' do
+
+  end
   resources :connections, only: [:new, :destroy]
   resources :users, only: [:create, :show, :new, :destroy]
   resources :sessions, only: [:create, :destroy]

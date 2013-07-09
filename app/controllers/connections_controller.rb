@@ -12,6 +12,7 @@ class ConnectionsController < ApplicationController
           Oauth1AuthWorker.perform_async connection.id
         end
       when 'oauth2'
+        #OAuth State is used to store user ID
         id = params[:state].to_i
         connection = current_user.connections.find(id)
         if params[:code].nil?

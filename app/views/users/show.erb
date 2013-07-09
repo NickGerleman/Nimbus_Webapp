@@ -5,7 +5,8 @@
     <div class="large-8 columns">
         <h1>Welcome <%= user_name %>!</h1>
 
-        <%= image_tag(gravatar, id: 'gravatar', alt: 'Gravatar', class: 'hide-for-small') %>
+        <%= image_tag(gravatar, id: 'gravatar', alt: 'Gravatar', class: 'hide-for-small', height: '200',
+                      width: '200') %>
         <% if user_verified
              verified = ' ' %>
         <% else
