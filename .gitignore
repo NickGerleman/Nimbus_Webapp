@@ -15,12 +15,16 @@
 /tmp
 /log
 
-# Ignore IDEA files
+# Ignore IntelliJ files
 /.idea
 /*.iml
 
+# Ignore cache files
 /webdriver*
 /.rbx
 /*.rdb
+
+# Ignore deployment specific files
 /Capfile
-/config/deploy.rb
+/deploy
+/Procfile
