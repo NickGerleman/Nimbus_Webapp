@@ -37,14 +37,14 @@ NimbusWebapp::Application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
 
-  # See everything in the log (default is :info)
-  config.log_level = :warn
-
   # Prepend all log lines with the following tags
   # config.log_tags = [ :subdomain, :uuid ]
 
   # Use a different logger for distributed setups
-  config.logger = Syslog::Logger.new('rails')
+  # config.logger = Syslog::Logger.new('rails')
+  
+  # See everything in the log (default is :info)
+  config.log_level = :warn
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
