@@ -1,11 +1,9 @@
 NimbusWebapp::Application.configure do
   require 'syslog/logger'
   # Settings specified here will take precedence over those in config/application.rb
-  ENV['HOST'] = ENV['HOST'] || '127.0.0.1:3000'
-  Rails.env.production? ? protocol = 'https' : protocol = 'http'
   config.action_mailer.default_url_options = {
       host: ENV['HOST'],
-      protocol: protocol
+      protocol: 'https'
   }
   # Code is not reloaded between requests
   config.cache_classes = true
@@ -41,10 +39,11 @@ NimbusWebapp::Application.configure do
   # config.log_tags = [ :subdomain, :uuid ]
 
   # Use a different logger for distributed setups
-  # config.logger = Syslog::Logger.new('rails')
+  config.logger = Syslog::Logger.new('rails')
+  config.lograge.enabled = true
   
   # See everything in the log (default is :info)
-  config.log_level = :warn
+  # config.log_level = :warn
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store

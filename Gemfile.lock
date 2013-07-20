@@ -107,6 +107,9 @@ GEM
     jwt (0.1.8)
       multi_json (>= 1.5)
     kgio (2.8.0)
+    lograge (0.2.0)
+      actionpack
+      activesupport
     magnific-popup-rails (0.8.9)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -227,6 +230,7 @@ DEPENDENCIES
   factory_girl_rails
   foreman
   jquery-rails
+  lograge
   magnific-popup-rails (>= 0.8.9)
   newrelic_rpm
   pg
