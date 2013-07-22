@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.0.0'
 gem 'rails', '4.0.0'
-gem 'redis-store'
+gem 'redis-rails', github: 'jodosha/redis-store'
 gem 'bcrypt-ruby'
 gem 'recaptcha', require: 'recaptcha/rails'
 gem 'coffee-rails', '~> 4.0.0'
@@ -20,12 +20,12 @@ gem 'unicorn'
 
 group :development do
   gem 'capistrano'
+  gem 'yard'
 end
 
 group :test, :development do
   gem 'sqlite3'
   gem 'foreman'
-  gem 'yard'
 end
 
 
