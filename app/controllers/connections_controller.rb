@@ -4,13 +4,7 @@ class ConnectionsController < ApplicationController
   #Get Ttoken after OAuth Callback
   def authorize
     case params[:oauth]
-      when 'oauth1'
-        connection = current_user.connections.find(params[:id])
-        if params[:not_approved]
-          connection.update_attribute :state, 'error'
-        else
-          Oauth1AuthWorker.perform_async connection.id
-        end
+      #Oauth1 code removed
       when 'oauth2'
         #OAuth State is used to store user ID
         id = params[:state].to_i
