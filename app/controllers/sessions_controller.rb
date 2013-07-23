@@ -6,14 +6,14 @@ class SessionsController < ApplicationController
     respond_to do |format|
       user = User.find_by_email params[:email]
       if user and user.authenticate params[:password]
-        token = SecureRandom.urlsafe_base64 32, false
+        token = SecureRandom.urlsafe_base64
         user.sessions.first.destroy if user.sessions.count > 10
         if params[:remember]
           user.sessions.create token: token, expiration: Time.now.advance(months: 1)
           cookies[:session_token] = {value: token, expires_in: 1.month, secure: Rails.env.production?}
+          session[:user] = user.id
         else
-          user.sessions.create token: token, expiration: Time.now.advance(hours: 1)
-          session[:session_token] = token
+          session[:user] = user.id
         end
       else
         flash.now[:errors] = true
