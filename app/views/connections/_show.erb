@@ -33,11 +33,11 @@
 <% end %>
 
 <% max_connections = current_user.has_max_connections
-   connections = current_user.connections.order('id')
-   box_connections = connections.find_all_by_type('BoxConnection')
-   dropbox_connections = connections.find_all_by_type('DropboxConnection')
-   google_connections = connections.find_all_by_type('GoogleConnection')
-   skydrive_connections = connections.find_all_by_type('SkydriveConnection') %>
+   connections = current_user.connections.order('id').to_a
+   box_connections = connections.select { |c| c.instance_of? BoxConnection}
+   dropbox_connections = connections.select { |c| c.instance_of? DropboxConnection}
+   google_connections = connections.select { |c| c.instance_of? GoogleConnection}
+   skydrive_connections = connections.select { |c| c.instance_of? SkydriveConnection} %>
 <h4>Box:</h4>
 <% box_connections.each &decorate_connection if box_connections
    new_connection['box'] unless max_connections %>
