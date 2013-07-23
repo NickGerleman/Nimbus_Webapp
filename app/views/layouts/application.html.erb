@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <% if mobile? %>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <% end %>
     <title><%= title(yield :title_suffix) %></title>
     <%= stylesheet_link_tag 'application' %>
 	<%= jquery_include_tag :google %>

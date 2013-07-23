@@ -8,7 +8,7 @@ class UsersController < ApplicationController
       if Rails.env.test?
         @user.save
       else
-        if  verify_recaptcha(model: @user) and @user.save
+        if verify_recaptcha(model: @user) and @user.save
           UserMailer.delay.verify_email(@user.id)
         end
       end

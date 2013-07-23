@@ -11,57 +11,31 @@ module ApplicationHelper
     Rails.env.production? ? 'https' : 'http'
   end
 
+  #whether the user is using a non desktop browser based on useragent
+  def mobile?
+      browser.mobile? || browser.tablet?
+  end
+
   #whether the browser is outdated
   def outdated_browser?
-    #cache results in the session cookie in order to avoid needless recomputation on every visit
-    return true if session[:outdated]
-    return false if session[:modern]
-    version = browser.full_version.to_f
-    case
-      when browser.chrome?
-        if version < 5
-          session[:outdated] = true
-          true
-        else
-          session[:modern] = true
-          false
-        end
-      when browser.ie?
-        if version < 10
-          session[:outdated] = true
-          true
-        else
-          session[:modern] = true
-          false
-        end
-      when browser.opera?
-        if version < 12
-          session[:outdated] = true
-          true
-        else
-          session[:modern] = true
-          false
-        end
-      when browser.firefox?
-        if version < 4
-          session[:outdated] = true
-          true
-        else
-          session[:modern] = true
-          false
-        end
-      when browser.safari?
-        if version < 5
-          session[:outdated] = true
-          true
-        else
-          session[:modern] = true
-          false
-        end
-      else
-        session[:modern] = true
-        false
-    end
+    #cache results in the session in order to avoid needless checking on every visit
+    session[:outdated] ||=
+    (
+      version = browser.full_version.to_f
+      case
+        when browser.chrome?
+          version < 5 ? true : false
+        when browser.ie?
+          version < 10 ? true : false
+        when browser.opera?
+          version < 12 ? true : false
+        when browser.firefox?
+          version < 4 ? true : false
+        when browser.safari?
+          version < 5 ? true : false
+        else false
+      end
+    )
   end
 
   # The name of the current user
