@@ -32,17 +32,21 @@
     </p>
 <% end %>
 
-<% max_connections = current_user.has_max_connections %>
-<% connections = current_user.connections.load %>
+<% max_connections = current_user.has_max_connections
+   connections = current_user.connections.order('id')
+   box_connections = connections.find_all_by_type('BoxConnection')
+   dropbox_connections = connections.find_all_by_type('DropboxConnection')
+   google_connections = connections.find_all_by_type('GoogleConnection')
+   skydrive_connections = connections.find_all_by_type('SkydriveConnection') %>
 <h4>Box:</h4>
-<% connections.where(type: 'BoxConnection').order('id').each &decorate_connection
+<% box_connections.each &decorate_connection if box_connections
    new_connection['box'] unless max_connections %>
 <h4>Dropbox:</h4>
-<% connections.where(type: 'DropboxConnection').order('id').each &decorate_connection
+<% dropbox_connections.each &decorate_connection if dropbox_connections
    new_connection['dropbox'] unless max_connections %>
 <h4>Google Drive:</h4>
-<% connections.where(type: 'GoogleConnection').order('id').each &decorate_connection
+<% google_connections.each &decorate_connection if google_connections
    new_connection['google'] unless max_connections %>
 <h4>SkyDrive:</h4>
-<% connections.where(type: 'SkydriveConnection').order('id').each &decorate_connection
+<% skydrive_connections.each &decorate_connection if skydrive_connections
    new_connection['skydrive'] unless max_connections %>
