@@ -24,10 +24,9 @@ class SessionsController < ApplicationController
 
   # Destroys the current user's session
   def destroy
-    token = session[:session_token] || cookies[:session_token]
     session.clear
     cookies.delete :session_token
-    Session.find_by_token(token).destroy unless token.blank?
+    Session.find_by_token(cookies[:session_token]).destroy unless cookies[:session_token].blank?
     @user=nil
     redirect_to root_url
   end
