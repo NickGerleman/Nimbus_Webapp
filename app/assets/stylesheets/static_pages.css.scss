@@ -1,7 +1,8 @@
 #scene {
   background: image_url('scene400.jpg');
-  @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 2dppx) {
+  @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 1.5dppx) {
     background: image_url('scene800.jpg');
+    background-size: cover;
   }
   background-size: cover;
   height: 400px;
