@@ -41,4 +41,6 @@ group :production do
   gem 'newrelic_rpm'
   gem 'pg'
   gem 'lograge'
+  gem 'clockworkd'
+  gem 'daemons'
 end

@@ -6,8 +6,6 @@ Clockwork.configure {|config| config[:logger] = Syslog::Logger.new('clockwork')}
 require File.expand_path('../../config/boot', __FILE__)
 require File.expand_path('../../config/environment', __FILE__)
 
-#Write pid file
-File.open('/tmp/clockwork.pid', 'w') {|f| f.write(Process.pid)}
 
 include Clockwork
 
