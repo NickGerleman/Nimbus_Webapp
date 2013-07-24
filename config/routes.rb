@@ -1,6 +1,6 @@
 NimbusWebapp::Application.routes.draw do
-  constraints subsomain: 'api' do
-
+  constraints subsomain: 'api', protocol: 'https' do
+    get '/test', to: 'static_pages#home'
   end
   resources :connections, only: [:new, :destroy]
   resources :users, only: [:create, :show, :new, :destroy]
