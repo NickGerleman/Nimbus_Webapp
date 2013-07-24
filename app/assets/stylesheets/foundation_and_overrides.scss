@@ -94,9 +94,9 @@ $medium-screen: 1280px;
 $large-screen: 1440px;
 
 // $screen: "only screen";
-$small: "only screen and (min-device-width: #{$small-screen})";
-$medium: "only screen and (min-device-width: #{$medium-screen})";
-$large: "only screen and (min-device-width: #{$large-screen})";
+$small: "only screen and (min-width: #{$small-screen})";
+$medium: "only screen and (min-width: #{$medium-screen})";
+$large: "only screen and (min-width: #{$large-screen})";
 // $landscape: "only screen and (orientation: landscape)";
 // $portrait: "only screen and (orientation: portrait)";
 
@@ -1258,7 +1258,7 @@ $topbar-menu-icon-color-toggled: #000;
 
 // $topbar-transition-speed: 300ms;
 $topbar-breakpoint: emCalc(768px);
-$topbar-media-query: "only screen and (min-device-width: #{$topbar-breakpoint})";
+$topbar-media-query: "only screen and (min-width: #{$topbar-breakpoint})";
 
 // Divider Styles
 

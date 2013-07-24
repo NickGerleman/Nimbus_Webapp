@@ -12,8 +12,7 @@ class ApplicationController < ActionController::Base
   # The object representing the current user or nil if no user is logged in
   def current_user
     @user ||= (
-      user_id =
-      session[:user] ||= (cookies[:session_token] ? Session.get_user(cookies[:session_token]) : nil)
+      user_id = session[:user] ||= cookies[:session_token] ? Session.get_user(cookies[:session_token]) : nil
       user_id ? User.find(user_id) : nil
     )
   end

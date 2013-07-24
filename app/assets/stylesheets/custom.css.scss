@@ -4,7 +4,7 @@
 
 body {
   min-width: 320px;
-  @media only screen and(min-device-width: 768px){
+  @media only screen and(min-width: 768px){
     min-width: 768px;
   }
 }
@@ -19,7 +19,7 @@ body {
 }
 
 .top-bar {
-  @media only screen and(max-device-width: 767px) {
+  @media only screen and(max-width: 767px) {
     margin-bottom: 1em !important;
   }
   -moz-box-shadow: 0 0 3px black;
@@ -43,7 +43,7 @@ body {
     }
   }
   .right {
-    @media only screen and (max-device-width: 767px) {
+    @media only screen and (max-width: 767px) {
       font-size: 1.3em;
     }
     .active {
@@ -85,7 +85,7 @@ footer {
 }
 
 #content {
-  @media only screen and (min-device-width: 768px) {
+  @media only screen and (min-width: 768px) {
     min-height: 450px;
   }
 }
