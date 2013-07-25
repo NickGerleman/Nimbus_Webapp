@@ -19,6 +19,7 @@ gem 'cache_digests'
 gem 'puma'
 gem 'faye'
 gem 'faye-redis'
+gem 'modernizr-rails'
 
 group :development do
   gem 'yard'
