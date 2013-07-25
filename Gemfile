@@ -16,10 +16,11 @@ gem 'uglifier', '>= 2.1.1'
 gem 'zurb-foundation', '~> 4.2.2'
 gem 'magnific-popup-rails', '>= 0.8.9'
 gem 'cache_digests'
-gem 'unicorn'
+gem 'puma'
+gem 'faye'
+gem 'faye-redis'
 
 group :development do
-  gem 'capistrano'
   gem 'yard'
 end
 
