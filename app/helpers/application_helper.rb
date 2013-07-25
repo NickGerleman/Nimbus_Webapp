@@ -16,28 +16,6 @@ module ApplicationHelper
       browser.mobile? || browser.tablet?
   end
 
-  #whether the browser is outdated
-  def outdated_browser?
-    #cache results in the session in order to avoid needless checking on every visit
-    session[:outdated] ||=
-    (
-      version = browser.full_version.to_f
-      case
-        when browser.chrome?
-          version < 5 ? true : false
-        when browser.ie?
-          version < 10 ? true : false
-        when browser.opera?
-          version < 12 ? true : false
-        when browser.firefox?
-          version < 4 ? true : false
-        when browser.safari?
-          version < 5 ? true : false
-        else false
-      end
-    )
-  end
-
   # The name of the current user
   #
   # @raise [RuntimeError] if there is no current user

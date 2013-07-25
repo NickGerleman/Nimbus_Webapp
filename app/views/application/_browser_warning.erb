@@ -21,18 +21,22 @@
             </footer>
         </div>
         <script>
-            jQuery(function ()
-            {
-                $.magnificPopup.open({
-                    items: {
-                        src: '#warning',
-                        type: 'inline',
-                        mainClass: 'modal',
-                        tLoading: '',
-                        removalDelay: 200,
-                        closeBtnInside: true
-                    }
-                });
+            jQuery(function () {
+                var supported = Modernizr.backgroundsize && Modernizr.borderradius && Modernizr.boxshadow &&
+                        Modernizr.opacity && Modernizer.textshadow && Modernizr.csscolumns && Modernizr.csstransforms
+                        && Modernizer.csstransitions && Modernizer.svg;
+                if(!supported){
+                  $.magnificPopup.open({
+                      items: {
+                          src: '#warning',
+                          type: 'inline',
+                          mainClass: 'modal',
+                          tLoading: '',
+                          removalDelay: 200,
+                          closeBtnInside: true
+                      }
+                  });
+                }
             });
         </script>
     <% session[:warning_shown] = true %>

@@ -3,17 +3,16 @@
 <head>
     <meta charset="utf-8"/>
     <% if mobile? %>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <% end %>
     <title><%= title(yield :title_suffix) %></title>
     <%= stylesheet_link_tag 'application' %>
-	<%= jquery_include_tag :google %>
+	  <%= jquery_include_tag :google %>
     <%= javascript_include_tag 'application' %>
-    <%= javascript_include_tag "vendor/custom.modernizr" %>
     <%= csrf_meta_tags %>
 </head>
 <body>
-<%= render 'application/browser_warning' if outdated_browser? %>
+<%= render 'application/browser_warning' %>
 <%= render 'header' %>
 <div id="content">
     <%= yield %>

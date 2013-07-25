@@ -12,5 +12,6 @@
 //
 //= require jquery_ujs
 //= require foundation
+//= require modernizr
 //= require magnific-popup
 //= require_tree .
