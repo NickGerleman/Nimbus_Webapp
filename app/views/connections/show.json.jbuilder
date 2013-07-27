@@ -1,2 +1,1 @@
-
-json.cache! { json.partial! 'show' }
+json.partial! 'show'

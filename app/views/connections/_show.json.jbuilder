@@ -1,6 +1,6 @@
-json.cache! do
-  connections = current_user.connections.reject {|c| c.state != 'success'}
-  connections.each do |connection|
+connections = current_user.connections.reject {|c| c.state != 'success'}
+connections.each do |connection|
+  json.cache! connection do
     json.set! connection.id do
       json.name connection.name
       json.type connection.short_service_name

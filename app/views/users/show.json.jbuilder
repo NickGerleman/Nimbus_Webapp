@@ -1,5 +1,5 @@
-json.cache! do
+json.cache! current_user do
   json.(current_user, :name, :id)
   json.socket_token(Gibberish::HMAC(ENV['SOCKET_KEY'], current_user.id))
-  json.connections { json.partial!('connections/show') }
 end
+json.connections { json.partial!('connections/show') }
