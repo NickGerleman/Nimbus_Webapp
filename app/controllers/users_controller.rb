@@ -41,7 +41,10 @@ class UsersController < ApplicationController
   end
 
   def show
-    redirect_to login_path if current_user.nil?
+    respond_to do |format|
+      format.html { redirect_to login_path if current_user.nil? }
+      format.json { raise ActionController::RoutingError.new('Not Found') unless current_user }
+    end
   end
 
   # Verifies the email address of a user

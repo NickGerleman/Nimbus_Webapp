@@ -1,6 +1,7 @@
 NimbusWebapp::Application.routes.draw do
-  constraints subsomain: 'api', protocol: 'https' do
-    get '/test', to: 'static_pages#home'
+  constraints protocol: (Rails.env.production? ? 'https://' : 'http://'), subdomain: 'api' do
+    get '/user/connections', to: 'connections#show', defaults: {format: :json}
+    get '/user/info', to: 'users#show', defaults: {format: :json}
   end
   resources :connections, only: [:new, :destroy]
   resources :users, only: [:create, :show, :new, :destroy]
@@ -11,7 +12,7 @@ NimbusWebapp::Application.routes.draw do
   get '/contribute', to: 'static_pages#contribute'
   get '/login', to: 'users#login'
   get '/logout', to: 'sessions#destroy'
-  get '/user', to: 'users#show'
+  get '/user', to: 'users#show', constraints: {format: :html}
   get '/user/delete', to: 'users#delete'
   get '/settings', to: 'users#settings'
   get '/verify', to: 'users#verify'

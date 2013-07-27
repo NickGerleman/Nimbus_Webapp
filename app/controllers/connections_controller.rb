@@ -115,4 +115,8 @@ class ConnectionsController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       render file: 'public/500.html', layout: false
   end
+
+  def show
+    raise ActionController::RoutingError.new('Not Found') unless current_user
+  end
 end

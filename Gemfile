@@ -20,10 +20,8 @@ gem 'puma'
 gem 'faye'
 gem 'faye-redis'
 gem 'modernizr-rails'
-
-group :development do
-  gem 'yard'
-end
+gem 'jbuilder'
+gem 'gibberish'
 
 group :test, :development do
   gem 'sqlite3'
