@@ -1,6 +1,7 @@
 class ConnectionRemoveMessageWorker
   include Sidekiq::Worker
   require 'json'
+  require 'eventmachine'
 
   def perform(user_id, connection_id)
     channel = "/#{user_id}"
@@ -11,11 +12,13 @@ class ConnectionRemoveMessageWorker
      }
     }
     json_message = JSON.dump(message)
-    client = Faye::Client.new(FAYE_URL)
-    client.add_extension(FayeClientAuth.new)
-    client.subscribe(channel)
-    client.publish(channel, json_message)
-    client.unsubscribe(channel)
-    client.disconnect
+    EM.run do
+      client = Faye::Client.new(FAYE_URL)
+      client.add_extension(FayeClientAuth.new)
+      client.subscribe(channel)
+      client.publish(channel, json_message)
+      client.unsubscribe(channel)
+      client.disconnect
+    end
   end
 end
