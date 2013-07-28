@@ -1,6 +1,5 @@
 class ConnectionRemoveMessageWorker
   include Sidekiq::Worker
-  require 'eventmachine'
   require 'json'
 
   def perform(user_id, connection_id)

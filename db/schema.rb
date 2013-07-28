@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130623111640) do
+ActiveRecord::Schema.define(version: 20130728203600) do
 
   create_table "connections", force: true do |t|
     t.string   "type"
@@ -21,7 +21,10 @@ ActiveRecord::Schema.define(version: 20130623111640) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name",       default: "Unnamed Connection"
+    t.datetime "expires_at", default: '2013-07-28 20:41:07'
   end
+
+  add_index "connections", ["expires_at"], name: "index_connections_on_expires_at"
 
   create_table "sessions", force: true do |t|
     t.string   "token"
