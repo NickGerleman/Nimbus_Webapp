@@ -16,5 +16,6 @@ class ConnectionUpdateMessageWorker
     client.subscribe(channel)
     client.publish(channel, json_message)
     client.unsubscribe(channel)
+    client.disconnect
   end
 end
