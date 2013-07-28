@@ -38,4 +38,8 @@ class User < ActiveRecord::Base
     Gibberish::HMAC(ENV['SOCKET_KEY'], self.id)
   end
 
+  def self.socket_token(id)
+    Gibberish::HMAC(ENV['SOCKET_KEY'], id)
+  end
+
 end
