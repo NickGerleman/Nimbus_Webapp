@@ -43,7 +43,10 @@ class UsersController < ApplicationController
   def show
     respond_to do |format|
       format.html { redirect_to login_path if current_user.nil? }
-      format.json { raise ActionController::RoutingError.new('Not Found') unless current_user }
+      format.json do
+       render status: :not_found, text: 'User Not Logged In' unless current_user
+        render json: current_user
+      end
     end
   end
 

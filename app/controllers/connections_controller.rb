@@ -15,12 +15,12 @@ class ConnectionsController < ApplicationController
           Oauth2AuthWorker.perform_async id, params[:code]
         end
       else
-        render file: 'public/404.html', layout: false
+        render status: :bad_request, text: 'Invalid OAuth Version'
         return
     end
     redirect_to root_path
   rescue ActiveRecord::RecordNotFound
-    render file: 'public/500.html', layout: false
+    render status: :not_found, text: 'User Connection Not FOund'
   end
 
   #Delete the Connection
@@ -29,13 +29,13 @@ class ConnectionsController < ApplicationController
     connection.destroy
     redirect_to root_path
   rescue ActiveRecord::RecordNotFound
-    render file: 'public/500.html', layout: false
+    render status: :not_found, text: 'User Connection Not Found'
   end
 
   # Creates initial session and redirects user to authorize use
   def new
     if current_user.has_max_connections
-      render file: 'public/500.html', layout: false
+      render status: :forbidden, text: 'Connection Limit Reached'
     else
         connection = current_user.connections.find(params[:id]) if params[:id]
         case params[:service]
@@ -104,19 +104,28 @@ class ConnectionsController < ApplicationController
                 redirect_uri: url_for(controller: :connections, action: :authorize, only_path: false, oauth: 'oauth2')
             )
           else
-            render file: 'public/404.html', layout: false
-            return
+            raise status: :bad_request, text: 'Invalid Service'
         end
         connection.update_attributes(session: @client, state: 'in_progress')
         redirect_to @client.authorization_uri.to_s
     end
 
-    #render error page if user tries to use connection that doesn't belong to them
     rescue ActiveRecord::RecordNotFound
-      render file: 'public/500.html', layout: false
+      render status: :not_found, text: 'User Connection Not Found'
   end
 
   def show
-    raise ActionController::RoutingError.new('Not Found') unless current_user
+    render status: :not_found, text: 'User Not Logged In' unless current_user
+    connection = current_user.connections.find(params[:id])
+    render json: connection, serializer: ConnectionSerializer
+    rescue ActiveRecord::RecordNotFound
+      render status: :not_found, text: 'User Connection Not Found'
   end
+
+  def index
+    render status: :not_found, text: 'User Not Logged In' unless current_user
+    connections = current_user.connections.where(state: 'success')
+    render json: connections, each_serializer: ConnectionSerializer
+  end
+
 end

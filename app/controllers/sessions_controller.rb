@@ -30,4 +30,13 @@ class SessionsController < ApplicationController
     @user=nil
     redirect_to root_url
   end
+
+  def show
+
+  end
+
+  def index
+
+  end
+
 end

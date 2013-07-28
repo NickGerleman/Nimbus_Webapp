@@ -1,7 +1,7 @@
 NimbusWebapp::Application.routes.draw do
   constraints protocol: (Rails.env.production? ? 'https://' : 'http://'), subdomain: 'api' do
-    get '/user/connections', to: 'connections#show', defaults: {format: :json}
-    get '/user/info', to: 'users#show', defaults: {format: :json}
+    resources :connections, only: [:show, :index], defaults: {format: :json}
+    get '/user', to: 'users#show', defaults: {format: :json}
   end
   resources :connections, only: [:new, :destroy]
   resources :users, only: [:create, :show, :new, :destroy]

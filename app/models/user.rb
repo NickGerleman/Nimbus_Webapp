@@ -34,4 +34,8 @@ class User < ActiveRecord::Base
     self.connections.count >= 5
   end
 
+  def socket_token
+    Gibberish::HMAC(ENV['SOCKET_KEY'], self.id)
+  end
+
 end

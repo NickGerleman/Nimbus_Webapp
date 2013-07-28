@@ -20,7 +20,7 @@ gem 'puma'
 gem 'faye'
 gem 'faye-redis'
 gem 'modernizr-rails'
-gem 'jbuilder'
+gem 'active_model_serializers'
 gem 'gibberish'
 
 group :test, :development do
