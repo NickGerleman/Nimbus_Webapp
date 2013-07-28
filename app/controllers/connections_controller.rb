@@ -125,7 +125,7 @@ class ConnectionsController < ApplicationController
   def index
     render status: :not_found, text: 'User Not Logged In' unless current_user
     connections = current_user.connections.where(state: 'success')
-    render json: connections, each_serializer: ConnectionSerializer
+    render json: connections, each_serializer: ConnectionSerializer, root: false
   end
 
 end

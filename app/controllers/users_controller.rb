@@ -60,6 +60,7 @@ class UsersController < ApplicationController
     end
   end
 
+  #blank methods are here so https will be properly forced on these actions
   def settings
 
   end
