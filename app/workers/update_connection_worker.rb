@@ -3,12 +3,16 @@ class UpdateConnectionWorker
 
   def perform()
     Connection.expires_soon.each do |connection|
+      begin
       session = connection.session
       session.fetch_access_token!
-      issue_time = Time.parse(session.issued_at)
+      issue_time = session.issued_at
       expires_at = issue_time.since(1.hour)
       connection.update(session: session, expires_at: expires_at)
       ConnectionUpdateMessageWorker.perform_async(connection.id)
+      rescue Signet::AuthorizationError
+        connection.update(state: 'expired')
+      end
     end
   end
 end
