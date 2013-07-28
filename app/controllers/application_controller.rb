@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   def current_user
     @user ||= (
       user_id = session[:user] ||= cookies[:session_token] ? Session.get_user(cookies[:session_token]) : nil
-      user_id ? User.includes(:connections).find(user_id) : nil
+      user_id ? User.find(user_id) : nil
     )
   end
 
