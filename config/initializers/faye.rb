@@ -1,9 +1,12 @@
 class FayeClientAuth
+
+  def initialize(channel)
+    @channel = channel
+  end
+
   def outgoing(message, callback)
-    return callback.call(message) unless message['channel'] == '/meta/subscribe'
-    subscription = message['subscription'][1..-1]
     message['ext'] ||= {}
-    message['ext']['auth_token'] = Gibberish::HMAC(ENV['SOCKET_KEY'], subscription)
+    message['ext']['auth_token'] = Gibberish::HMAC(ENV['SOCKET_KEY'], @channel)
     callback.call(message)
   end
 end
