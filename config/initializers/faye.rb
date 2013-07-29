@@ -11,4 +11,10 @@ end
 protocol = Rails.env.production? ? 'https://' : 'http://'
 address = Rails.env.production? ? ENV['HOST'] : '127.0.0.1'
 port = Rails.env.production? ? 443 : 8081
-FAYE_URL = "#{protocol}#{address}:#{port}/socket"
+url = "#{protocol}#{address}:#{port}/socket"
+Thread.new do
+  EM.run do
+    FAYE = Faye::Client.new(FAYE_URL)
+    client.add_extension(FayeClientAuth.new)
+  end
+end
