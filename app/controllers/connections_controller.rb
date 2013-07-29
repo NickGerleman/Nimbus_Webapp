@@ -138,6 +138,7 @@ class ConnectionsController < ApplicationController
 
   def update
     current_user.connections.find(params[:id]).update(name: params[:name])
+    ConnectionUpdateMessageWorker.perform_async(current_user.id, params[:id])
   rescue ActiveRecord::RecordNotFound
     render status: :not_found, text: 'User Connection Not Found'
   end
