@@ -1,9 +1,10 @@
-class FayeClientAuth
+class ClientAuth
   def outgoing(message, callback)
-    return callback.call(message) unless message['channel'] == '/meta/subscribe'
-    subscription = message['subscription'].slice(1)
-    message['ext'] ||= {}
-    message['ext']['auth_token'] = Gibberish::HMAC(ENV['SOCKET_KEY'], subscription)
+    if message['channel'].include? '/meta/subscribe'
+      subscription = message['subscription'][1..-1]
+      message['ext'] ||= {}
+      message['ext']['auth_token'] = Gibberish::HMAC(ENV['SOCKET_KEY'], subscription)
+    end
     callback.call(message)
   end
 end
@@ -15,6 +16,6 @@ url = "#{protocol}#{address}:#{port}/socket"
 Thread.new do
   EM.run do
     FAYE = Faye::Client.new(url)
-    client.add_extension(FayeClientAuth.new)
+    client.add_extension(ClientAuth.new)
   end
 end
