@@ -11,8 +11,11 @@ class ConnectionRemoveMessageWorker
      }
     }
     json_message = JSON.dump(message)
-    FAYE.subscribe(channel)
-    FAYE.publish(channel, json_message)
-    FAYE.unsubscribe(channel)
+    client = Faye::Client.new(FAYE_URL)
+    client.add_extension(FayeClientAuth.new)
+    client.subscribe(channel)
+    client.publish(channel, json_message)
+    client.unsubscribe(channel)
+    client.disconnect
   end
 end
