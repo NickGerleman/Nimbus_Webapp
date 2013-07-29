@@ -13,13 +13,14 @@ class ConnectionUpdateMessageWorker
     }
     json_message = JSON.dump(message)
 
-    EM.run_block do
+    EM.run do
       client = Faye::Client.new(FAYE_URL)
       client.add_extension(FayeClientAuth.new)
       client.subscribe(channel)
       client.publish(channel, json_message)
       client.unsubscribe(channel)
       client.disconnect
+      EM.stop_event_loop
     end
   end
 end
