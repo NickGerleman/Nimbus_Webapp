@@ -1,35 +1,30 @@
 <% decorate_connection = ->(connection) do %>
     <% id = connection.id %>
+    <div class="connection">
     <% case connection.state.to_sym %>
     <% when :in_progress %>
-        <div>
-            Connecting Your Account, Please Wait...
-        </div>
+      Connecting Your Account, Please Wait...
     <% when :error %>
-        <div>
-            Error
-            (<%= link_to 'Try Again?', controller: :connections, action: :new, service: connection.short_service_name,
-                         id: id %>) - <%= link_to('Delete', connection_path(id), method: :delete) %>
-        </div>
+      Error
+      (<%= link_to 'Try Again?', controller: :connections, action: :new, service: connection.short_service_name,id: id %>) -
+      <%= link_to('Delete', connection_path(id), method: :delete) %>
     <% when :expired %>
-        <div>
-            Your Session Has Expired
-            (<%= link_to 'Reconnect', controller: :connections, action: :new, service: connection.short_service_name,
-                         id: id %>) - <%= link_to('Delete', connection_path(id), method: :delete) %>
-        </div>
+      Your Session Has Expired
+      (<%= link_to 'Reconnect', controller: :connections, action: :new, service: connection.short_service_name,id: id %>) -
+      <%= link_to('Delete', connection_path(id), method: :delete) %>
     <% when :success %>
-        <div>
-            <%= connection.name %> - <%= link_to('Delete', connection_path(id), method: :delete) %>
-        </div>
+      <%= connection.name %> - <%= link_to 'Rename', edit_connection_path(id), class: 'ajax-popup' %> -
+      <%= link_to('Delete', connection_path(id), method: :delete) %>
     <% else
-         raise "Invalid State (was #{state})"
-       end
-    end %>
+      raise "Invalid State (was #{state})"
+       end %>
+    </div>
+    <% end %>
 
 <% new_connection = ->(name) do %>
-    <p>
+    <div class="new_connection">
         <%= link_to 'Create New Connection', controller: :connections, action: :new, service: name %>
-    </p>
+    </div>
 <% end %>
 
 <% max_connections = current_user.has_max_connections

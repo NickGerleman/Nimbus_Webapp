@@ -3,7 +3,7 @@ NimbusWebapp::Application.routes.draw do
     resources :connections, only: [:show, :index], defaults: {format: :json}
     get '/user', to: 'users#show', defaults: {format: :json}
   end
-  resources :connections, only: [:new, :destroy]
+  resources :connections, only: [:new, :destroy, :edit, :update]
   resources :users, only: [:create, :show, :new, :destroy]
   resources :sessions, only: [:create, :destroy]
   root to: 'static_pages#home'

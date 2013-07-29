@@ -119,8 +119,8 @@ class ConnectionsController < ApplicationController
     render status: :not_found, text: 'User Not Logged In' unless current_user
     connection = current_user.connections.find(params[:id])
     render json: connection, serializer: ConnectionSerializer
-    rescue ActiveRecord::RecordNotFound
-      render status: :not_found, text: 'User Connection Not Found'
+  rescue ActiveRecord::RecordNotFound
+    render status: :not_found, text: 'User Connection Not Found'
   end
 
   def index
@@ -130,6 +130,16 @@ class ConnectionsController < ApplicationController
     end
     connections = current_user.connections.where(state: 'success')
     render json: connections, each_serializer: ConnectionSerializer, root: false
+  end
+
+  def edit
+    render partial: 'edit', layout: false
+  end
+
+  def update
+    current_user.connections.find(params[:id]).update(name: params[:name])
+  rescue ActiveRecord::RecordNotFound
+    render status: :not_found, text: 'User Connection Not Found'
   end
 
 end
