@@ -14,7 +14,7 @@ port = Rails.env.production? ? 443 : 8081
 url = "#{protocol}#{address}:#{port}/socket"
 Thread.new do
   EM.run do
-    FAYE = Faye::Client.new(FAYE_URL)
+    FAYE = Faye::Client.new(url)
     client.add_extension(FayeClientAuth.new)
   end
 end
