@@ -84,8 +84,6 @@ GEM
     database_cleaner (1.0.1)
     diff-lcs (1.2.4)
     dotenv (0.7.0)
-    em-hiredis (0.2.1)
-      hiredis (~> 0.4.0)
     em-http-request (1.1.0)
       addressable (>= 2.3.4)
       cookiejar
@@ -111,10 +109,6 @@ GEM
       eventmachine (>= 0.12.0)
       faye-websocket (>= 0.4.0)
       rack (>= 1.0.0)
-      yajl-ruby (>= 1.0.0)
-    faye-redis (0.1.1)
-      em-hiredis (>= 0.2.0)
-      eventmachine (>= 0.12.0)
       yajl-ruby (>= 1.0.0)
     faye-websocket (0.6.2)
       eventmachine (>= 0.12.0)
@@ -255,9 +249,9 @@ DEPENDENCIES
   database_cleaner
   factory_girl_rails
   faye
-  faye-redis
   foreman
   gibberish
+  hiredis
   jquery-rails-cdn
   lograge
   magnific-popup-rails (>= 0.8.9)
