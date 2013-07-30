@@ -25,17 +25,28 @@ init_popups = ->
     closeBtnInside: true,
 
   })
-  popup.on 'mfpUpdateStatus', ->
-    max_height = 0
-    footer = $('.popup footer')
-    height = footer.height()
-    max_height = height if height > max_height
-    footer.css('min-height', max_height + 'px')
-    footer.css('line-height', max_height + 'px')
 
-window.form_methods =
-  toggle_load: ->
-    $('.load:first, .submit:first').toggleClass('hide')
+window.show_spinner = ->
+  spin_box = $('<div id="spinner_box">')
+  spin_overlay = $('<div id="spinner_overlay">')
+  spin_overlay.append(spin_box)
+  $(document.body).append(spin_overlay)
+  opts = {
+    lines: 13,
+    length: 0,
+    width: 20,
+    radius: 50,
+    corners: 1,
+    color: '#fff',
+    shadow: false,
+    hwaccel: true,
+    className: 'spinner',
+    zIndex: 2e9,
+  }
+  spin_box.spin(opts)
+
+window.stop_spinner = ->
+  $('#spinner_overlay').remove()
 
 window.compatible = ->
   Modernizr.backgroundsize and

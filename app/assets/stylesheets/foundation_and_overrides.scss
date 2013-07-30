@@ -89,14 +89,14 @@ $body-font-color: #333;
 
 // Media Queries
 
-$small-screen: 768px;
-$medium-screen: 1280px;
-$large-screen: 1440px;
+$small-screen: 600px;
+$medium-screen: 800px;
+$large-screen: 1024px;
 
 // $screen: "only screen";
-$small: "only screen and (min-width: #{$small-screen})";
-$medium: "only screen and (min-width: #{$medium-screen})";
-$large: "only screen and (min-width: #{$large-screen})";
+// $small: "only screen and (min-width: #{$small-screen})";
+// $medium: "only screen and (min-width: #{$medium-screen})";
+// $large: "only screen and (min-width: #{$large-screen})";
 // $landscape: "only screen and (orientation: landscape)";
 // $portrait: "only screen and (orientation: portrait)";
 
@@ -1257,7 +1257,7 @@ $topbar-menu-icon-color-toggled: #000;
 // Transitions and breakpoint styles
 
 // $topbar-transition-speed: 300ms;
-$topbar-breakpoint: emCalc(768px);
+$topbar-breakpoint: emCalc(800px);
 $topbar-media-query: "only screen and (min-width: #{$topbar-breakpoint})";
 
 // Divider Styles

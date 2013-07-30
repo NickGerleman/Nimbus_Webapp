@@ -21,8 +21,6 @@
                 <li><%= link_to 'Features', features_path %></li>
             <% end %>
             <li class="divider"></li>
-            <li><a href="#">Download</a></li>
-            <li class="divider"></li>
             <% if (yield :title_suffix)=='Contribute' %>
                 <li><%= link_to 'Contribute', contribute_path, class: 'active' %></li>
             <% else %>

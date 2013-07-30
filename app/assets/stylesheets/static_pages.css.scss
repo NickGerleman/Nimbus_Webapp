@@ -14,10 +14,8 @@
 }
 
 #intro-text {
-  @media only screen and(min-width: 768px) {
-    font-size: 1.3em;
-  }
-  @media only screen and(max-width: 767px) {
+  font-size: 1.3em;
+  @media only screen and(max-width: 799px) {
     font-size: 1.1em;
   }
   h1, p {
@@ -26,7 +24,6 @@
   h1 {
     line-height: 1.2em;
   }
-
   -webkit-text-shadow: 0 5px 10px black;
   text-shadow: 0 5px 10px black;
 }
@@ -36,10 +33,8 @@
   background-color: #333;
   -webkit-box-shadow: inset 0 15px 15px -12px black, inset 0 -15px 15px -12px black;
   box-shadow: inset 0 15px 15px -12px black, inset 0 -15px 15px -12px black;
-  @media only screen and(min-width: 768px) {
-    padding: 20px 0;
-  }
-  @media only screen and(max-width: 767px) {
+  padding: 20px 0;
+  @media only screen and(max-width: 799px) {
     padding: 5px 0;
   }
 }

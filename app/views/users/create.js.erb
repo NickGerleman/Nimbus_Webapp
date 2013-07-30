@@ -1,7 +1,7 @@
 (function () {
     var modal = $('.modal');
     var submit = $('#submit');
-    var loading = $('#loading');
+    stop_spinner();
     //Remove Previous Errors
     $('small').remove();
     $('.error').removeClass('error');
@@ -14,10 +14,8 @@
     //Wait for fade-out to complete
     setTimeout(function ()
     {
-        loading.toggleClass('hide');
         <% if @user.errors.any?%>
-            submit.toggleClass('hide');
-            //Recaptcha errors have key of :base
+        //Recaptcha errors have key of :base
         <% if @user.errors.has_key? :base %>
             $('#recaptcha_area').after('<small class="error">Incorrect Response</small>');
         <% end %>

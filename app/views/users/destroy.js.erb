@@ -1,5 +1,5 @@
 <% if flash[:errors] %>
-form_methods.toggle_load();
+stop_spinner();
 if (!$('small').length)
     {
         $('#password').after('<small class="error">Incorrect Password</small> ');
