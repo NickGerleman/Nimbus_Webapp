@@ -8,10 +8,10 @@ class UpdateConnectionWorker
         session.fetch_access_token!
         issue_time = session.issued_at
         expires_at = issue_time.since(1.hour)
-        connection.update(session: session, expires_at: expires_at)
+        connection.update_attributes(session: session, expires_at: expires_at)
         ConnectionUpdateMessageWorker.perform_async(connection.user.id, connection.id)
       rescue Signet::AuthorizationError
-        connection.update(state: 'expired')
+        connection.update_attribute(:state, 'expired')
       end
     end
   end

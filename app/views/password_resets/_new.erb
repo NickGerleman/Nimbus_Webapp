@@ -1,0 +1,24 @@
+<div class="popup">
+    <header>
+        <h3>Reset Password</h3>
+    </header>
+    <section class="message">
+        <p>
+            Enter Your Email Address
+        </p>
+    </section>
+    <%= form_tag user_password_reset_path, onsubmit: 'show_spinner();', remote: true do %>
+        <div class="row">
+            <div class="large-4 columns">
+                <%= label_tag :email, 'Email Address:', class: 'inline' %>
+            </div>
+            <div class="large-8 columns">
+                <%= text_field_tag :email %>
+            </div>
+        </div>
+
+        <footer>
+            <%= submit_tag 'Submit', class: 'button submit' %>
+        </footer>
+    <% end %>
+</div>

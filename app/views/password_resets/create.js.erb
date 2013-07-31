@@ -1,0 +1,23 @@
+stop_spinner();
+<% if flash[:errors] %>
+if (!$('.error').length)
+    {
+        $('.modal #email').after('<small class="error">Email Address Not Registered</small> ');
+    }
+$('.modal .row').addClass('error');
+<% else %>
+var modal = $('.modal');
+modal.removeClass('mfp-ready');
+$('.popup .small').remove();
+setTimeout(function () {
+    var header = $('.popup header');
+    header.html('<h3>Success</h3>');
+    $('.message').remove();
+    $('.popup form').remove();
+    header.after('<p>A link to reset your password has been sent to your email address.</p>');
+    var footer = $('<footer>');
+    footer.append('<button class="button" onclick="$.magnificPopup.close();">Okay</button>');
+    $('.popup').append(footer);
+    modal.addClass('mfp-ready');
+}, 200);
+<% end %>

@@ -8,8 +8,8 @@
 
 <p>
     You have been successfully registered for Nimbus.
-    Please click this <a href="<%= url_for controller: 'users', action: 'verify', token: @token, only_path: false %>">
-    link</a> to verify your account.
+    Please click this <%= link_to 'link', url_for(verify_user_url(token: @token, only_path: false)) %>
+    to verify your account.
 </p>
 </body>
 </html>

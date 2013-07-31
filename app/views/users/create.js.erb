@@ -1,9 +1,9 @@
 (function () {
     var modal = $('.modal');
-    var submit = $('#submit');
+    var submit = $('.modal #submit');
     stop_spinner();
     //Remove Previous Errors
-    $('small').remove();
+    $('.popup small').remove();
     $('.error').removeClass('error');
     //Hide Modal
     modal.removeClass('mfp-ready');

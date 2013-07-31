@@ -8,10 +8,10 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
-  before_create do |user|
-    user.email = email.downcase
-    user.verified = false
-    user.email_token = SecureRandom.urlsafe_base64 32, false
+  before_validation do
+    self.email = email.downcase
+    self.verified = false
+    self.email_token = SecureRandom.urlsafe_base64 32, false
   end
 
   scope :old_unverified, -> { where('verified = ? AND created_at < ?', false, Time.now.ago(1.week)) }
@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
   validates :password, length: {minimum: 6, maximum: 50}
   validates :password_confirmation, presence: true
   validates :email_token, uniqueness: {case_sensitive: true}
-  validates :password_reset_token, uniqueness: {case_sensitive: true}
+  validates :password_reset_token, uniqueness: {case_sensitive: true, allow_nil: true}
 
   def verify
     update_attribute 'verified', true

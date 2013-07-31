@@ -2,6 +2,11 @@
   display: none !important;
 }
 
+//Because Zurb added negative margins to smalls using this same expression, I have no clue why
+.error small.error {
+  margin-top: 0;
+}
+
 body {
   min-width: 320px;
 }

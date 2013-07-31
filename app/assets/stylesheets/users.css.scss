@@ -64,18 +64,23 @@
 }
 
 //Registration Modal
-#dynamic_recaptcha {
-  height: 132px;
-  width: 440px;
-  margin: 15px auto 25px auto;
-}
+#register {
+  #dynamic_recaptcha {
+    height: 132px;
+    width: 440px;
+    margin: 15px auto 25px auto;
+  }
 
-h3 {
-  margin-top: 0;
-}
+  h3 {
+    margin-top: 0;
+  }
 
-.forms {
-  margin: 40px auto 10px auto;
+  .forms {
+    margin: 40px auto 10px auto;
+  }
+  label {
+    text-align: right;
+  }
 }
 
 //Services Box

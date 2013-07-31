@@ -1,10 +1,10 @@
 <% if flash[:errors] %>
 stop_spinner();
-if (!$('small').length)
+if (!$('.error').length)
     {
-        $('#password').after('<small class="error">Incorrect Password</small> ');
+        $('.modal #password').after('<small class="error">Incorrect Password</small> ');
     }
-$('.row').addClass('error');
+$('.modal .row').addClass('error');
 <% else %>
 window.location.replace('<%= logout_url %>');
 <% end %>

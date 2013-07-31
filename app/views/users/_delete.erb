@@ -2,9 +2,11 @@
     <header>
         <h3>Delete My Account</h3>
     </header>
-    <p>
-        Please confirm your password. Note that there is no way to undo this action.
-    </p>
+    <section class="message">
+        <p>
+            Please confirm your password. Note that there is no way to undo this action.
+        </p>
+    </section>
     <%= form_tag user_path, method: :delete, onsubmit: 'show_spinner();', remote: true do %>
         <div class="row">
             <div class="large-4 columns">
