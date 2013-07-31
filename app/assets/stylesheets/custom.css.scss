@@ -10,11 +10,6 @@ body {
   padding: 0 20px;
 }
 
-.button {
-  border-radius: 2px;
-  box-shadow: 0 0 1px black;
-}
-
 .top-bar {
   @media only screen and(max-width: 799px) {
     margin-bottom: 1em !important;
@@ -91,8 +86,9 @@ footer {
   position: relative;
   background: #FFF;
   padding: 20px 20px 0 20px;
-  width: auto;
   margin: 20px auto;
+  max-width: 650px;
+  width: 40%;
 }
 
 #warning ul {
