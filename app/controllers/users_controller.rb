@@ -39,9 +39,12 @@ class UsersController < ApplicationController
     respond_to { |f| f.js }
   end
 
+  def edit
+    redirect_to new_session_path if current_user.nil?
+  end
+
   def show
     respond_to do |format|
-      format.html { redirect_to login_path if current_user.nil? }
       format.json do
         unless current_user
           render status: :not_found, text: 'User Not Logged In'
