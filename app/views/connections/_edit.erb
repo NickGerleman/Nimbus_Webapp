@@ -5,8 +5,7 @@
     <p>
         Rename your connection.
     </p>
-    <%= form_tag connection_path(params[:id]), method: :patch, onsubmit: 'show_spinner();',
-                 remote: true do %>
+    <%= form_tag connection_path(params[:id]), method: :patch, onsubmit: 'show_spinner();', remote: true do %>
         <div class="row">
             <div class="large-4 columns">
                 <%= label_tag :name, 'Name:', class: 'inline' %>

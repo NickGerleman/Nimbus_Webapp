@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20130731071128) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name",       default: "Unnamed Connection"
-    t.datetime "expires_at", default: '2013-07-28 20:41:07'
+    t.datetime "expires_at", default: '2013-07-31 14:28:55'
   end
 
   add_index "connections", ["expires_at"], name: "index_connections_on_expires_at"

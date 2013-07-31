@@ -21,9 +21,11 @@
         <div id="register-here">
             <h2>Register Now</h2>
 
-            <p>Register now to be able to connect Nimbus to your accounts. All of you personal information is
-                stored securely. Passwords are hashed and salted using the bcrypt library.</p>
-            <a href="<%= new_user_path %>" class="button large ajax-popup" id="register-button">Register</a>
+            <p>
+                Register now to be able to connect Nimbus to your accounts. All of you personal information is
+                stored securely. Passwords are hashed and salted using the bcrypt library.
+            </p>
+            <%= link_to 'Register', new_user_path, class: 'button large ajax-popup', id: 'register-button' %>
         </div>
     </div>
 </div>

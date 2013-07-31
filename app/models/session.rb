@@ -4,7 +4,7 @@ class Session < ActiveRecord::Base
   validates :expiration, presence: true
   validates :user_id, presence: true
 
-  after_find {|session| session.destroy if session.expired?}
+  after_find { |session| session.destroy if session.expired? }
 
   belongs_to :user
   scope :expired, -> { where('expiration <= ?', Time.now) }

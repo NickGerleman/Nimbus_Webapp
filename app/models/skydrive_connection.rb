@@ -8,4 +8,5 @@ class SkydriveConnection < Connection
   def short_service_name
     'skydrive'
   end
+
 end

@@ -3,8 +3,7 @@
     <header>
         <h3>Register</h3>
     </header>
-    <%= form_for @user, remote: true, html: {class: 'form-horizontal', onsubmit: 'show_spinner();'} do |f|
-    %>
+    <%= form_for @user, remote: true, html: {class: 'form-horizontal', onsubmit: 'show_spinner();'}, url: user_path do |f| %>
         <section class="forms">
             <div class="row">
                 <div class="large-5 columns">

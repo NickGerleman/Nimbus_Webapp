@@ -70,7 +70,6 @@
   margin: 15px auto 25px auto;
 }
 
-
 h3 {
   margin-top: 0;
 }
@@ -80,14 +79,14 @@ h3 {
 }
 
 //Services Box
-#services{
-  p{
+#services {
+  p {
     margin: 0;
   }
-  form{
+  form {
     display: inline;
   }
-  h4:not(:first-child){
+  h4:not(:first-child) {
     margin-top: 20px;
   }
 }

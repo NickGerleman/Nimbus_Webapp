@@ -7,8 +7,8 @@ class ConnectionUpdateMessageWorker
     connection = Connection.find(connection_id)
     connection = ConnectionSerializer.new(connection).serializable_hash
     message = {
-     message_type: "connection_update",
-     message_content: connection
+        message_type: "connection_update",
+        message_content: connection
     }
     json_message = JSON.dump(message)
     FAYE.subscribe(channel)

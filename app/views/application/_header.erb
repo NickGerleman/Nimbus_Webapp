@@ -37,8 +37,7 @@
                 <li><%= link_to 'Logout', session_path, method: :delete %></li>
             <% else %>
                 <% if (yield :title_suffix)=='Login' %>
-                    <li><%= link_to 'Login', new_session_url ,protocol: secure_protocol, only_path: false,
-                                    class: 'active' %></li>
+                    <li><%= link_to 'Login', new_session_url ,protocol: secure_protocol, only_path: false, class: 'active' %></li>
                 <% else %>
                     <li><%= link_to 'Login', new_session_url ,protocol: secure_protocol, only_path: false %></li>
                 <% end %>

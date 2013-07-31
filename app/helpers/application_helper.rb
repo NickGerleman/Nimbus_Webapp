@@ -13,7 +13,7 @@ module ApplicationHelper
 
   #whether the user is using a non desktop browser based on useragent
   def mobile?
-      browser.mobile? || browser.tablet?
+    browser.mobile? || browser.tablet?
   end
 
   # The name of the current user
@@ -39,7 +39,6 @@ module ApplicationHelper
     raise 'No user' unless current_user
     @verified ||= current_user.verified
   end
-
 
 
 end

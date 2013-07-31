@@ -8,4 +8,5 @@ class BoxConnection < Connection
   def short_service_name
     'box'
   end
+
 end

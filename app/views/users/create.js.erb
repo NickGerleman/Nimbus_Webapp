@@ -12,39 +12,38 @@
     Recaptcha.reload();
     <% end %>
     //Wait for fade-out to complete
-    setTimeout(function ()
-    {
+    setTimeout(function () {
         <% if @user.errors.any?%>
         //Recaptcha errors have key of :base
         <% if @user.errors.has_key? :base %>
-            $('#recaptcha_area').after('<small class="error">Incorrect Response</small>');
+        $('#recaptcha_area').after('<small class="error">Incorrect Response</small>');
         <% end %>
         //Highlight Confirmattion fields if normal field is invalid
         <% if @user.errors.has_key? :email %>
-            <% @user.errors.add :email_confirmation, 'ignore' %>
+        <% @user.errors.add :email_confirmation, 'ignore' %>
         <% end %>
         <% if @user.errors.has_key? :password %>
-            <% @user.errors.add :password_confirmation, 'ignore' %>
+        <% @user.errors.add :password_confirmation, 'ignore' %>
         <% end %>
         //ignore base as it doesn't have a form
         <% @user.errors.keys.reject{|k| k== :base}.each do |key| %>
-            var field = $('#user_<%= key %>');
-            <% @user.errors.get(key).each do |message| %>
-                <% unless message == 'ignore' %>
-                    field.after('<small class="error"><%= @user.errors.full_message key, message %></small>');
-                <% end %>
-            <% end %>
-            field.closest('.row').addClass('error');
+        var field = $('#user_<%= key %>');
+        <% @user.errors.get(key).each do |message| %>
+        <% unless message == 'ignore' %>
+        field.after('<small class="error"><%= @user.errors.full_message key, message %></small>');
+        <% end %>
+        <% end %>
+        field.closest('.row').addClass('error');
         <% end %>
         <% else %>
-            //Create success modal
-            var header = $('.popup header');
-            header.html('<h3>Success</h3>');
-            $('.popup form').remove();
-            header.after('<p>You have been successfully registered. Please check your email for instructions to verify your account.</p>');
-            var footer = $('<footer>');
-            footer.append('<button class="button" onclick="$.magnificPopup.close();">Okay</button>');
-            $('.popup').append(footer);
+        //Create success modal
+        var header = $('.popup header');
+        header.html('<h3>Success</h3>');
+        $('.popup form').remove();
+        header.after('<p>You have been successfully registered. Please check your email for instructions to verify your account.</p>');
+        var footer = $('<footer>');
+        footer.append('<button class="button" onclick="$.magnificPopup.close();">Okay</button>');
+        $('.popup').append(footer);
         <% end %>
         modal.addClass('mfp-ready');
     }, 200);

@@ -4,31 +4,24 @@
 
     <div class="large-8 columns">
         <h1>Welcome <%= user_name %></h1>
-        <%= image_tag(gravatar, id: 'gravatar', alt: 'Gravatar', class: 'hide-for-small', height: '200',width: '200') %>
-        <% if user_verified
-             verified = ' ' %>
-        <% else
-             verified = ' not ' %>
-        <% end %>
+        <%= image_tag(gravatar, id: 'gravatar', alt: 'Gravatar', class: 'show-for-large-up', height: '200', width: '200') %>
+        <% verified = user_verified ? ' ' : ' not ' %>
         <h2>You are<%= verified %>verified</h2>
         <%= link_to 'Delete My Account', delete_user_path, class: 'ajax-popup' %>
     </div>
     <div class="large-4 columns">
-      <section id="services" class="panel">
-        <h3>Connections</h3>
-        <%= render current_user.connections.order('id') %>
-        <% unless current_user.has_max_connections %>
-          <a href="#" class="button" data-dropdown="dropdown">Link a New Account</a>
-          <ul id="dropdown" class="f-dropdown" data-dropdown-content>
-            <li><%= link_to "Box", user_connections_path(service: 'box'), method: :post, class: 'spinner-link' %></li>
-            <li><%= link_to "Dropbox", user_connections_path(service: 'dropbox'), method: :post,
-                            class: 'spinner-link' %></li>
-            <li><%= link_to "Google Drive", user_connections_path(service: 'google'), method: :post,
-                            class: 'spinner-link' %></li>
-            <li><%= link_to "SkyDrive", user_connections_path(service: 'skydrive'), method: :post,
-                            class: 'spinner-link' %></li>
-          </ul>
-          <% end %>
+        <section id="services" class="panel">
+            <h3>Connections</h3>
+            <%= render current_user.connections.order('id') %>
+            <% unless current_user.has_max_connections %>
+                <a href="#" class="button" data-dropdown="dropdown">Link a New Account</a>
+                <ul id="dropdown" class="f-dropdown" data-dropdown-content>
+                    <li><%= link_to "Box", user_connections_path(service: 'box'), method: :post, class: 'spinner-link' %></li>
+                    <li><%= link_to "Dropbox", user_connections_path(service: 'dropbox'), method: :post, class: 'spinner-link' %></li>
+                    <li><%= link_to "Google Drive", user_connections_path(service: 'google'), method: :post, class: 'spinner-link' %></li>
+                    <li><%= link_to "SkyDrive", user_connections_path(service: 'skydrive'), method: :post, class: 'spinner-link' %></li>
+                </ul>
+            <% end %>
         </section>
     </div>
 </div>

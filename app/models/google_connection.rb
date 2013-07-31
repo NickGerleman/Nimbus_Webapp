@@ -8,4 +8,5 @@ class GoogleConnection < Connection
   def short_service_name
     'google'
   end
+
 end

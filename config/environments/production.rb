@@ -11,7 +11,7 @@ NimbusWebapp::Application.configure do
   config.eager_load = true
 
   # Full error reports are disabled and caching is turned on
-  config.consider_all_requests_local       = false
+  config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
   config.static_cache_control = 'public, max-age=86400'
   # Disable Rails's static asset server (Apache or nginx will already do this)
@@ -41,7 +41,7 @@ NimbusWebapp::Application.configure do
   # Use a different logger for distributed setups
   config.logger = Syslog::Logger.new('rails')
   config.lograge.enabled = true
-  
+
   # See everything in the log (default is :info)
   # config.log_level = :warn
 

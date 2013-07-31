@@ -4,7 +4,7 @@ describe 'Login Page' do
 
   subject { page }
 
-  before { visit login_path }
+  before { visit new_session_path }
 
   it { should have_title 'Nimbus | Login' }
   it { should have_selector 'nav' }
@@ -22,7 +22,7 @@ describe 'Correct Login', js: true do
   before do
     User.find_by_email('name@example.com').destroy unless User.find_by_email('name@example.com').nil?
     create(:user)
-    visit login_path
+    visit new_session_path
     fill_in 'email', with: 'name@example.com'
     fill_in 'password', with: 'password'
     click_button 'login-button'
@@ -54,7 +54,7 @@ describe 'Fully Incorrect Login', js: true do
   before do
     User.find_by_email('name@example.com').destroy unless User.find_by_email('name@example.com').nil?
     create(:user)
-    visit login_path
+    visit new_session_path
     fill_in 'email', with: 'invalidcom@bla.n'
     fill_in 'password', with: 'invalidpass'
     click_button 'login-button'
@@ -69,7 +69,7 @@ describe 'Incorrect Email', js: true do
   before do
     User.find_by_email('name@example.com').destroy unless User.find_by_email('name@example.com').nil?
     create(:user)
-    visit login_path
+    visit new_session_path
     fill_in 'email', with: 'invalidcom@bla.n'
     fill_in 'password', with: 'password'
     click_button 'login-button'
@@ -84,7 +84,7 @@ describe 'Incorrect Password', js: true do
   before do
     User.find_by_email('name@example.com').destroy unless User.find_by_email('name@example.com').nil?
     create(:user)
-    visit login_path
+    visit new_session_path
     fill_in 'email', with: 'name@example.com'
     fill_in 'password', with: 'invalidpass'
     click_button 'login-button'
@@ -97,7 +97,7 @@ describe 'Register Page', js: true do
   subject { page }
 
   before do
-    visit login_path
+    visit new_session_path
     click_link 'Register'
   end
 
@@ -124,7 +124,7 @@ describe 'Valid Registration', js: true do
 
   before :each do
     num = rand(100000)
-    visit login_path
+    visit new_session_path
     click_link 'Register'
     fill_in 'Name', with: 'Bob'
     fill_in 'user_email', exact: true, with: "#{num}@example.com"
@@ -148,7 +148,7 @@ describe 'Valid Registration', js: true do
 
   it do
     click_button 'Submit'
-    sleep 0.5
+    sleep 1
     should have_content 'Success'
   end
 
@@ -165,7 +165,7 @@ describe 'invalid_name', js: true do
 
   before :each do
     num = rand(100000)
-    visit login_path
+    visit new_session_path
     click_link 'Register'
     fill_in 'Name', with: 'B'
     fill_in 'user_email', exact: true, with: "#{num}@example.com"
@@ -190,7 +190,7 @@ describe 'invalid_email', js: true do
 
   before :each do
     num = rand(100000)
-    visit login_path
+    visit new_session_path
     click_link 'Register'
     fill_in 'Name', with: 'Bob'
     fill_in 'user_email', exact: true, with: "#{num}@example"
@@ -215,7 +215,7 @@ describe 'non_matching_email', js: true do
 
   before :each do
     num = rand(100000)
-    visit login_path
+    visit new_session_path
     click_link 'Register'
     fill_in 'Name', with: 'Bob'
     fill_in 'user_email', exact: true, with: "#{num}@exampel.com"
@@ -240,7 +240,7 @@ describe 'invalid_password', js: true do
 
   before :each do
     num = rand(100000)
-    visit login_path
+    visit new_session_path
     click_link 'register-button'
     fill_in 'Name', with: 'Bob'
     fill_in 'user_email', exact: true, with: "#{num}@example.com"
@@ -265,7 +265,7 @@ describe 'non_matching_password', js: true do
 
   before :each do
     num = rand(100000)
-    visit login_path
+    visit new_session_path
     click_link 'Register'
     fill_in 'Name', with: 'Bob'
     fill_in 'user_email', exact: true, with: "#{num}@example.com"
@@ -291,7 +291,7 @@ describe 'existing_email', js: true do
   before :each do
     num = rand(100000)
     2.times do
-      visit login_path
+      visit new_session_path
       click_link 'Register'
       fill_in 'Name', with: 'Bob'
       fill_in 'user_email', exact: true, with: "#{num}@example.com"
