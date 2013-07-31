@@ -2,7 +2,7 @@ class StaticPagesController < ApplicationController
 
   def home
     if current_user
-      render 'users/show'
+      redirect_to edit_user_path
     else
       render 'home'
     end

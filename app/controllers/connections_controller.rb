@@ -33,9 +33,13 @@ class ConnectionsController < ApplicationController
     render status: :not_found, text: 'User Connection Not Found'
   end
 
-  # Creates initial session and redirects user to authorize use
   def new
-    if current_user.has_max_connections
+    render partial: 'new', layout: false
+  end
+
+  # Creates initial session and redirects user to authorize use
+  def create
+    if current_user.has_max_connections and params[:id].nil?
       render status: :forbidden, text: 'Connection Limit Reached'
     else
         connection = current_user.connections.find(params[:id]) if params[:id]
@@ -43,7 +47,7 @@ class ConnectionsController < ApplicationController
           when 'dropbox'
             unless params[:id]
               connections = current_user.dropbox_connections
-              name = "Connection #{connections.count + 1}"
+              name = "Dropbox Connection #{connections.count + 1}"
               connection = connections.create(state: 'in_progress', name: name)
             end
             @client = Signet::OAuth2::Client.new(
@@ -61,7 +65,7 @@ class ConnectionsController < ApplicationController
           when 'google'
             unless params[:id]
               connections = current_user.google_connections
-              name = "Connection #{connections.count + 1}"
+              name = "Google Connection #{connections.count + 1}"
               connection = connections.create(state: 'in_progress', name: name)
             end
             @client = Signet::OAuth2::Client.new(
@@ -76,7 +80,7 @@ class ConnectionsController < ApplicationController
           when 'box'
             unless params[:id]
               connections = current_user.box_connections
-              name = "Connection #{connections.count + 1}"
+              name = "Box Connection #{connections.count + 1}"
               connection = connections.create(state: 'in_progress', name: name)
             end
             @client = Signet::OAuth2::Client.new(
@@ -91,7 +95,7 @@ class ConnectionsController < ApplicationController
           when 'skydrive'
             unless params[:id]
               connections = current_user.skydrive_connections
-              name = "Connection #{connections.count + 1}"
+              name = "SkyDrive Connection #{connections.count + 1}"
               connection = connections.create(state: 'in_progress', name: name)
             end
             @client = Signet::OAuth2::Client.new(

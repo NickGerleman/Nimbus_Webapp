@@ -24,6 +24,8 @@ class User < ActiveRecord::Base
   validates :name, length: {maximum: 50, minimum: 2}
   validates :password, length: {minimum: 6, maximum: 50}
   validates :password_confirmation, presence: true
+  validates :email_token, uniqueness: {case_sensitive: true}
+  validates :password_reset_token, uniqueness: {case_sensitive: true}
 
   def verify
     update_attribute 'verified', true
@@ -34,12 +36,12 @@ class User < ActiveRecord::Base
     self.connections.count >= 5
   end
 
-  def socket_token
-    Gibberish::HMAC(ENV['SOCKET_KEY'], self.id)
-  end
-
   def self.socket_token(id)
     Gibberish::HMAC(ENV['SOCKET_KEY'], id)
+  end
+
+  def socket_token
+    User.socket_token(self.id)
   end
 
 end

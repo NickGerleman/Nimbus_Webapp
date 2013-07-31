@@ -31,4 +31,8 @@ class SessionsController < ApplicationController
     redirect_to root_url
   end
 
+  def new
+
+  end
+
 end

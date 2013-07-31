@@ -4,6 +4,7 @@ jQuery ->
   $(document).foundation()
   refresh_layout()
   init_popups()
+  create_callbacks()
 
 $(window).resize ->
   refresh_layout()
@@ -25,6 +26,10 @@ init_popups = ->
     closeBtnInside: true,
 
   })
+
+create_callbacks = ->
+  $('.spinner-link').click ->
+    show_spinner()
 
 window.show_spinner = ->
   spin_box = $('<div id="spinner_box">')

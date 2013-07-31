@@ -31,9 +31,8 @@ class UsersController < ApplicationController
 
   # Delete the current user if authentication successful, otherwise show errors
   def destroy
-    user = User.find(params[:id])
     if current_user.authenticate params[:password]
-      user.destroy
+      current_user.destroy
     else
       flash.now[:errors]=true
     end
@@ -61,15 +60,6 @@ class UsersController < ApplicationController
     else
       user.verify
     end
-  end
-
-  #blank methods are here so https will be properly forced on these actions
-  def settings
-
-  end
-
-  def login
-
   end
 
   private
