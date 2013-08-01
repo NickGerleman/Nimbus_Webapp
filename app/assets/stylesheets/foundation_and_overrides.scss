@@ -303,7 +303,7 @@ $small-font-size: 70%;
 // Error states for inputs and labels
 
 // $input-error-message-padding: emCalc(6px) emCalc(4px);
-// $input-error-message-top: -($form-spacing) - emCalc(5px);
+$input-error-message-top: 0;
 // $input-error-message-font-size: emCalc(12px);
 // $input-error-message-font-weight: bold;
 // $input-error-message-font-color: #fff;
@@ -454,9 +454,9 @@ $button-border-width: 0;
 
 // Alert padding
 
-// $alert-padding-top: emCalc(11px);
-// $alert-padding-default-float: $alert-padding-top;
-// $alert-padding-opposite-direction: $alert-padding-top + emCalc(10px);
+$alert-padding-top: emCalc(11px);
+$alert-padding-default-float: $alert-padding-top;
+$alert-padding-opposite-direction: $alert-padding-top;
 // $alert-padding-bottom: $alert-padding-top + emCalc(1px);
 
 // Text style
@@ -1146,7 +1146,7 @@ $button-border-width: 0;
 
 // Row padding and font styles
 
-// $table-row-padding: emCalc(9px) emCalc(10px);
+// $table-row-padding: 0 emCalc(20px);
 // $table-row-font-size: emCalc(14px);
 // $table-row-font-color: #222;
 // $table-line-height: emCalc(18px);

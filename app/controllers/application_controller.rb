@@ -15,6 +15,9 @@ class ApplicationController < ActionController::Base
     user_id = session[:user] ||= cookies[:session_token] ? Session.get_user(cookies[:session_token]) : nil
     user_id ? User.find(user_id) : nil
     )
+  rescue ActiveRecord::RecordNotFound
+    cookies.clear
+    session[:user] = nil
   end
 
   helper_method :current_user

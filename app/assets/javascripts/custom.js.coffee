@@ -32,8 +32,8 @@ create_callbacks = ->
     show_spinner()
 
 window.show_spinner = ->
-  spin_box = $('<div id="spinner_box">')
-  spin_overlay = $('<div id="spinner_overlay">')
+  spin_box = $('<div id="spinner-box">')
+  spin_overlay = $('<div id="spinner-overlay">')
   spin_overlay.append(spin_box)
   $(document.body).append(spin_overlay)
   opts = {
@@ -51,7 +51,7 @@ window.show_spinner = ->
   spin_box.spin(opts)
 
 window.stop_spinner = ->
-  $('#spinner_overlay').remove()
+  $('#spinner-overlay').remove()
 
 window.compatible = ->
   Modernizr.backgroundsize and

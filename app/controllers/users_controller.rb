@@ -33,10 +33,10 @@ class UsersController < ApplicationController
   def destroy
     if current_user.authenticate params[:password]
       current_user.destroy
+      flash[:mesasge] = 'Account Deleted Successfully'
     else
       flash.now[:errors]=true
     end
-    respond_to { |f| f.js }
   end
 
   def edit

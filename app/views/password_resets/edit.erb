@@ -1,9 +1,9 @@
 <div class="row">
     <% if flash[:errors] %>
-        <h3 id="password_reset_header">Invalid Token</h3>
+        <h3 id="password-reset-header">Invalid Token</h3>
     <% else %>
-        <h3 id="password_reset_header">Reset Your Password</h3>
-        <section id="password_reset_box" class="panel">
+        <h3 id="password-reset-header">Reset Your Password</h3>
+        <section id="password-reset-box" class="panel">
             <%= form_tag user_password_reset_url, method: :patch, remote: true, html: {class: 'form-horizontal', onsubmit: 'show_spinner();'} do %>
                 <%= hidden_field_tag :token, @token %>
                 <div id="inputs">

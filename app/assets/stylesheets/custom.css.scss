@@ -1,18 +1,22 @@
+.alert-box {
+  text-align: center;
+  margin: auto;
+  max-width: 600px;
+  min-width: 200px;
+  width: 40%;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  margin: 0 -20%;
+  z-index: 1;
+}
+
 .hide {
   display: none !important;
 }
 
-//Because Zurb added negative margins to smalls using this same expression, I have no clue why
-.error small.error {
-  margin-top: 0;
-}
-
 body {
   min-width: 320px;
-}
-
-.row {
-  padding: 0 20px;
 }
 
 .top-bar {
@@ -178,14 +182,14 @@ footer {
   background-size: 210px 42px;
 }
 
-#spinner_overlay {
+#spinner-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   z-index: 1999999998;
-  #spinner_box {
+  #spinner-box {
     position: absolute;
     top: 50%;
     left: 50%;
