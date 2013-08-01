@@ -1,9 +1,12 @@
 <% if @user.errors.any? %>
 stop_spinner();
-if (!$('.error').length)
-{
-    $('#password_confirmation').after('<small class="error"><%= @user.errors.full_messages.first %></small> ');
-}
+$('small.error').remove();
+<% @user.errors.full_messages_for(:password).each do |error| %>
+$('#password').after('<small class="error"><%= error %></small> ');
+<% end %>
+<% @user.errors.full_messages_for(:password_confirmation).each do |error| %>
+$('#password_confirmation').after('<small class="error"><%= error %></small> ');
+<% end %>
 $('#inputs').addClass('error');
 <% else %>
 <% flash[:message] = 'Password Changed Successfully' %>
