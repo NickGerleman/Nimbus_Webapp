@@ -7,6 +7,5 @@ class Oauth2AuthWorker
     client.code = code
     client.fetch_access_token!
     connection.update_attributes(session: client, state: 'success')
-    ConnectionUpdateMessageWorker.perform_async(connection.user.id, connection_id)
   end
 end

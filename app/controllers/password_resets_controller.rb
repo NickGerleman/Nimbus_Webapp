@@ -7,8 +7,8 @@ class PasswordResetsController < ApplicationController
   def create
     user = User.find_by(email: params[:email].downcase)
     if user
-      user.update_attribute(:password_reset_token, SecureRandom.urlsafe_base64(32, false))
-      UserMailer.delay.reset_password(user.id)
+      user.generate_password_reset_token
+      user.send_password_reset
     else
       flash.now[:errors]=true
     end
@@ -23,10 +23,8 @@ class PasswordResetsController < ApplicationController
   def update
     @user = User.find_by(password_reset_token: params[:token])
     if @user
-      @user.update_attributes(password: params[:password],
-                              password_confirmation: params[:password_confirmation],
-                              email_confirmation: @user.email,
-                              password_rest_token: nil)
+      @user.update_reset_password(password: params[:password],
+                                  password_confirmation: params[:password_confirmation])
     else
       render status: :not_found, text: 'Invalid Token'
     end

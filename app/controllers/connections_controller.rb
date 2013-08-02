@@ -27,14 +27,9 @@ class ConnectionsController < ApplicationController
   def destroy
     connection = current_user.connections.find(params[:id])
     connection.destroy
-    ConnectionRemoveMessageWorker.perform_async(current_user.id, params[:id])
     redirect_to root_path
   rescue ActiveRecord::RecordNotFound
     render status: :not_found, text: 'User Connection Not Found'
-  end
-
-  def new
-    render partial: 'new', layout: false
   end
 
   # Creates initial session and redirects user to authorize use
@@ -155,7 +150,6 @@ class ConnectionsController < ApplicationController
 
   def update
     current_user.connections.find(params[:id]).update(name: params[:name])
-    ConnectionUpdateMessageWorker.perform_async(current_user.id, params[:id])
   rescue ActiveRecord::RecordNotFound
     render status: :not_found, text: 'User Connection Not Found'
   end

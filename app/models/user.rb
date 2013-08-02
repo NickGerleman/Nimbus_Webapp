@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
     self.email_token = SecureRandom.urlsafe_base64 32, false
   end
 
+  after_create { send_verify_email }
+
   scope :old_unverified, -> do
     where('verified = ? AND created_at < ?', false, Time.now.ago(1.week))
   end
@@ -59,7 +61,26 @@ class User < ActiveRecord::Base
   end
 
   def socket_token
-    User.socket_token(self.id)
+    User.socket_token(id)
+  end
+
+  def send_verify_email
+    UserMailer.delay.verify_email(id)
+  end
+
+  def generate_password_reset_token
+    update_attribute(:password_reset_token, SecureRandom.urlsafe_base64(32, false))
+  end
+
+  def send_password_reset
+    UserMailer.delay.reset_password(id)
+  end
+
+  def update_reset_password(opts)
+    update_attributes(password: opts[:password],
+                      password_confirmation: opts[:password_confirmation],
+                      email_confirmation: email,
+                      password_reset_token: nil)
   end
 
 end
