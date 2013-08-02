@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  #URL options
+  # URL options
   def default_url_options
     {
         host: ENV['HOST'] || '127.0.0.1:8080',

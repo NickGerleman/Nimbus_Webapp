@@ -7,34 +7,29 @@ module ApplicationHelper
     "#{title_base} | #{title_suffix}"
   end
 
+  # HTTP or HTTPS depending on environment
   def secure_protocol
     Rails.env.production? ? 'https' : 'http'
   end
 
-  #whether the user is using a non desktop browser based on useragent
+  # Whether the user is using a non desktop browser based on useragent
   def mobile?
     browser.mobile? || browser.tablet?
   end
 
   # The name of the current user
-  #
-  # @raise [RuntimeError] if there is no current user
   def user_name
     raise 'No user' unless current_user
     @name ||= current_user.name
   end
 
   # The email address of the current user
-  #
-  # @raise [RuntimeError] if there is no current user
   def user_email
     raise 'No user' unless current_user
     @email ||= current_user.name
   end
 
   # Whether the user has verified their email address
-  #
-  # @raise [RuntimeError] if there is no current user
   def user_verified
     raise 'No user' unless current_user
     @verified ||= current_user.verified

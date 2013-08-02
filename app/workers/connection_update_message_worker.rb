@@ -2,6 +2,7 @@ class ConnectionUpdateMessageWorker
   include Sidekiq::Worker
   require 'json'
 
+  # Sends Faye message that a connection has been added or updated
   def perform(user_id, connection_id)
     channel = "/#{user_id}"
     connection = Connection.find(connection_id)

@@ -36,7 +36,7 @@ describe 'Correct Login', js: true do
   it { should have_content 'Account' }
 
   it do
-    visit user_path
+    visit edit_user_path
     should have_content 'Bob'
   end
 

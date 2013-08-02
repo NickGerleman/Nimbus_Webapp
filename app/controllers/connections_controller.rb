@@ -1,7 +1,7 @@
 class ConnectionsController < ApplicationController
   force_ssl(only: :authorize) if Rails.env.production?
 
-  #Get Ttoken after OAuth Callback
+  # Get Token after OAuth Callback
   def authorize
     case params[:oauth]
       #Oauth1 code removed
@@ -23,7 +23,7 @@ class ConnectionsController < ApplicationController
     render status: :not_found, text: 'User Connection Not FOund'
   end
 
-  #Delete the Connection
+  # Delete the Connection
   def destroy
     connection = current_user.connections.find(params[:id])
     connection.destroy
@@ -56,7 +56,7 @@ class ConnectionsController < ApplicationController
                                     only_path: false,
                                     oauth: 'oauth2')
           )
-          #Workaround for Dropbox refusing code if access_type or approval_prompt is present
+          # Workaround for Dropbox refusing code if access_type or approval_prompt is present
           connection.update_attributes(session: @client, state: 'in_progress')
           url = @client.authorization_uri.to_s.chomp('access_type=offline&approval_prompt=force&')
           redirect_to url
@@ -127,6 +127,7 @@ class ConnectionsController < ApplicationController
     render status: :not_found, text: 'User Connection Not Found'
   end
 
+  # Render a connection using JSON according to the API
   def show
     render status: :not_found, text: 'User Not Logged In' unless current_user
     connection = current_user.connections.find(params[:id])
@@ -135,6 +136,7 @@ class ConnectionsController < ApplicationController
     render status: :not_found, text: 'User Connection Not Found'
   end
 
+  # List all the connections the user has
   def index
     unless current_user
       render status: :not_found, text: 'User Not Logged In'
@@ -144,10 +146,12 @@ class ConnectionsController < ApplicationController
     render json: connections, each_serializer: ConnectionSerializer, root: false
   end
 
+  # Show form for renaming a connection
   def edit
     render partial: 'edit', layout: false
   end
 
+  # Rename the connection
   def update
     current_user.connections.find(params[:id]).update(name: params[:name])
   rescue ActiveRecord::RecordNotFound

@@ -1,5 +1,6 @@
 "use strict"
 
+# jQuery function is shortcut for once DOM is ready
 jQuery ->
   $(document).foundation()
   refresh_layout()
@@ -12,6 +13,7 @@ $(window).resize ->
 refresh_layout = ->
   adjust_footer()
 
+# Should eventually move to CSS
 adjust_footer = ->
   height = $(window).height()
   $('#content').css('min-height', (height - 175) + 'px')
@@ -23,8 +25,7 @@ init_popups = ->
     type: 'ajax',
     preloader: false,
     removalDelay: 200,
-    closeBtnInside: true,
-
+    closeBtnInside: true
   })
 
 create_callbacks = ->
@@ -44,6 +45,7 @@ window.show_spinner = ->
     corners: 1,
     color: '#fff',
     shadow: false,
+    # Causes issues with my laptop and Chrome when quickly closing the spinner
     hwaccel: false,
     className: 'spinner',
     zIndex: 2e9,
@@ -72,4 +74,5 @@ window.compatible = ->
   Modernizr.csstransforms and
   Modernizr.csstransitions and
   Modernizr.svg and
+  # Check if it correctly parses ISO 8601 time
   Date.parse('2013-07-24T07:24:04-05:00') == 1374668644000

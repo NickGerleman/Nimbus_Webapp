@@ -31,6 +31,7 @@ class SessionsController < ApplicationController
     redirect_to root_url
   end
 
+  # Blank method is included here so the force_ssl option will work for the new page
   def new
 
   end

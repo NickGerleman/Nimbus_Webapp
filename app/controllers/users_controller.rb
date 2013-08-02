@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   force_ssl(except: :verify) if Rails.env.production?
 
-  # Create a new user and send a verification email
+  # Create a new user
   def create
     @user = User.new user_params
     respond_to do |format|
@@ -28,7 +28,7 @@ class UsersController < ApplicationController
     render partial: 'delete', layout: false
   end
 
-  # Delete the current user if authentication successful, otherwise show errors
+  # Delete the current user
   def destroy
     if current_user.authenticate params[:password]
       current_user.destroy
@@ -38,6 +38,7 @@ class UsersController < ApplicationController
     end
   end
 
+  # The settings page
   def edit
     redirect_to new_session_path if current_user.nil?
   end
@@ -64,6 +65,7 @@ class UsersController < ApplicationController
     end
   end
 
+  # Resends the verification email
   def resend_verification
     if current_user
       current_user.send_verify_email

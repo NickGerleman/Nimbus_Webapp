@@ -2,6 +2,7 @@ class ConnectionRemoveMessageWorker
   include Sidekiq::Worker
   require 'json'
 
+  # Sends Faye message that a connection has been removed
   def perform(user_id, connection_id)
     channel = "/#{user_id}"
     message = {

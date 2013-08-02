@@ -9,12 +9,14 @@ class Session < ActiveRecord::Base
   belongs_to :user
   scope :expired, -> { where('expiration <= ?', Time.now) }
 
+  # Finds the user who owns the session with the corresponding token
   def self.get_user(token)
     session = self.find_by_token token
     return nil if session.nil? or session.expired?
     session.user
   end
 
+  # Whether the session has expired
   def expired?
     self.expiration < Time.now
   end
