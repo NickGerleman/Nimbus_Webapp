@@ -5,10 +5,20 @@
             <%= form_tag session_path, remote: true, onsubmit: 'show_spinner();' do %>
                 <h3>Login</h3>
                 <%= label_tag :email, 'Email Address:', class: 'control-label' %>
-                <%= email_field_tag :email, nil, placeholder: 'name@example.com', required: true %>
+                <%=
+                    email_field_tag :email,
+                                    nil,
+                                    placeholder: 'name@example.com',
+                                    required: true
+                %>
                 <%= label_tag :password, 'Password:', class: 'control-label' %>
                 <%= password_field_tag :password, nil, required: true %>
-                <%= label_tag :remember, 'Remember Me:', class: 'control-label', id: 'remember-label' %>
+                <%=
+                    label_tag :remember,
+                              'Remember Me:',
+                              class: 'control-label',
+                              id: 'remember-label'
+                %>
                 <%= check_box_tag :remember %>
                 <div id="links">
                     <%= link_to 'Forgot My Password', new_user_password_reset_path, class: 'ajax-popup' %>
@@ -22,10 +32,16 @@
             <h2>Register Now</h2>
 
             <p>
-                Register now to be able to connect Nimbus to your accounts. All of you personal information is
-                stored securely. Passwords are hashed and salted using the bcrypt library.
+                Register now to be able to connect Nimbus to your accounts. All of you personal
+                information is stored securely. Passwords are hashed and salted using the bcrypt
+                library.
             </p>
-            <%= link_to 'Register', new_user_path, class: 'button large ajax-popup', id: 'register-button' %>
+            <%=
+                link_to 'Register',
+                        new_user_path,
+                        class: 'button large ajax-popup',
+                        id: 'register-button'
+            %>
         </div>
     </div>
 </div>

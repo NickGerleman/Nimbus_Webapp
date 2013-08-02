@@ -10,11 +10,11 @@ class SessionsController < ApplicationController
         user.sessions.first.destroy if user.sessions.count > 10
         if params[:remember]
           user.sessions.create token: token, expiration: Time.now.advance(months: 1)
-          cookies[:session_token] = {value: token, expires_in: 1.month, secure: Rails.env.production?}
-          session[:user] = user.id
-        else
-          session[:user] = user.id
+          cookies[:session_token] = {value: token,
+                                     expires_in: 1.month,
+                                     secure: Rails.env.production?}
         end
+        session[:user] = user.id
       else
         flash.now[:errors] = true
       end

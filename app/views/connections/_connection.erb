@@ -7,16 +7,41 @@
             Connecting Your Account, Please Wait...
         <% when 'error' %>
             Error
-            <%= link_to 'Try Again?', user_connections_path(service: connection.short_service_name, id: id), method: :post %> -
-            <%= link_to('Delete', connection_path(id), method: :delete, class: 'spinner-link') %>
+            <%=
+                link_to 'Try Again?',
+                        user_connections_path(service: connection.short_service_name, id: id),
+                        method: :post
+            %>
+            -
+            <%=
+                link_to('Delete',
+                        connection_path(id),
+                        method: :delete,
+                        class: 'spinner-link')
+            %>
         <% when 'expired' %>
             Your Session Has Expired
-            <%= link_to 'Reconnect', user_connections_path(service: connection.short_service_name, id: id),
-                        method: :post %> -
-            <%= link_to('Delete', connection_path(id), method: :delete, class: 'spinner-link') %>
+            <%=
+                link_to 'Reconnect',
+                        user_connections_path(service: connection.short_service_name, id: id),
+                        method: :post
+            %>
+            -
+            <%=
+                link_to 'Delete',
+                        connection_path(id),
+                        method: :delete,
+                        class: 'spinner-link'
+            %>
         <% when 'success' %>
-            <%= link_to 'Rename', edit_connection_path(id), class: 'ajax-popup' %> -
-            <%= link_to('Delete', connection_path(id), method: :delete, class: 'spinner-link') %>
+            <%= link_to 'Rename', edit_connection_path(id), class: 'ajax-popup' %>
+            -
+            <%=
+                link_to 'Delete',
+                        connection_path(id),
+                        method: :delete,
+                        class: 'spinner-link'
+            %>
         <% else
              raise "Invalid State (was #{state})"
            end %>

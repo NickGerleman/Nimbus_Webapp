@@ -7,7 +7,11 @@
             Enter Your Email Address
         </p>
     </section>
-    <%= form_tag user_password_reset_path, onsubmit: 'show_spinner();', remote: true do %>
+    <%=
+        form_tag user_password_reset_path,
+                 onsubmit: 'show_spinner();',
+                 remote: true do
+    %>
         <div class="row">
             <div class="large-4 columns">
                 <%= label_tag :email, 'Email Address:', class: 'inline' %>

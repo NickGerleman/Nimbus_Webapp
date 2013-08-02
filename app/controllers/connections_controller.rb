@@ -56,11 +56,15 @@ class ConnectionsController < ApplicationController
               authorization_uri: 'https://www.dropbox.com/1/oauth2/authorize',
               token_credential_uri: 'https://api.dropbox.com/1/oauth2/token',
               state: connection.id.to_s,
-              redirect_uri: url_for(controller: :connections, action: :authorize, only_path: false, oauth: 'oauth2')
+              redirect_uri: url_for(controller: :connections,
+                                    action: :authorize,
+                                    only_path: false,
+                                    oauth: 'oauth2')
           )
           #Workaround for Dropbox refusing code if access_type or approval_prompt is present
           connection.update_attributes(session: @client, state: 'in_progress')
-          redirect_to @client.authorization_uri.to_s.gsub('access_type=offline&approval_prompt=force&', '')
+          url = @client.authorization_uri.to_s.chomp('access_type=offline&approval_prompt=force&')
+          redirect_to url
           return
         when 'google'
           unless params[:id]
@@ -75,7 +79,10 @@ class ConnectionsController < ApplicationController
               client_secret: ENV['GOOGLE_CLIENT_SECRET'],
               scope: 'https://www.googleapis.com/auth/drive',
               state: connection.id.to_s,
-              redirect_uri: url_for(controller: :connections, action: :authorize, only_path: false, oauth: 'oauth2')
+              redirect_uri: url_for(controller: :connections,
+                                    action: :authorize,
+                                    only_path: false,
+                                    oauth: 'oauth2')
           )
         when 'box'
           unless params[:id]
@@ -90,7 +97,10 @@ class ConnectionsController < ApplicationController
               client_secret: ENV['BOX_CLIENT_SECRET'],
               response_type: 'code',
               state: connection.id.to_s,
-              redirect_uri: url_for(controller: :connections, action: :authorize, only_path: false, oauth: 'oauth2')
+              redirect_uri: url_for(controller: :connections,
+                                    action: :authorize,
+                                    only_path: false,
+                                    oauth: 'oauth2')
           )
         when 'skydrive'
           unless params[:id]
@@ -106,7 +116,10 @@ class ConnectionsController < ApplicationController
               response_type: 'code',
               scope: 'wl.offline_access',
               state: connection.id.to_s,
-              redirect_uri: url_for(controller: :connections, action: :authorize, only_path: false, oauth: 'oauth2')
+              redirect_uri: url_for(controller: :connections,
+                                    action: :authorize,
+                                    only_path: false,
+                                    oauth: 'oauth2')
           )
         else
           raise status: :bad_request, text: 'Invalid Service'

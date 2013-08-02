@@ -3,7 +3,12 @@
     <header>
         <h3>Register</h3>
     </header>
-    <%= form_for @user, remote: true, html: {class: 'form-horizontal', onsubmit: 'show_spinner();'}, url: user_path do |f| %>
+    <%=
+        form_for @user,
+                 remote: true,
+                 html: {class: 'form-horizontal', onsubmit: 'show_spinner();'},
+                 url: user_path do |f|
+    %>
         <section class="forms">
             <div class="row">
                 <div class="large-5 columns">
@@ -29,7 +34,12 @@
                 </div>
 
                 <div class="large-7 columns">
-                    <%= f.text_field :email_confirmation, placeholder: 'name@example.com', autocomplete: 'off', required: true %>
+                    <%=
+                        f.text_field :email_confirmation,
+                                     placeholder: 'name@example.com',
+                                     autocomplete: 'off',
+                                     required: true
+                    %>
                 </div>
             </div>
 
