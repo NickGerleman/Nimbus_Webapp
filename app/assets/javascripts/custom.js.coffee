@@ -44,7 +44,7 @@ window.show_spinner = ->
     corners: 1,
     color: '#fff',
     shadow: false,
-    hwaccel: true,
+    hwaccel: false,
     className: 'spinner',
     zIndex: 2e9,
   }

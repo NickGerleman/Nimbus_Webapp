@@ -1,0 +1,10 @@
+stop_spinner();
+<% if @errors %>
+var alert = $('<div data-alert class="alert-box alert">');
+alert.append('Unable To Resend Verification Email');
+<% else %>
+var alert = $('<div data-alert class="alert-box success">');
+alert.append('Unable To Resend Verification Email');
+<% end %>
+alert.append('<a href="#" class="close">&times;</a>');
+$('body').prepend(alert);

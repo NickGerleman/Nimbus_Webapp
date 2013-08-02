@@ -1,5 +1,5 @@
 stop_spinner();
-<% if flash[:errors] %>
+<% if @errors %>
 if (!$('.error').length)
     {
         $('.modal #email').after('<small class="error">Email Address Not Registered</small> ');

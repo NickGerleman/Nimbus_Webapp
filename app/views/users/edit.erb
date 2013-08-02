@@ -1,9 +1,9 @@
-<% provide :title_suffix, 'Account' %>
+<% provide :title_suffix, 'Settings' %>
 
 <div class="row">
 
     <div class="large-8 columns">
-        <h1>Welcome <%= user_name %></h1>
+        <h1>Welcome <%= current_user.name %></h1>
         <%=
             image_tag gravatar,
                       id: 'gravatar',
@@ -12,9 +12,22 @@
                       height: '200',
                       width: '200'
         %>
-        <% verified = user_verified ? ' ' : ' not ' %>
-        <h2>You are<%= verified %>verified</h2>
-        <%= link_to 'Delete My Account', delete_user_path, class: 'ajax-popup' %>
+        <% if current_user.verified %>
+            <h4>Your email address has been verified.</h4>
+        <% else %>
+            <h4>Your email address has not been verified.</h4>
+            <div class="settings-link">
+                <%=
+                    link_to 'Resend Verification',
+                            resend_verification_user_path,
+                            class: 'spinner-link',
+                            remote: true
+                %>
+            </div>
+        <% end %>
+        <div class="settings-link">
+            <%= link_to 'Delete My Account', delete_user_path, class: 'ajax-popup' %>
+        </div>
     </div>
     <div class="large-4 columns">
         <section id="services" class="panel">

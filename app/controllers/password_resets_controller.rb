@@ -10,14 +10,14 @@ class PasswordResetsController < ApplicationController
       user.generate_password_reset_token
       user.send_password_reset
     else
-      flash.now[:errors]=true
+      @errors = true
     end
   end
 
   def edit
     @token = params[:token]
     user = User.find_by(password_reset_token: @token)
-    flash.now[:errors] = true unless user
+    @errors = true unless user
   end
 
   def update

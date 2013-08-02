@@ -34,7 +34,7 @@ class UsersController < ApplicationController
       current_user.destroy
       flash[:mesasge] = 'Account Deleted Successfully'
     else
-      flash.now[:errors]=true
+      @errors = true
     end
   end
 
@@ -58,9 +58,17 @@ class UsersController < ApplicationController
   def verify
     user = User.find_by_email_token(params[:token])
     if user.nil?
-      flash.now[:incorrect]=true
+      @errors = true
     else
       user.verify
+    end
+  end
+
+  def resend_verification
+    if current_user
+      current_user.send_verify_email
+    else
+      @errors = true
     end
   end
 

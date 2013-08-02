@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
         end
         session[:user] = user.id
       else
-        flash.now[:errors] = true
+        @errors = true
       end
       format.js
     end

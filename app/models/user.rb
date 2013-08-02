@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   after_create { send_verify_email }
 
   scope :old_unverified, -> do
-    where('verified = ? AND created_at < ?', false, Time.now.ago(1.week))
+    where("verified = 'false' AND created_at < ?", Time.now.ago(1.week))
   end
 
   #Taken from Rails Tutorial

@@ -41,7 +41,8 @@
         header.html('<h3>Success</h3>');
         $('.popup form').remove();
         header.after('<p>You have been successfully registered. Please check your email for ' +
-                'instructions to verify your account.</p>');
+                'instructions to verify your account. Your account will be deleted if you do not' +
+                'verify your email address within one week.</p>');
         var footer = $('<footer>');
         footer.append('<button class="button" onclick="$.magnificPopup.close();">Okay</button>');
         $('.popup').append(footer);

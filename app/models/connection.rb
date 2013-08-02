@@ -32,4 +32,11 @@ class Connection < ActiveRecord::Base
     update_attribute(:state, 'expired')
   end
 
+  def authorize(code)
+    client = self.session
+    client.code = code
+    client.fetch_access_token!
+    update_attributes(session: client, state: 'success')
+  end
+
 end
