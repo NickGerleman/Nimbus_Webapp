@@ -4,7 +4,7 @@ var alert = $('<div data-alert class="alert-box alert">');
 alert.append('Unable To Resend Verification Email');
 <% else %>
 var alert = $('<div data-alert class="alert-box success">');
-alert.append('Unable To Resend Verification Email');
+alert.append('Verification Email Sent Successfully');
 <% end %>
 alert.append('<a href="#" class="close">&times;</a>');
 $('body').prepend(alert);

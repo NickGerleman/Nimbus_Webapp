@@ -67,7 +67,7 @@ class UsersController < ApplicationController
 
   # Resends the verification email
   def resend_verification
-    if current_user
+    if current_user and !current_user.verified
       current_user.send_verify_email
     else
       @errors = true
