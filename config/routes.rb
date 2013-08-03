@@ -1,9 +1,11 @@
 NimbusWebapp::Application.routes.draw do
 
-  constraints protocol: (Rails.env.production? ? 'https://' : 'http://'), subdomain: 'api' do
-    resources :connections, only: [:show], defaults: {format: :json}
-    resource :user, only: [:show] do
-      resources :connections, only: [:index], defaults: {format: :json}
+  scope '/api' do
+    constraints protocol: (Rails.env.production? ? 'https://' : 'http://') do
+      resources :connections, only: [:show], defaults: {format: :json}
+      resource :user, only: [:show], defaults: {format: :json} do
+        resources :connections, only: [:index]
+      end
     end
   end
 
