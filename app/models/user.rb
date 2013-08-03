@@ -83,12 +83,11 @@ class User < ActiveRecord::Base
     UserMailer.delay.reset_password(id)
   end
 
-  # Updates the password and clears the password reset token
-  def update_reset_password(opts)
-    update_attributes(password: opts[:password],
-                      password_confirmation: opts[:password_confirmation],
-                      email_confirmation: email,
-                      password_reset_token: nil)
+  # Updates the password
+  def upadte_password(opts)
+    opts[:email_confirmation] = email
+    opts[:password_reset_token] = nil if opts[:reset_password]
+    update_attributes(opts)
   end
 
 end
