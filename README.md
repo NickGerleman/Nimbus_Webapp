@@ -3,7 +3,6 @@
 This is the source code for Nimbus. Although this wasn't designed to be run as a personal service, there is nothing stoping you from doing that if you want to, as long as you don't run it commercially. Feel free to contribute to this project or fork it, just make sure to provide attribution. More inforamtion is available on the wiki.
 
 
-----------
 
 
 ## Setting It Up
@@ -48,9 +47,9 @@ Nimbus requires several environmental variables to be run properly. This can be 
 
    The private key used for RECAPTCHA
 
-  
 
-####The following are the Cryptographic keys used for OAuth on the various providers.
+
+The following are the Cryptographic keys used for OAuth on the various providers.
 
  - BOX\_CLIENT_ID
  - BOX\_CLIENT_SECRET
@@ -61,7 +60,6 @@ Nimbus requires several environmental variables to be run properly. This can be 
  - SKYDRIVE\_CLIENT_ID
  - SKYDRIVE\_CLIENT_SECRET
 
-----------
 
 
 ## Deployment Information
@@ -77,7 +75,6 @@ Currently Heroku Postgres is used as the databse, although this will probably so
 [11]: https://www.digitalocean.com/?refcode=1206d329a7f0
 
 
-----------
 
 
 ## Technologies Used
