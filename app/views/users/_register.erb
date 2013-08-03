@@ -62,7 +62,11 @@
             </div>
         </section>
 
-        <%= recaptcha_tags(display: {theme: 'clean'}, ajax: true) unless Rails.env.test? %>
+        <%=
+            if Rails.env.production? and ENV[:RECAPTCHA_PUBLIC_KEY]
+              recaptcha_tags(display: {theme: 'clean'}, ajax: true)
+            end
+        %>
         <footer>
             <span class="hide load" id="loading">Loading...</span>
             <%= f.submit 'Submit', class: 'button submit', id: 'submit' %>

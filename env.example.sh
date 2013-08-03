@@ -1,0 +1,16 @@
+export HOST=example.com
+export RAILS_ENV=production
+export SOCKET_KEY=randomstring
+export SOCKET_MASTER=randomstring
+export REDIS_URL=redis://127.0.0.1:6379
+export SECRET_TOKEN=randomstring
+export RECAPTCHA_PUBLIC_KEY=randomstring
+export RECAPTCHA_PRIVATE_KEY=randomstring
+export BOX_CLIENT_ID=randomstring
+export BOX_CLIENT_SECRET=randomstring
+export DROPBOX_CLIENT_ID=randomstring
+export DROPBOX_CLIENT_SECRET=randomstring
+export GOOGLE_CLIENT_ID=randomstring
+export GOOGLE_CLIENT_SECRET=randomstring
+export SKYDRIVE_CLIENT_ID=randomstring
+export SKYDRIVE_CLIENT_SECRET=randomstring

@@ -1,2 +1,0 @@
-Welcome to the git repository for the Nimbus web application. This has been built using Bootstrap and Ruby on Rails.
-If you see any issues, please submit it to the gitHub issue tracker. All files are under the GPLv3 license.
