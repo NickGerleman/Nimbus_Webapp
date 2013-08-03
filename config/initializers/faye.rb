@@ -10,7 +10,7 @@ end
 protocol = Rails.env.production? ? 'https://' : 'http://'
 address = Rails.env.production? ? ENV['HOST'] : '127.0.0.1'
 port = Rails.env.production? ? 443 : 8081
-url = "#{protocol}#{address}:#{port}/socket"
+url = "#{protocol}#{address}:#{port}/api/socket"
 
 Thread.new do
   EM.run do
