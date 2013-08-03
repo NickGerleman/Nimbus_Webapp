@@ -1,12 +1,9 @@
 NimbusWebapp::Application.routes.draw do
 
-  scope '/api' do
-    constraints protocol: (Rails.env.production? ? 'https://' : 'http://') do
-      resources :connections, only: [:show], defaults: {format: :json}
-      resource :user, only: [:show], defaults: {format: :json} do
-        resources :connections, only: [:index]
-      end
-    end
+  constraints protocol: (Rails.env.production? ? 'https://' : 'http://') do
+    get '/api/connection/:id', to: 'connections#show', defaults: {format: :json}
+    get '/api/user', to: 'users#show', defaults: {format: :json}
+    get '/api/user/connections', to: 'connections#index', defaults: {format: :json}
   end
 
   resources :connections, only: [:destroy, :edit, :update]
