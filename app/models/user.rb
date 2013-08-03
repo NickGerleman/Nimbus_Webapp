@@ -57,8 +57,10 @@ class User < ActiveRecord::Base
   def has_max_connections
     self.connections.count >= 5
   end
-  
+
   # Generate a socket token from an id
+  #
+  # @param id [Fixnum] the id of the user
   def self.socket_token(id)
     Gibberish::HMAC(ENV['SOCKET_KEY'], id)
   end
@@ -84,6 +86,11 @@ class User < ActiveRecord::Base
   end
 
   # Updates the password
+  #
+  # @param opts [Hash] the options hash
+  # @option opts [String] :password the password to change to
+  # @option opts [String] :password_confirmation the confirmation of the password
+  # @option opts [Boolean] :reset_password(false) whether to clear the password reset token
   def upadte_password(opts)
     opts[:email_confirmation] = email
     opts[:password_reset_token] = nil if opts[:reset_password]

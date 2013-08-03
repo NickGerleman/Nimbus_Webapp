@@ -35,6 +35,8 @@ class Connection < ActiveRecord::Base
   end
 
   # Gets access code after code authorization
+  #
+  # @param code [String] the OAuth code provided
   def authorize(code)
     client = self.session
     client.code = code
