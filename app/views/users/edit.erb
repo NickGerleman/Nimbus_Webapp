@@ -26,7 +26,10 @@
             </div>
         <% end %>
         <div class="settings-link">
-            <%= link_to 'Delete My Account', delete_user_path, class: 'ajax-popup' %>
+            <%= link_to 'Delete My Account',
+                        delete_user_path,
+                        class: 'ajax-popup',
+                        id: 'delete-account' %>
         </div>
     </div>
     <div class="large-4 columns">

@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.0.0'
 gem 'redis-rails', github: 'jodosha/redis-store'
-gem 'bcrypt-ruby'
+gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'recaptcha', require: 'recaptcha/rails'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails-cdn'
@@ -33,7 +33,7 @@ group :test do
   gem 'factory_girl_rails'
   gem 'capybara', '>= 2.1.0'
   gem 'capybara-webkit', '>= 1.0.0'
-  gem 'database_cleaner'
+  gem 'database_cleaner', '1.0.1'
 end
 
 group :production do

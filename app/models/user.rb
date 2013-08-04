@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
     self.email_token = SecureRandom.urlsafe_base64 32, false
   end
 
-  after_create { send_verify_email }
+  after_create { send_verify_email unless Rails.env.test? }
 
   scope :old_unverified, -> do
     where("verified = 'false' AND created_at < ?", Time.now.ago(1.week))
