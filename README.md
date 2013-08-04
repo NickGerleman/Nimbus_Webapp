@@ -7,7 +7,7 @@ This is the source code for Nimbus. Although this wasn't designed to be run as a
 
 ## Setting It Up
 Setup is pretty standard although there are certain assumptions made. One of which is that the application has only been tested using MRI/YARV 2.0. Just run `bundle install` and let it install everything. Note that you will probbaly want to install it without the test or production group using `bunele install --without test production`, as the test and production groups require several external dependencies. To get the node.js portion running, you need to install the `faye` and 
-`faye-redis` packages to the faye directoy. This can be done by going into the directory and running `npm install faye faye-redis`. Additionally, you must define several environmental variables when running this in order for the respective functionality to work.
+`faye-redis` packages to the faye directoy. This can be done by going into the directory and running `npm install faye faye-redis`. Additionally, you must define several environmental variables when running this in order for the respective functionality to work. You must also have Redis installed. You can use Foreman to run the entire thing.
 
 ###Environmental Variables
 

@@ -28,3 +28,6 @@
 /Capfile
 /deploy
 /Procfile
+
+# Ignore node.js package files
+/faye/node_modules

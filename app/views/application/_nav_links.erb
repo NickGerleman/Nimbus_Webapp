@@ -1,0 +1,26 @@
+<% if (yield :title_suffix)=='Features' %>
+    <li><%= link_to 'Features', features_path, class: 'active' %></li>
+<% else %>
+    <li><%= link_to 'Features', features_path %></li>
+<% end %>
+<li class="divider"></li>
+<%= render 'persistent_links' %>
+<li class="divider"></li>
+<li>
+    <% if (yield :title_suffix)=='Login' %>
+        <%=
+            link_to 'Login',
+                    new_session_url,
+                    protocol: secure_protocol,
+                    only_path: false,
+                    class: 'active'
+        %>
+    <% else %>
+        <%=
+            link_to 'Login',
+                    new_session_url,
+                    protocol: secure_protocol,
+                    only_path: false
+        %>
+    <% end %>
+</li>
