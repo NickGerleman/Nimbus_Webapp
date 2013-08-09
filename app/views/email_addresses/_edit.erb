@@ -1,0 +1,39 @@
+<div class="popup">
+    <header>
+        <h3>Change My Email Address</h3>
+    </header>
+    <section class="message">
+        <p>
+            Enter your new Email Address and then confirm it.
+        </p>
+    </section>
+    <%=
+        form_for :user,
+                 url: user_email_address_path,
+                 method: :patch,
+                 html: {onsubmit: 'show_spinner();'},
+                 remote: true do |f|
+    %>
+        <div class="row">
+            <div class="large-4 columns">
+                <%= f.label :email, 'Email Address:', class: 'inline' %>
+            </div>
+            <div class="large-8 columns">
+                <%= f.email_field :email, required: true %>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="large-4 columns">
+                <%= f.label :email_confirmation, 'Confirm Email Address:', class: 'inline' %>
+            </div>
+            <div class="large-8 columns">
+                <%= f.email_field :email_confirmation, required: true %>
+            </div>
+        </div>
+
+        <footer>
+            <%= f.submit 'Submit', class: 'button submit' %>
+        </footer>
+    <% end %>
+</div>

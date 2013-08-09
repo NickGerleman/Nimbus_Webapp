@@ -13,6 +13,8 @@ NimbusWebapp::Application.routes.draw do
     get 'delete'
     get 'verify'
     get 'resend_verification'
+    resource :password, only: [:edit, :update]
+    resource :email_address, only: [:edit, :update]
     resource :password_reset, only: [:create, :new, :edit, :update]
     resources :connections, only: [:create]
   end

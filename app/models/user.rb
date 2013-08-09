@@ -9,9 +9,11 @@ class User < ActiveRecord::Base
   has_secure_password
 
   before_validation do
-    self.email = email.downcase
-    self.verified = false
-    self.email_token = SecureRandom.urlsafe_base64 32, false
+    if self.new_record?
+      self.email = email.downcase
+      self.verified = false
+      self.email_token = SecureRandom.urlsafe_base64 32, false
+    end
   end
 
   after_create { send_verify_email unless Rails.env.test? }
@@ -30,16 +32,15 @@ class User < ActiveRecord::Base
             confirmation: true
 
   validates :email_confirmation,
-            presence: true
+            presence: true,
+            if: :email_changed?
 
   validates :name,
             length: {maximum: 50, minimum: 2}
 
+  #presence on create already validated by has_secure_password
   validates :password,
-            length: {minimum: 6, maximum: 50}
-
-  validates :password_confirmation,
-            presence: true
+            length: {minimum: 6, maximum: 50, allow_nil: true}
 
   validates :email_token,
             uniqueness: {case_sensitive: true}
@@ -83,18 +84,6 @@ class User < ActiveRecord::Base
   # Sends a password reset email to the user
   def send_password_reset
     UserMailer.delay.reset_password(id)
-  end
-
-  # Updates the password
-  #
-  # @param opts [Hash] the options hash
-  # @option opts [String] :password the password to change to
-  # @option opts [String] :password_confirmation the confirmation of the password
-  # @option opts [Boolean] :reset_password(false) whether to clear the password reset token
-  def upadte_password(opts)
-    opts[:email_confirmation] = email
-    opts[:password_reset_token] = nil if opts[:reset_password]
-    update_attributes(opts)
   end
 
 end

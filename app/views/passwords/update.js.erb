@@ -1,0 +1,26 @@
+stop_spinner();
+<% if @user.errors.any? %>
+$('small.error').remove();
+<% @user.errors.full_messages_for(:password).each do |error| %>
+$('#user_password').after('<small class="error"><%= error %></small> ');
+<% end %>
+<% @user.errors.full_messages_for(:password_confirmation).each do |error| %>
+$('#user_password_confirmation').after('<small class="error"><%= error %></small> ');
+<% end %>
+$('.row').addClass('error');
+<% else %>
+var modal = $('.modal');
+modal.removeClass('mfp-ready');
+$('.popup .small').remove();
+setTimeout(function () {
+    var header = $('.popup header');
+    header.html('<h3>Success</h3>');
+    $('.message').remove();
+    $('.popup form').remove();
+    header.after('<p>Your password has been changed.</p>');
+    var footer = $('<footer>');
+    footer.append('<button class="button" onclick="$.magnificPopup.close();">Okay</button>');
+    $('.popup').append(footer);
+    modal.addClass('mfp-ready');
+}, 200);
+<% end %>

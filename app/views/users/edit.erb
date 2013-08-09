@@ -3,17 +3,27 @@
 <div class="row">
 
     <div class="large-8 columns">
-        <h1>Welcome <%= current_user.name %></h1>
-        <%=
-            image_tag gravatar,
-                      id: 'gravatar',
-                      alt: 'Gravatar',
-                      class: 'show-for-large-up',
-                      height: '200',
-                      width: '200'
-        %>
+        <h1><%= current_user.name %></h1>
+        <a href="//gravatar.com">
+            <%=
+                image_tag gravatar,
+                          id: 'gravatar',
+                          alt: 'Gravatar',
+                          class: 'show-for-large-up',
+                          height: '200',
+                          width: '200'
+            %>
+        </a>
         <% if current_user.verified %>
             <h4>Your email address has been verified.</h4>
+            <div class="settings-link">
+                <%=
+                    link_to 'Change My Email Address',
+                            edit_user_email_address_path,
+                            class: 'ajax-popup',
+                            id: 'change-email'
+                %>
+            </div>
         <% else %>
             <h4>Your email address has not been verified.</h4>
             <div class="settings-link">
@@ -25,11 +35,23 @@
                 %>
             </div>
         <% end %>
+
         <div class="settings-link">
-            <%= link_to 'Delete My Account',
+            <%=
+                link_to 'Change My Password',
+                        edit_user_password_path,
+                        class: 'ajax-popup',
+                        id: 'change-password'
+            %>
+        </div>
+
+        <div class="settings-link">
+            <%=
+                link_to 'Delete My Account',
                         delete_user_path,
                         class: 'ajax-popup',
-                        id: 'delete-account' %>
+                        id: 'delete-account'
+            %>
         </div>
     </div>
     <div class="large-4 columns">

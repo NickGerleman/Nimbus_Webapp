@@ -4,23 +4,18 @@ class UsersController < ApplicationController
   # Create a new user
   def create
     @user = User.new user_params
-    respond_to do |format|
-      if Rails.env.test?
-        @user.save
-      else
-        verify_recaptcha(model: @user)
-        @user.save
-      end
-      format.js
+    if Rails.env.production? and ENV['RECAPTCHA_PUBLIC_KEY']
+      verify_recaptcha(model: @user)
+      @user.save
+    else
+      @user.save
     end
   end
 
   # Display form for creating a new user
   def new
     @user = User.new
-    respond_to do |format|
-      format.html { render partial: 'new', layout: false }
-    end
+    render partial: 'new', layout: false
   end
 
   # Display form for deleting current user
@@ -43,15 +38,14 @@ class UsersController < ApplicationController
     redirect_to new_session_path if current_user.nil?
   end
 
+  # Shows the JSON representation of the user
   def show
-    respond_to do |format|
-      format.json do
-        unless current_user
-          render status: :not_found, text: 'User Not Logged In'
-          return
-        end
-        render json: current_user
+    format.json do
+      unless current_user
+        render status: :not_found, text: 'User Not Logged In'
+        return
       end
+      render json: current_user
     end
   end
 

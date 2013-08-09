@@ -12,15 +12,13 @@
             link_to 'Login',
                     new_session_url,
                     protocol: secure_protocol,
-                    only_path: false,
                     class: 'active'
         %>
     <% else %>
         <%=
             link_to 'Login',
                     new_session_url,
-                    protocol: secure_protocol,
-                    only_path: false
+                    protocol: secure_protocol
         %>
     <% end %>
 </li>

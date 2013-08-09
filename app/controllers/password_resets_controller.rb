@@ -27,9 +27,9 @@ class PasswordResetsController < ApplicationController
   def update
     @user = User.find_by(password_reset_token: params[:token])
     if @user
-      @user.update_password(password: params[:password],
-                            password_confirmation: params[:password_confirmation],
-                            reset_password: true)
+      @user.update_attributes(password: params[:password],
+                              password_confirmation: params[:password_confirmation],
+                              password_reset_token: nil)
     else
       render status: :not_found, text: 'Invalid Token'
     end
