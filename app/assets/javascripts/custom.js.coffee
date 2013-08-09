@@ -16,7 +16,7 @@ refresh_layout = ->
 # Should eventually move to CSS
 adjust_footer = ->
   height = $(window).height()
-  $('#content').css('min-height', (height - 175) + 'px')
+  $('#content').css('min-height', (height - 200) + 'px')
 
 init_popups = ->
   popup = $('.ajax-popup')

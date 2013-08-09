@@ -18,7 +18,7 @@ class ConnectionsController < ApplicationController
         render status: :bad_request, text: 'Invalid OAuth Version'
         return
     end
-    redirect_to root_path
+    redirect_to edit_user_path
   rescue ActiveRecord::RecordNotFound
     render status: :not_found, text: 'User Connection Not FOund'
   end

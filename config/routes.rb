@@ -26,5 +26,6 @@ NimbusWebapp::Application.routes.draw do
   get '/features', to: 'static_pages#features'
   get '/about', to: 'static_pages#about'
   get '/contribute', to: 'static_pages#contribute'
+  get '/agreement', to: 'static_pages#agreement'
 
 end
