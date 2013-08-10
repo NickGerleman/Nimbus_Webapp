@@ -4,7 +4,7 @@ class Connection < ActiveRecord::Base
   validates :user_id, presence: true
   validates :name, length: {minimum: 1, maximum: 64}
 
-  after_save { ConnectionUpdateMessageWorker.perform_async(user.id, id) }
+  after_save { ConnectionUpdateMessageWorker.perform_async(user.id, id) if state == 'success' }
   after_destroy { ConnectionRemoveMessageWorker.perform_async(user.id, id) }
 
   belongs_to :user

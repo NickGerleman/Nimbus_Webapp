@@ -40,13 +40,11 @@ class UsersController < ApplicationController
 
   # Shows the JSON representation of the user
   def show
-    format.json do
-      unless current_user
-        render status: :not_found, text: 'User Not Logged In'
-        return
-      end
-      render json: current_user
+    unless current_user
+      render status: :not_found, text: 'User Not Logged In'
+      return
     end
+    render json: current_user
   end
 
   # Verifies the email address of a user
