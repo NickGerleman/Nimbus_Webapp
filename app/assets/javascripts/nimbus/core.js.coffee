@@ -1,7 +1,7 @@
 window.nimbus_app.core = (socket_uri) ->
   # put inside a second anonymous function so that changing instance variables are only visible to
   # those with direct reference to this
-  do (socket_uri)->
+  do ->
     that = this
     user_retrieved = $.Deferred()
     @user = nimbus_app.user(user_retrieved, this)
