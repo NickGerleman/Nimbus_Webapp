@@ -1,7 +1,7 @@
 <script>
-    var app;
+    var nimbus;
     <% socket_url = ENV['HOST'] ? '/api/socket' : 'http://127.0.0.1:8081/api/socket' %>
     jQuery(function(){
-      app = nimbus_app('<%= socket_url %>');
+      nimbus = nimbus_app.core('<%= socket_url %>');
     });
 </script>

@@ -1,0 +1,1 @@
+window.nimbus_app ||= {}
