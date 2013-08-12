@@ -24,7 +24,6 @@ window.nimbus_app.connections = (promise, core) ->
       if connection.id == new_connection.id
         connections_array[i] = new_connection
         return
-    new_connection.prototype = connection
     connections_array.push(new_connection)
 
   {all: all, get: get, remove: remove, update: update}

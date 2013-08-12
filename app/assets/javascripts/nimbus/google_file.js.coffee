@@ -1,7 +1,6 @@
-window.nimbus_app.google_file = (connection, opts) ->
+window.nimbus_app.google_file = (connection, metadata) ->
   that = nimbus_app.file()
   do ->
-    metadata = opts
     size = metadata.fileSize / 1024
     full_name = metadata.title
     time = Date.parse(metadata.modifiedDate)

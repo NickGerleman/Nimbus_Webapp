@@ -1,10 +1,8 @@
-window.nimbus_app.dropbox_file = (connection, opts) ->
+window.nimbus_app.dropbox_file = (connection, metadata) ->
   that = nimbus_app.file()
   do ->
-    metadata = opts
     size = parseFloat(metadata.size)
-    path = opts.path
-    full_name = metadata.path.match(/[^/]*$/)[0]
+    full_name = metadata.path.slice(path.lastIndexOf('/') + 1)
     time = Date.parse(metadata.modified)
     download_link = 'https://api-content.dropbox.com/1/files/dropbox' + path +
       '?access_token=' + connection.access_token
