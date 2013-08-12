@@ -11,10 +11,10 @@ window.nimbus_app.core = (socket_uri) ->
     directory_retrieved = $.Deferred()
 
     user_retrieved.done ->
-      @faye = nimbus_app.faye(faye_connected, socket_uri, that)
+      that.faye = nimbus_app.faye(faye_connected, socket_uri, that)
 
     connections_retrieved.done ->
-      @directory = nimbus_app.directory(directory_retrieved, that)
+      that.directory = nimbus_app.directory(directory_retrieved, that)
 
     user: -> that.user
     connections: -> that.connections

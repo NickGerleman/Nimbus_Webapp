@@ -75,4 +75,8 @@ window.compatible = ->
   Modernizr.csstransitions and
   Modernizr.svg and
   # Check if it correctly parses ISO 8601 time
-  Date.parse('2013-07-24T07:24:04-05:00') == 1374668644000
+  Date.parse('2013-07-24T07:24:04-05:00') == 1374668644000 and
+  # Check RFC 3339 Time
+  Date.parse('2012-07-04T18:10:00.000+09:00') == 1341393000000 and
+  # Check strftime
+  Date.parse('Sat, 21 Aug 2010 22:31:20 +0000') == 1282429880000
