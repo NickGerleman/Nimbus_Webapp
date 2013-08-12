@@ -20,9 +20,11 @@ window.nimbus_app.connections = (promise, core) ->
     return
 
   update = (new_connection) ->
-    for connection, i in connections_array
+    for connection in connections_array
       if connection.id == new_connection.id
-        connections_array[i] = new_connection
+        connection.name = new_connection.name
+        connection.access_token = new_connection.access_token
+        connection.last_updated = new_connection.last_updated
         return
     connections_array.push(new_connection)
 

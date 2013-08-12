@@ -1,13 +1,13 @@
-window.nimbus_app.box_file = (connection, metadata) ->
+window.nimbus_app.skydrive_file = (connection, metadata) ->
   that = nimbus_app.file()
   do ->
     size = metadata.size / 1024
     full_name = metadata.name
-    time = Date.parse(metadata.modified_at)
-    download_link =  'https://api.box.com/2.0/files/' + metadata.id + '/content' +
+    time = Date.parse(metadata.updated_time)
+    download_link =  -> ' https://apis.live.net/v5.0/' + metadata.id + '/content' +
       '?access_token=' + connection.access_token
     destroy = (promise) ->
-      $.delete 'https://api.box.com/2.0/files/' + metadata.id + '?access_token=' +
+      $.delete  'https://apis.live.net/v5.0/' + metadata.id + '?access_token=' +
       connection.access_token,
       -> promise.resolve()
 
@@ -16,4 +16,5 @@ window.nimbus_app.box_file = (connection, metadata) ->
     that.time = time
     that.download_link = download_link
     that.destroy = destroy
+    that.connection = connection
     that
