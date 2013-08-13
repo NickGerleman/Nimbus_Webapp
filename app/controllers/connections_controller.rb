@@ -58,7 +58,7 @@ class ConnectionsController < ApplicationController
           )
           # Workaround for Dropbox refusing code if access_type or approval_prompt is present
           connection.update_attributes(session: @client, state: 'in_progress')
-          url = @client.authorization_uri.to_s.chomp('access_type=offline&approval_prompt=force&')
+          url = @client.authorization_uri.to_s.gsub('access_type=offline&approval_prompt=force&', '')
           redirect_to url
           return
         when 'google'
