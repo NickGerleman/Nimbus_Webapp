@@ -1,6 +1,4 @@
 window.nimbus_app.directory = ->
-  files = []
-  subdirectories = []
 
   path = =>
     @memo_path or =>
@@ -13,5 +11,3 @@ window.nimbus_app.directory = ->
       @memo_path = paths.join('')
 
   path: path
-  files: files
-  subdirectories: subdirectories

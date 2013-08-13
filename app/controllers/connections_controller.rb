@@ -27,7 +27,7 @@ class ConnectionsController < ApplicationController
   def destroy
     connection = current_user.connections.find(params[:id])
     connection.destroy
-    redirect_to root_path
+    redirect_to edit_user_path
   rescue ActiveRecord::RecordNotFound
     render status: :not_found, text: 'User Connection Not Found'
   end

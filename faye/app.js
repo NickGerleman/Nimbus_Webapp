@@ -1,8 +1,8 @@
 var fs = require('fs'),
     http = require('http'),
     faye = require('faye'),
-	redis = require('faye-redis'),
-	crypto = require('crypto'),
+	  redis = require('faye-redis'),
+	  crypto = require('crypto'),
     url = require('url');
 	
 fs.writeFile('/tmp/faye.pid', process.pid);

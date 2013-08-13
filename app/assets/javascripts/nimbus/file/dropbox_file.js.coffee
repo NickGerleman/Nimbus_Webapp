@@ -8,7 +8,7 @@ window.nimbus_app.dropbox_file = (connection, metadata) ->
       '?access_token=' + connection.access_token
     destroy = (promise) ->
       $.post 'https://api.dropbox.com/1/fileops/delete',
-        {root: 'dropbox', path: path, access_token: connection.access_token},
+        root: 'dropbox', path: path, access_token: connection.access_token,
         -> promise.resolve()
 
     that.size = size
@@ -16,5 +16,5 @@ window.nimbus_app.dropbox_file = (connection, metadata) ->
     that.time = time
     that.download_link = download_link
     that.destroy = destroy
-    that.connection = connection
+    that.connection = -> connection
     that

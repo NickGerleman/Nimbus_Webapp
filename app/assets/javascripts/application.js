@@ -12,6 +12,7 @@
 //
 //= require jquery_ujs
 //= require jquery.spin
+//= require jquery-fileupload/basic
 //= require foundation
 //= require modernizr
 //= require magnific-popup

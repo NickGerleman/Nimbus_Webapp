@@ -16,7 +16,8 @@ window.nimbus_app.connections = (promise, core) ->
   remove = (id) ->
     for connection, i in connections_array
       if connection.id == id
-        connections_array.splice(i, 1)
+        c = connections_array.splice(i, 1)
+        core.current_directory.remove_connection(c)
     return
 
   update = (new_connection) ->
@@ -27,5 +28,6 @@ window.nimbus_app.connections = (promise, core) ->
         connection.last_updated = new_connection.last_updated
         return
     connections_array.push(new_connection)
+    core.add_connection(c)
 
   {all: all, get: get, remove: remove, update: update}

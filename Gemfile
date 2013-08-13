@@ -22,6 +22,7 @@ gem 'modernizr-rails'
 gem 'active_model_serializers'
 gem 'gibberish'
 gem 'spinjs-rails'
+gem 'jquery-fileupload-rails'
 
 group :test, :development do
   gem 'sqlite3'

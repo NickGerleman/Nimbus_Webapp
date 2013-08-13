@@ -1,18 +1,18 @@
 window.nimbus_app.meta_directory = (parent, directories) ->
-  files = []
-  subdirectories = []
   isEnumerated = false
 
-  path = directories[0].path
+  name = directories[0].name()
 
-  get_files = ->
+  path = directories[0].path()
+
+  files = ->
     files = []
-    files = files.concat(d.files) for d in directories
+    files = files.concat(d.files()) for d in directories
 
-  get_subdirectories = ->
-    initial_directories = []
+  subdirectories = ->
     subdirectories = []
-    initial_directories = initial_directories().concat(d.subdirectories) for d in directories
+    initial_directories = []
+    initial_directories = initial_directories().concat(d.subdirectories()) for d in directories
     initial_directories.sort (a,b) ->
       switch
         when a.name < b.name then -1
@@ -35,14 +35,30 @@ window.nimbus_app.meta_directory = (parent, directories) ->
     for directory in directories
       directory.enumerate(promises.push($.Deferred()))
     $.when.apply($, promises).then ->
-      files = get_files()
-      subdirectories = get_subdirectories()
       isEnumerated = true
       promise.resolve()
 
-  enumerate: enumerate
+  remove_connection = (connection) ->
+    directories = directories.filter (directory) -> directory.connection() != connection
+    core.ui_callback()
+
+  add_directory = (directory) ->
+    promise = $.Deferred()
+    promise.done ->
+      directories.push(directory)
+      core.ui_callback()
+    directory.enumerate(promise)
+
+
+
+  remove_connection: remove_connection
+  add_directory: add_directory
+  enumerate: if isEnumerated then (promise) -> promise.resolve() else enumerate
+  update: enumerate
   subdirectories: subdirectories
-  parent: parent
+  parent: -> parent
   files: files
-  path: path
+  path: -> path
+  name: name
+  directories: -> directories
   isEnumerated: -> isEnumerated

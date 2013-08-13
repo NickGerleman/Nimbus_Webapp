@@ -3,7 +3,7 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
   # those with direct reference to this
   do ->
     init_done = false
-    ui_callback = refresh_callback
+    @ui_callback = refresh_callback
     current_directory = null
 
     initialize = init_done or (promise) ->
@@ -20,17 +20,47 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
         that.faye = nimbus_app.faye(faye_connected, socket_uri, that)
 
       $.when(connections_retrieved, faye_connected).then ->
-        #enumerate initial directory
+        directories = []
+        promises = []
+        for connection in @connections.all()
+          promise = promises.push($.Deferred())
+          promise.done (directory) -> directories.push(directory)
+          create_directory(connection, '/', promise)
+        $.when.apply($, promises).then ->
+          current_directory = nimbus_app.meta_directory(null, directories)
+          current_directory.enumerate(directory_enumerated)
 
       directory_enumerated.done -> promise.resolve()
 
-    change_directory = (id) ->
+    create_directory = (connection, path, promise) ->
+      internal_promise = $.Deferred()
+      switch connection.type
+        when 'dropbox'
+          internal_promise.done (data) ->
+            promise.resolve(nimbus_app.dropbox_directory(connection, data))
+          $.getJSON 'https://api.dropbox.com/1/metadata/dropbox' + path,
+            access_token: connection.access_token,
+            (data) -> internal_promise.resolve(data)
+        when 'google'
+          ->
+        when 'box'
+          ->
+        when 'skydrive'
+          ->
+        else console.log('unknown service')
+
+    change_directory = (directory, promise) ->
+      internal_promise = $.Deferred()
+      directory.enumerate(internal_promise)
+      internal_promise.done ->
+        current_directory = directory
+        promise.resolve()
 
 
     user: -> that.user
     connections: -> that.connections
     faye: -> that.faye
     initialize: initialize
-    current_directory: current_directory
+    current_directory: -> current_directory
     change_directory: change_directory
 

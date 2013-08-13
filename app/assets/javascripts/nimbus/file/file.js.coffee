@@ -8,5 +8,4 @@ window.nimbus_app.file = ->
 
   that =
     extension: extension
-    name: name
-    type: 'file'
+    name: -> name

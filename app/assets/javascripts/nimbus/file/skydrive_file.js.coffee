@@ -7,14 +7,14 @@ window.nimbus_app.skydrive_file = (connection, metadata) ->
     download_link =  -> ' https://apis.live.net/v5.0/' + metadata.id + '/content' +
       '?access_token=' + connection.access_token
     destroy = (promise) ->
-      $.delete  'https://apis.live.net/v5.0/' + metadata.id + '?access_token=' +
-      connection.access_token,
-      -> promise.resolve()
+      $.delete  'https://apis.live.net/v5.0/' + metadata.id
+        access_token: connection.access_token,
+        -> promise.resolve()
 
     that.size = size
     that.full_name = full_name
     that.time = time
     that.download_link = download_link
     that.destroy = destroy
-    that.connection = connection
+    that.connection = -> connection
     that
