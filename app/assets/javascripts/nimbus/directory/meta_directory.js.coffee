@@ -7,21 +7,26 @@ window.nimbus_app.meta_directory = (parent, directories) ->
 
   files = ->
     files = []
-    files = files.concat(d.files()) for d in directories
+    for directory in directories
+      for file in directory.files()
+        files.push(file)
+    files
 
   subdirectories = ->
     subdirectories = []
     initial_directories = []
-    initial_directories = initial_directories().concat(d.subdirectories()) for d in directories
+    for directory in directories
+      for subdirectory in directory.subdirectories()
+        initial_directories.push(subdirectory)
     initial_directories.sort (a,b) ->
       switch
-        when a.name < b.name then -1
-        when a.name > b.name then 1
+        when a.name().toLowerCase() < b.name().toLowerCase() then -1
+        when a.name().toLowerCase() > b.name().toLowerCase() then 1
         else 0
     directory_buffer = []
-    while subdirectories.length > 0
+    while initial_directories.length > 0
       directory = initial_directories.shift()
-      if directory_buffer.length == 0 or directory_buffer[0].name == directory.name
+      if directory_buffer.length == 0 or directory_buffer[0].name() == directory.name
         directory_buffer.push(directory)
       else
         subdirectories.push(nimbus_app.meta_directory(this, directory_buffer))
@@ -33,7 +38,9 @@ window.nimbus_app.meta_directory = (parent, directories) ->
   enumerate = (promise) ->
     promises = []
     for directory in directories
-      directory.enumerate(promises.push($.Deferred()))
+      internal_promise = $.Deferred()
+      promises.push internal_promise
+      directory.enumerate(internal_promise)
     $.when.apply($, promises).then ->
       isEnumerated = true
       promise.resolve()
@@ -50,7 +57,6 @@ window.nimbus_app.meta_directory = (parent, directories) ->
     directory.enumerate(promise)
 
 
-
   remove_connection: remove_connection
   add_directory: add_directory
   enumerate: if isEnumerated then (promise) -> promise.resolve() else enumerate
@@ -59,6 +65,6 @@ window.nimbus_app.meta_directory = (parent, directories) ->
   parent: -> parent
   files: files
   path: -> path
-  name: name
+  name: -> name
   directories: -> directories
   isEnumerated: -> isEnumerated

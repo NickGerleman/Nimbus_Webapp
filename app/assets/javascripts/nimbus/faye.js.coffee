@@ -1,5 +1,5 @@
 window.nimbus_app.faye = (promise, socket_uri, core) ->
-  subscription = null
+  subscription = {}
 
   callback_handler = (message) ->
     message = JSON.parse(message)
@@ -18,8 +18,9 @@ window.nimbus_app.faye = (promise, socket_uri, core) ->
       message.ext ||= {}
       message.ext.auth_token = core.user.socket_token()
       callback(message)
-  subscription = client.subscribe(core.user.id + '/', callback_handler)
+  subscription = client.subscribe('/' + core.user.id(), callback_handler)
   subscription.callback ->
     promise.resolve()
+  subscription.errback( -> alert 'Faye Subscription Failed')
 
   client

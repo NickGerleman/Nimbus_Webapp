@@ -19,11 +19,12 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
       user_retrieved.done ->
         that.faye = nimbus_app.faye(faye_connected, socket_uri, that)
 
-      $.when(connections_retrieved, faye_connected).then ->
+      $.when(connections_retrieved, faye_connected).then =>
         directories = []
         promises = []
         for connection in @connections.all()
-          promise = promises.push($.Deferred())
+          promise = $.Deferred()
+          promises.push(promise)
           promise.done (directory) -> directories.push(directory)
           create_directory(connection, '/', promise)
         $.when.apply($, promises).then ->
@@ -42,11 +43,11 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
             access_token: connection.access_token,
             (data) -> internal_promise.resolve(data)
         when 'google'
-          ->
+          promise.resolve()
         when 'box'
-          ->
+          promise.resolve()
         when 'skydrive'
-          ->
+          promise.resolve()
         else console.log('unknown service')
 
     change_directory = (directory, promise) ->

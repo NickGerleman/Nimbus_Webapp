@@ -1,18 +1,22 @@
 window.nimbus_app.dropbox_directory = (connection, metadata) ->
-  that = nimbus_app.directory(opts.id)
+  that = nimbus_app.directory()
   isEnumerated = false
   files = []
   subdirectories = []
 
   if metadata.contents
-    for file in metadata.content
+    for file in metadata.contents
       if file.is_dir
         subdirectories.push(nimbus_app.dropbox_directory(connection, file, this))
       else
-        files.push(nimbus_app.dropbox_file(connection, file))
+        constructed_file = nimbus_app.dropbox_file(connection, file)
+        files.push(constructed_file)
     isEnumerated = true
 
   enumerate = (promise) ->
+    if isEnumerated
+      promise.resolve()
+      return
     params = {access_token: connection.access_token}
     params.hash = metadata.hash if isEnumerated
     metadata_retrieved = $.Deferred()
@@ -22,11 +26,12 @@ window.nimbus_app.dropbox_directory = (connection, metadata) ->
         metadata = data
         metadata_retrieved.resolve()
     metadata_retrieved.done ->
-      for file in metadata.content
+      for file in metadata.contents
         if file.is_dir
           subdirectories.push(nimbus_app.dropbox_directory(connection, file, this))
         else
-          files.push(nimbus_app.dropbox_file(connection, file))
+          constructed_file = nimbus_app.dropbox_file(connection, file)
+          files.push(constructed_file)
       isEnumerated = true
       promise.resolve()
 
@@ -39,15 +44,15 @@ window.nimbus_app.dropbox_directory = (connection, metadata) ->
       access_token: connection.access_token
 
 
-  name = metadata.path.slice(path.lastIndexOf('/') + 1)
+  name = metadata.path.slice(metadata.path.lastIndexOf('/') + 1)
 
   that.path = -> metadata.path
   that.files = -> files
   that.subdirectories = -> subdirectories
-  that.enumerate = if isEnumerated then (promise) -> promise.resolve() else enumerate
+  that.enumerate = enumerate
   that.update = enumerate
   that.upload = upload
-  that.name = name
+  that.name = -> name
   that.connection = -> connection
   that.isEnumerated = -> isEnumerated
   that
