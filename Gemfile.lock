@@ -121,6 +121,9 @@ GEM
     hiredis (0.4.5)
     http_parser.rb (0.6.0.beta.2)
     i18n (0.6.4)
+    jquery-fileupload-rails (0.4.1)
+      actionpack (>= 3.1)
+      railties (>= 3.1)
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
@@ -254,6 +257,7 @@ DEPENDENCIES
   foreman
   gibberish
   hiredis
+  jquery-fileupload-rails
   jquery-rails-cdn
   lograge
   magnific-popup-rails (>= 0.8.9)
