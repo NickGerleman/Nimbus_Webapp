@@ -20,23 +20,19 @@ window.nimbus_app.dropbox_directory = (connection, metadata) ->
       return
     params = {access_token: connection.access_token()}
     params.hash = metadata.hash if isEnumerated
-    metadata_retrieved = $.Deferred()
 
     $.getJSON 'https://api.dropbox.com/1/metadata/dropbox' + metadata.path,
       params,
       (data) ->
         metadata = data
-        metadata_retrieved.resolve()
-
-    metadata_retrieved.done ->
-      for file in metadata.contents
-        if file.is_dir
-          subdirectories.push(nimbus_app.dropbox_directory(connection, file, this))
-        else
-          constructed_file = nimbus_app.dropbox_file(connection, file)
-          files.push(constructed_file)
-      isEnumerated = true
-      promise.resolve()
+        for file in metadata.contents
+          if file.is_dir
+            subdirectories.push(nimbus_app.dropbox_directory(connection, file, this))
+          else
+            constructed_file = nimbus_app.dropbox_file(connection, file)
+            files.push(constructed_file)
+        isEnumerated = true
+        promise.resolve()
 
   update = (promise) ->
     isEnumerated = false
