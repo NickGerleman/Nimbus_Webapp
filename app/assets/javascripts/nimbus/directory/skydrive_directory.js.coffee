@@ -23,7 +23,7 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
     params = {access_token: connection.access_token()}
     params.hash = metadata.hash if isEnumerated
 
-    $.getJSON 'https://apis.live.net/v5.0/' + metadata.id,
+    $.getJSON 'https://apis.live.net/v5.0/' + metadata.id + '/files',
       params,
       (data) ->
         metadata = data
@@ -57,7 +57,7 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
 
   upload_callback = (data, promise) ->
     id = data.id
-    $.getJSON 'https://apis.live.net/v5.0/' + id,
+    $.getJSON metadata.upload_location,
       access_token: connection.access_token(),
       (data) ->
         resources.push(data)

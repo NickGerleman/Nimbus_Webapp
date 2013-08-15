@@ -24,7 +24,7 @@ window.nimbus_app.connection = (connection) ->
             directory = nimbus_app.google_directory(to_return, data)
             promise.resolve(directory)
       when 'skydrive'
-        $.getJSON 'https://apis.live.net/v5.0/me/skydrive',
+        $.getJSON 'https://apis.live.net/v5.0/me/skydrive/files',
           access_token: connection.access_token,
           (data) ->
             directory = nimbus_app.skydrive_directory(to_return, data)
