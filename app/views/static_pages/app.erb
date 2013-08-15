@@ -2,6 +2,28 @@
     var nimbus;
     <% socket_url = ENV['HOST'] ? '/api/socket' : 'http://127.0.0.1:8081/api/socket' %>
     jQuery(function(){
-      nimbus = nimbus_app.core('<%= socket_url %>');
+      window.nimbus = nimbus_app.core('<%= socket_url %>');
+      var init_done = $.Deferred();
+      init_done.done(function(){
+        var files = nimbus.current_directory().files();
+        var files_len = files.length;
+        var folders = nimbus.current_directory().subdirectories();
+        var folders_len = folders.length;
+        var files_container = $('#files');
+        var folders_container = $('#folders');
+        for(i = 0; i < files_len; i++)
+          files_container.append($('<div class="file">' + files[i].full_name() + '</div>'))
+        for(i = 0; i < folders_len; i++)
+          folders_container.append($('<div class="file">' + folders[i].name() + '</div>'))
+      });
+      nimbus.initialize(init_done)
     });
 </script>
+<div class="row">
+    <div id="files">
+        <h2>Files: </h2>
+    </div>
+    <div id="folders">
+        <h2>Folders</h2>
+    </div>
+</div>
