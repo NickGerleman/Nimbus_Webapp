@@ -77,7 +77,6 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
     initialize = (promise) ->
       user_retrieved = $.Deferred()
       connections_retrieved = $.Deferred()
-      faye_connected = $.Deferred()
       root_created = $.Deferred()
       directory_enumerated = $.Deferred()
 
@@ -86,15 +85,13 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
 
       user_retrieved.done ->
         faye = nimbus_app.faye
-          promise: faye_connected
           socket_uri: socket_uri
           socket_token: user.socket_token()
           user_id: user.id()
           update_callback: update_connection
           remove_callback: remove_connection
 
-
-      $.when(connections_retrieved, faye_connected).then ->
+      connections_retrieved.done ->
         create_root_metadirectory(root_created)
 
       root_created.done (root) ->

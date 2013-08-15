@@ -4,7 +4,6 @@
 # @option opts socket_uri the URI for Faye to connect to
 # @option opts socket_token the token to use to connect
 # @option opts user_id the users id
-# @option opts promise a Deffered to resolve when subscription complete
 # @option opts update_callback the function to call on a connection_update message
 # @option opts remove_callback the function to call on a connection_remove message
 # @returns the faye client
@@ -18,8 +17,6 @@ window.nimbus_app.faye = (opts) ->
       message.ext.auth_token = opts.socket_token
       callback(message)
   subscription = client.subscribe('/' + opts.user_id, callback_handler)
-  subscription.callback ->
-    opts.promise.resolve()
   subscription.errback( -> alert 'Faye Subscription Failed')
 
   callback_handler = (message) ->
