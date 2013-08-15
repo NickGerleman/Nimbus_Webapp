@@ -10,12 +10,9 @@ window.nimbus_app.box_directory = (connection, metadata) ->
       promise.resolve()
       return
 
-    $.ajax
-      url: 'https://api.box.com/2.0/folders/' + metadata.id + '/items'
-      data:
-        access_token: connection.access_token()
-      dataType: 'jsonp'
-      success: (data) ->
+    $.getJSON 'https://api.box.com/2.0/folders/' + metadata.id + '/items',
+      access_token: connection.access_token(),
+      (data) ->
         resources = data.entries
         files = []
         subdirectories = []
