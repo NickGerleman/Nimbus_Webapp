@@ -20,6 +20,11 @@ window.nimbus_app.metadirectory = (parent, directories) ->
     for directory in directories
       for file in directory.files()
         files.push(file)
+    files.sort (a,b) ->
+      switch
+        when a.name().toLowerCase() < b.name().toLowerCase() then -1
+        when a.name().toLowerCase() > b.name().toLowerCase() then 1
+        else 0
     files
 
   subdirectories = ->

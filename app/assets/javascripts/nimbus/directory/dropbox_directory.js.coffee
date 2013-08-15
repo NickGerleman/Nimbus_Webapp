@@ -21,11 +21,13 @@ window.nimbus_app.dropbox_directory = (connection, metadata) ->
     params = {access_token: connection.access_token()}
     params.hash = metadata.hash if isEnumerated
     metadata_retrieved = $.Deferred()
+
     $.getJSON 'https://api.dropbox.com/1/metadata/dropbox' + metadata.path,
       params,
       (data) ->
         metadata = data
         metadata_retrieved.resolve()
+
     metadata_retrieved.done ->
       for file in metadata.contents
         if file.is_dir
@@ -41,12 +43,8 @@ window.nimbus_app.dropbox_directory = (connection, metadata) ->
     enumerate(promise)
 
   # Returns options object for jQuery File Upload
-  upload =
-    url: 'https://api-content.dropbox.com/1/files_put/dropbox' + metadata.path
-    type: 'put'
-    dropZone: null
-    data:
-      access_token: connection.access_token()
+  upload = -> (filename)
+    #Todo
 
 
   name = metadata.path.slice(metadata.path.lastIndexOf('/') + 1)

@@ -18,7 +18,7 @@ window.nimbus_app.connection = (connection) ->
             directory = nimbus_app.dropbox_directory(to_return, data)
             promise.resolve(directory)
       when 'google'
-        $.getJSON 'https://www.googleapis.com/drive/v2/root',
+        $.getJSON 'https://www.googleapis.com/drive/v2/files/root',
           access_token: connection.access_token,
           (data) ->
             directory = nimbus_app.google_directory(to_return, data)
