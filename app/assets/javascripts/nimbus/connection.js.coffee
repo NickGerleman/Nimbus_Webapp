@@ -6,9 +6,12 @@ window.nimbus_app.connection = (connection) ->
   create_root_directory = (promise) ->
     switch connection.type
       when 'box'
-        $.getJSON 'https://api.box.com/2.0/folders/0',
-          access_token: connection.access_token,
-          (data) ->
+        $.ajax
+          url: 'https://api.box.com/2.0/folders/0'
+          data:
+            access_token: connection.access_token
+          dataType: 'jsonp'
+          success: (data) ->
             directory = nimbus_app.box_directory(to_return, data)
             promise.resolve(directory)
       when 'dropbox'

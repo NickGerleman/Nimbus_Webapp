@@ -17,6 +17,7 @@ window.nimbus_app.google_file = (connection, metadata) ->
     that.connection = -> connection
     that.download_url = -> download_url
     that.full_name = -> full_name
+    that.mime_type = -> metadata.mimeType
     that.size = -> size
     that.time = -> time
     that.view_url = -> view_url

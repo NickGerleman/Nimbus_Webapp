@@ -14,10 +14,10 @@ window.nimbus_app.google_directory = (connection, metadata) ->
       access_token: connection.access_token()
       q: "trashed = false and '" + metadata.id + "' in parents",
       (data) ->
-        resources = data
+        resources = data.items
         files = []
         subdirectories = []
-        for file in resources.items
+        for file in resources
           if file.mimeType == 'application/vnd.google-apps.folder'
             subdirectories.push(nimbus_app.google_directory(connection, file, this))
           else
@@ -64,7 +64,6 @@ window.nimbus_app.google_directory = (connection, metadata) ->
   that.connection = -> connection
   that.files = -> files
   that.isEnumerated = -> isEnumerated
-  that.mime_type = -> metadata.mimeType
   that.name = -> name
   that.subdirectories = -> subdirectories
   that.enumerate = enumerate
