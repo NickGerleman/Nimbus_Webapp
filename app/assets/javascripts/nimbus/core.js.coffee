@@ -2,53 +2,17 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
   # put inside a second anonymous function so that changing instance variables are only visible to
   # those with direct reference to this
   do ->
-    init_done = false
-    @ui_callback = refresh_callback
+
+    faye = null
+    connections_manager = null
     current_directory = null
+    user = null
 
-    initialize = init_done or (promise) ->
-      that = this
-      user_retrieved = $.Deferred()
-      connections_retrieved = $.Deferred()
-      faye_connected = $.Deferred()
-      directory_enumerated = $.Deferred()
-
-      @user = nimbus_app.user(user_retrieved, this)
-      @connections = nimbus_app.connections(connections_retrieved, this)
-
-      user_retrieved.done ->
-        that.faye = nimbus_app.faye(faye_connected, socket_uri, that)
-
-      $.when(connections_retrieved, faye_connected).then =>
-        directories = []
-        promises = []
-        for connection in @connections.all()
-          promise = $.Deferred()
-          promises.push(promise)
-          promise.done (directory) -> directories.push(directory)
-          create_directory(connection, '/', promise)
-        $.when.apply($, promises).then ->
-          current_directory = nimbus_app.meta_directory(null, directories)
-          current_directory.enumerate(directory_enumerated)
-
-      directory_enumerated.done -> promise.resolve()
-
-    create_directory = (connection, path, promise) ->
-      internal_promise = $.Deferred()
-      switch connection.type
-        when 'dropbox'
-          internal_promise.done (data) ->
-            promise.resolve(nimbus_app.dropbox_directory(connection, data))
-          $.getJSON 'https://api.dropbox.com/1/metadata/dropbox' + path,
-            access_token: connection.access_token,
-            (data) -> internal_promise.resolve(data)
-        when 'google'
-          promise.resolve()
-        when 'box'
-          promise.resolve()
-        when 'skydrive'
-          promise.resolve()
-        else console.log('unknown service')
+    add_connection = (connection) ->
+      connections_manager.add(connection)
+      promise = $.Deferred()
+      promise.done -> refresh_callback()
+      rebuild_directories(promise)
 
     change_directory = (directory, promise) ->
       internal_promise = $.Deferred()
@@ -57,11 +21,91 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
         current_directory = directory
         promise.resolve()
 
+    create_root_metadirectory = (promise) ->
+      directories = []
+      promises = []
+      for id, connection of connections_manager.all()
+        internal_promise = $.Deferred()
+        internal_promise.done (directory) -> directories.push(directory)
+        promises.push(internal_promise)
+        connection.create_root_directory(internal_promise)
+      $.when.apply($, promises).then ->
+        metadirectory = nimbus_app.metadirectory(null, directories)
+        promise.resolve(metadirectory)
 
-    user: -> that.user
-    connections: -> that.connections
-    faye: -> that.faye
-    initialize: initialize
+    # Rebuilds all directories until it reaches the path of the current directory, it then replaces
+    # current_directory
+    rebuild_directories = (promise) ->
+      paths = current_directory.split('/')
+      directory = null
+      do ->
+        if paths.length == 0
+          current_directory = directory
+          promise.resolve()
+          return
+        directory_enumerated = $.Deferred()
+        directory_enumerated.done ->
+          this()
+        path = paths.shift()
+        if directory
+          for subdirectory in directory.subdirectories()
+            if subdirectory.name() == path
+              directory = subdirectory
+              break
+          directory.enumerate(directory_enumerated)
+        else
+          root_created = $.Deferred()
+          root_created.done (root) ->
+            directory = root
+          directory.enumerate(directory_enumerated)
+
+    remove_connection = (id) ->
+      connections_manager.remove(id)
+      promise = $.Deferred()
+      promise.done -> refresh_callback()
+      rebuild_directories(promise)
+
+    update_connection = (connection) ->
+      if connections_manager.get(connection.id)
+        connections_manager.update(connection)
+      else
+        add_connection(connection)
+
+    # initialize the application and enumerate the current directory
+    #
+    # @param promise a Deffered that is resolved after initialization is done
+    initialize = (promise) ->
+      user_retrieved = $.Deferred()
+      connections_retrieved = $.Deferred()
+      faye_connected = $.Deferred()
+      root_created = $.Deferred()
+      directory_enumerated = $.Deferred()
+
+      user = nimbus_app.user(user_retrieved)
+      connections_manager = nimbus_app.connections_manager(connections_retrieved)
+
+      user_retrieved.done ->
+        faye = nimbus_app.faye
+          promise: faye_connected
+          socket_uri: socket_uri
+          socket_token: user.socket_token()
+          user_id: user.id()
+          update_callback: update_connection
+          remove_callback: remove_connection
+
+
+      $.when(connections_retrieved, faye_connected).then ->
+        create_root_metadirectory(root_created)
+
+      root_created.done (root) ->
+        current_directory = root
+        root.enumerate(directory_enumerated)
+
+      directory_enumerated.done -> promise.resolve()
+
+
+
     current_directory: -> current_directory
+    user: -> user
     change_directory: change_directory
-
+    initialize: initialize

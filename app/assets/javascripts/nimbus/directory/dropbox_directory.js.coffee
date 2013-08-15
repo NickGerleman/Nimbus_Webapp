@@ -13,11 +13,12 @@ window.nimbus_app.dropbox_directory = (connection, metadata) ->
         files.push(constructed_file)
     isEnumerated = true
 
+
   enumerate = (promise) ->
     if isEnumerated
       promise.resolve()
       return
-    params = {access_token: connection.access_token}
+    params = {access_token: connection.access_token()}
     params.hash = metadata.hash if isEnumerated
     metadata_retrieved = $.Deferred()
     $.getJSON 'https://api.dropbox.com/1/metadata/dropbox' + metadata.path,
@@ -35,24 +36,29 @@ window.nimbus_app.dropbox_directory = (connection, metadata) ->
       isEnumerated = true
       promise.resolve()
 
+  update = (promise) ->
+    isEnumerated = false
+    enumerate(promise)
+
   # Returns options object for jQuery File Upload
   upload =
     url: 'https://api-content.dropbox.com/1/files_put/dropbox' + metadata.path
     type: 'put'
     dropZone: null
     data:
-      access_token: connection.access_token
+      access_token: connection.access_token()
 
 
   name = metadata.path.slice(metadata.path.lastIndexOf('/') + 1)
 
-  that.path = -> metadata.path
+
+  that.connection = -> connection
   that.files = -> files
+  that.isEnumerated = -> isEnumerated
+  that.name = -> name
+  that.path = -> metadata.path
   that.subdirectories = -> subdirectories
   that.enumerate = enumerate
-  that.update = enumerate
+  that.update = update
   that.upload = upload
-  that.name = -> name
-  that.connection = -> connection
-  that.isEnumerated = -> isEnumerated
   that

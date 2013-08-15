@@ -10,10 +10,10 @@ window.nimbus_app.google_file = (connection, metadata) ->
         access_token: connection.access_token,
         -> promise.resolve()
 
-    that.size = -> size
-    that.full_name = -> full_name
-    that.time = -> time
-    that.download_url = download_url
-    that.destroy = destroy
     that.connection = -> connection
+    that.full_name = -> full_name
+    that.size = -> size
+    that.time = -> time
+    that.destroy = destroy
+    that.download_url = download_url
     that
