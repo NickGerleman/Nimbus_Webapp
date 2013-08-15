@@ -101,7 +101,6 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
       directory_enumerated.done -> promise.resolve()
 
 
-
     current_directory: -> current_directory
     user: -> user
     change_directory: change_directory
