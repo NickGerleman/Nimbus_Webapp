@@ -10,7 +10,7 @@ window.nimbus_app.google_file = (connection, metadata) ->
     view_url = metadata.alternateLink
     destroy = (promise) ->
       $.delete 'https://www.googleapis.com/drive/v2/files/' + metadata.id,
-        access_token: connection.access_token,
+        access_token: connection.access_token(),
         -> promise.resolve()
 
 
