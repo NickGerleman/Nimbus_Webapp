@@ -22,8 +22,8 @@ window.nimbus_app.metadirectory = (parent, directories) ->
         files.push(file)
     files.sort (a,b) ->
       switch
-        when a.name().toLowerCase() < b.name().toLowerCase() then -1
-        when a.name().toLowerCase() > b.name().toLowerCase() then 1
+        when a.full_name().toLowerCase() < b.full_name().toLowerCase() then -1
+        when a.full_name().toLowerCase() > b.full_name().toLowerCase() then 1
         else 0
     files
 
