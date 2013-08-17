@@ -9,7 +9,5 @@ window.nimbus_app.user = (promise) ->
 
   # The id of the user
   id: -> user_info.id
-  # The name of the user
-  name: -> user_info.name
   # The user's socket token
   socket_token: -> user_info.socket_token

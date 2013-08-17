@@ -88,20 +88,6 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
       root_created = $.Deferred()
       directory_enumerated = $.Deferred()
 
-      user = nimbus_app.user(user_retrieved)
-      connections_manager = nimbus_app.connections_manager(connections_retrieved)
-
-      user_retrieved.done ->
-        faye_loaded = $.Deferred()
-        faye_loaded.done (client) -> faye = client
-        nimbus_app.faye
-          socket_uri: socket_uri
-          socket_token: user.socket_token()
-          user_id: user.id()
-          update_callback: update_connection
-          remove_callback: remove_connection
-          promise: faye_loaded
-
       connections_retrieved.done ->
         create_root_metadirectory(root_created)
 
@@ -109,12 +95,24 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
         current_directory = root
         root.enumerate(directory_enumerated)
 
-      directory_enumerated.done -> promise.resolve()
+      directory_enumerated.done ->
+        promise.resolve()
+        user = nimbus_app.user(user_retrieved)
+        user_retrieved.done ->
+          faye_loaded = $.Deferred()
+          faye_loaded.done (client) -> faye = client
+          nimbus_app.faye
+            socket_uri: socket_uri
+            socket_token: user.socket_token()
+            user_id: user.id()
+            update_callback: update_connection
+            remove_callback: remove_connection
+            promise: faye_loaded
+
+      connections_manager = nimbus_app.connections_manager(connections_retrieved)
 
 
     # the current metadirectory
     current_directory: -> current_directory
-    #the user object
-    user: -> user
     change_directory: change_directory
     initialize: initialize
