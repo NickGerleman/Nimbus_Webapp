@@ -20,13 +20,11 @@ window.nimbus_app.metadirectory = (parent, directories) ->
   # Enumerate the metadirectory
   enumerate = (promise) ->
     promises = []
-    for directory in directories
-      internal_promise = $.Deferred()
-      promises.push internal_promise
-      directory.enumerate(internal_promise)
+    promises.push($.Deferred()) for directory in directories
     $.when.apply($, promises).then ->
       isEnumerated = true
       promise.resolve()
+    directory.enumerate(promises.pop()) for directory in directories
 
   # Get the files in the metadirectory
   files = ->

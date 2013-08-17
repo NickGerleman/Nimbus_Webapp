@@ -20,24 +20,26 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
     # Change the current directory to a different metadirectory, enumerates it
     change_directory = (directory, promise) ->
       internal_promise = $.Deferred()
-      directory.enumerate(internal_promise)
       internal_promise.done ->
         current_directory = directory
         promise.resolve()
+      directory.enumerate(internal_promise)
 
     # Creates a root metadirectory using the connections in connections_manager
     # Returns the metadirectory in the promise
     create_root_metadirectory = (promise) ->
       directories = []
       promises = []
-      for connection in connections_manager.all()
-        internal_promise = $.Deferred()
-        internal_promise.done (directory) -> directories.push(directory)
-        promises.push(internal_promise)
-        connection.create_root_directory(internal_promise)
+      promises.push($.Deferred()) for connection in connections_manager.all()
       $.when.apply($, promises).then ->
         metadirectory = nimbus_app.metadirectory(null, directories)
         promise.resolve(metadirectory)
+      for connection in connections_manager.all()
+        internal_promise = $.Deferred()
+        internal_promise.done (directory) ->
+          directories.push(directory)
+          promises.pop().resolve()
+        connection.create_root_directory(internal_promise)
 
     # Rebuilds all directories until it reaches the path of the current directory, it then replaces
     # current_directory
