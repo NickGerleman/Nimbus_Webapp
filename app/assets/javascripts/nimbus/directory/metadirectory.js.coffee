@@ -32,14 +32,11 @@ window.nimbus_app.metadirectory = (parent, directories) ->
     for directory in directories
       for file in directory.files()
         files.push(file)
-    files.sort (a,b) -> properties_comparator(a, b, -> full_name().toLowerCase())
-
-  # Generic comparator useable for sorting based of a property of an object
-  properties_comparator = (a, b, property) ->
-    switch
-      when a[property] < b[property] then -1
-      when a[property] > b[property] then 1
-      else 0
+    files.sort (a,b) ->
+      switch
+        when a.full_name().toLowerCase() < b.full_name().toLowerCase() then -1
+        when a.full_name().toLowerCase() > b.full_name().toLowerCase() then 1
+        else 0
 
   # Get the subdirectories(metadirectories) in the metadirectory
   subdirectories = ->
@@ -49,7 +46,11 @@ window.nimbus_app.metadirectory = (parent, directories) ->
       for subdirectory in directory.subdirectories()
         initial_directories.push(subdirectory)
     return [] unless initial_directories[0]
-    initial_directories.sort (a,b) -> properties_comparator(a, b, -> name().toLowerCase())
+    initial_directories.sort (a,b) ->
+      switch
+        when a.name().toLowerCase() < b.name().toLowerCase() then -1
+        when a.name().toLowerCase() > b.name().toLowerCase() then 1
+        else 0
     directory_buffer = []
     while initial_directories.length > 0
       directory = initial_directories.shift()
