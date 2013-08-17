@@ -1,8 +1,9 @@
-# Object representing a connection
-#
-# @param connection the raw connection object returned by the API
+'use strict'
+
+# Constructs and returns a connection object from the API representation of a connection
 window.nimbus_app.connection = (connection) ->
 
+  # Creates a root directory of the type of the connection
   create_root_directory = (promise) ->
     switch connection.type
       when 'box'
@@ -31,11 +32,15 @@ window.nimbus_app.connection = (connection) ->
             promise.resolve(directory)
       else console.log 'Unknown Service'
 
+  # Updates a connection with new information (eg title or access_token)
   update = (new_connection) -> connection = new_connection
 
   to_return =
+    # The OAuth access_token
     access_token: -> connection.access_token
+    # The name of the conenction
     name: -> connection.name
+    # The service the connection uses
     type: -> connection.type
     create_root_directory: create_root_directory
     update: update

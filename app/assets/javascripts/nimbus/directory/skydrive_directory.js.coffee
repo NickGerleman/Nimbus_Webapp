@@ -1,5 +1,7 @@
+'use strict'
+
+# Construct a skydrive directory from a connection it belongs to and API metadata
 window.nimbus_app.skydrive_directory = (connection, metadata) ->
-  that = nimbus_app.directory()
   isEnumerated = false
   files = []
   subdirectories = []
@@ -15,16 +17,13 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
         files.push(constructed_file)
     isEnumerated = true
 
-
+  # Enumerate the directory
   enumerate = (promise) ->
     if isEnumerated
       promise.resolve()
       return
-    params = {access_token: connection.access_token()}
-    params.hash = metadata.hash if isEnumerated
-
     $.getJSON 'https://apis.live.net/v5.0/' + metadata.id + '/files',
-      params,
+      access_token: connection.access_token,
       (data) ->
         metadata = data
         resources = metadata.data
@@ -41,13 +40,14 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
 
   name = metadata.name
 
+  # Re-enumerates the directory
   update = (promise) ->
     isEnumerated = false
     enumerate(promise)
 
   # Returns options object for jQuery File Upload
   upload = (filename, promise) ->
-    url: 'https://apis.live.net/v5.0/' + metadata.id + '/files/' + filename
+    url: metadata.upload_location + filename
     type: 'put'
     multipart: false
     dropZone: null
@@ -57,7 +57,7 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
 
   upload_callback = (data, promise) ->
     id = data.id
-    $.getJSON metadata.upload_location,
+    $.getJSON 'https://apis.live.net/v5.0/' + id,
       access_token: connection.access_token(),
       (data) ->
         resources.push(data)
@@ -65,12 +65,14 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
         promise.resolve()
 
 
-  that.connection = -> connection
-  that.files = -> files
-  that.isEnumerated = -> isEnumerated
-  that.name = -> name
-  that.subdirectories = -> subdirectories
-  that.enumerate = enumerate
-  that.update = update
-  that.upload = upload
-  that
+  # The connection the directory belongs to
+  connection: -> connection
+  # Array of files in the directory
+  files: -> files
+  # The name of the directory
+  name: -> name
+  # Array of subdirectories in the directory
+  subdirectories: -> subdirectories
+  enumerate: enumerate
+  update: update
+  upload: upload

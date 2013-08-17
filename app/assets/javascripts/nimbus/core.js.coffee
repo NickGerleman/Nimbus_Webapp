@@ -1,3 +1,5 @@
+'use strict'
+
 window.nimbus_app.core = (socket_uri, refresh_callback) ->
   # put inside a second anonymous function so that changing instance variables are only visible to
   # those with direct reference to this
@@ -8,12 +10,14 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
     current_directory = null
     user = null
 
+    # Adds a new connection, rebuilds the directories to incorporate it, calls a UI refresh
     add_connection = (connection) ->
       connections_manager.add(connection)
       promise = $.Deferred()
       promise.done -> refresh_callback()
       rebuild_directories(promise)
 
+    # Change the current directory to a different metadirectory, enumerates it
     change_directory = (directory, promise) ->
       internal_promise = $.Deferred()
       directory.enumerate(internal_promise)
@@ -21,10 +25,12 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
         current_directory = directory
         promise.resolve()
 
+    # Creates a root metadirectory using the connections in connections_manager
+    # Returns the metadirectory in the promise
     create_root_metadirectory = (promise) ->
       directories = []
       promises = []
-      for id, connection of connections_manager.all()
+      for connection in connections_manager.all()
         internal_promise = $.Deferred()
         internal_promise.done (directory) -> directories.push(directory)
         promises.push(internal_promise)
@@ -59,21 +65,21 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
             directory = root
           directory.enumerate(directory_enumerated)
 
+    # Removes the connection with the specified, rebuilds directories, calls UI refresh
     remove_connection = (id) ->
       connections_manager.remove(id)
       promise = $.Deferred()
       promise.done -> refresh_callback()
       rebuild_directories(promise)
 
+    # Handles connection_update message, will update connection or call for an add if appropriate
     update_connection = (connection) ->
       if connections_manager.get(connection.id)
         connections_manager.update(connection)
       else
         add_connection(connection)
 
-    # initialize the application and enumerate the current directory
-    #
-    # @param promise a Deffered that is resolved after initialization is done
+    # Initializes the application and enumerates the current directory
     initialize = (promise) ->
       user_retrieved = $.Deferred()
       connections_retrieved = $.Deferred()
@@ -101,7 +107,9 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
       directory_enumerated.done -> promise.resolve()
 
 
+    # the current metadirectory
     current_directory: -> current_directory
+    #the user object
     user: -> user
     change_directory: change_directory
     initialize: initialize

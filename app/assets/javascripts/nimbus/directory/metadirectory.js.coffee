@@ -1,10 +1,22 @@
+'use strict'
+
 window.nimbus_app.metadirectory = (parent, directories) ->
   isEnumerated = false
+  memo_path = null
 
-  name = directories[0].name()
+  name = if !parent then '' else directories[0].name()
 
-  path = directories[0].path()
+  path = ->
+    memo_path or do ->
+      paths = []
+      current_directory = to_return
+      while current_directory isnt null
+        paths.unshift(current_directory.name())
+        current_directory = current_directory.parent()
+      paths = paths.map (path) -> '/' + path if path
+      memo_path = paths.join('')
 
+  # Enumerate the metadirectory
   enumerate = (promise) ->
     promises = []
     for directory in directories
@@ -15,6 +27,7 @@ window.nimbus_app.metadirectory = (parent, directories) ->
       isEnumerated = true
       promise.resolve()
 
+  # Get the files in the metadirectory
   files = ->
     files = []
     for directory in directories
@@ -27,12 +40,14 @@ window.nimbus_app.metadirectory = (parent, directories) ->
         else 0
     files
 
+  # Get the subdirectories(metadirectories) in the metadirectory
   subdirectories = ->
     subdirectories = []
     initial_directories = []
     for directory in directories
       for subdirectory in directory.subdirectories()
         initial_directories.push(subdirectory)
+    return [] unless initial_directories[0]
     initial_directories.sort (a,b) ->
       switch
         when a.name().toLowerCase() < b.name().toLowerCase() then -1
@@ -49,17 +64,21 @@ window.nimbus_app.metadirectory = (parent, directories) ->
     subdirectories.push(nimbus_app.metadirectory(this, directory_buffer))
     subdirectories
 
+  # Re-enumerates the directory
   update = (promise) ->
     isEnumerated = false
     enumerate(promise)
 
-
-  directories: -> directories
-  isEnumerated: -> isEnumerated
-  name: -> name
-  parent: -> parent
-  path: -> path
-  enumerate: enumerate
-  files: files
-  subdirectories: subdirectories
-  update: update
+  to_return =
+    # The directories(not metadirectories) that represent this metadirectory
+    directories: -> directories
+    # The name of the directory
+    name: -> name
+    # The parent metadirectory(null if current metadirectory is root)
+    parent: -> parent
+    # The path of the metadirectory
+    enumerate: enumerate
+    files: files
+    path: path
+    subdirectories: subdirectories
+    update: update

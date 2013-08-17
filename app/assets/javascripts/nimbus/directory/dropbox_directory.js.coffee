@@ -1,5 +1,7 @@
+'use strict'
+
+# Construct a dropbox directory from a connection it belongs to and API metadata
 window.nimbus_app.dropbox_directory = (connection, metadata) ->
-  that = nimbus_app.directory()
   isEnumerated = false
   files = []
   subdirectories = []
@@ -16,13 +18,13 @@ window.nimbus_app.dropbox_directory = (connection, metadata) ->
     isEnumerated = true
 
 
+  # Enumerate the directory
   enumerate = (promise) ->
     if isEnumerated
       promise.resolve()
       return
     params = {access_token: connection.access_token()}
     params.hash = metadata.hash if isEnumerated
-
     $.getJSON 'https://api.dropbox.com/1/metadata/dropbox' + metadata.path,
       params,
       (data) ->
@@ -61,13 +63,14 @@ window.nimbus_app.dropbox_directory = (connection, metadata) ->
     promise.resolve()
 
 
-  that.connection = -> connection
-  that.files = -> files
-  that.isEnumerated = -> isEnumerated
-  that.name = -> name
-  that.path = -> metadata.path
-  that.subdirectories = -> subdirectories
-  that.enumerate = enumerate
-  that.update = update
-  that.upload = upload
-  that
+  # The connection the directory belongs to
+  connection: -> connection
+  # Array of files in the directory
+  files: -> files
+  # The name of the directory
+  name: -> name
+  # Array of subdirectories in the directory
+  subdirectories: -> subdirectories
+  enumerate: enumerate
+  update: update
+  upload: upload

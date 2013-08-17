@@ -1,15 +1,17 @@
+'use strict'
+
+# Construct a box directory from a connection it belongs to and API metadata
 window.nimbus_app.box_directory = (connection, metadata) ->
-  that = nimbus_app.directory()
   isEnumerated = false
   files = []
   subdirectories = []
   resources = []
 
+  # Enumerate the directory
   enumerate = (promise) ->
     if isEnumerated
       promise.resolve()
       return
-
     $.getJSON 'https://api.box.com/2.0/folders/' + metadata.id + '/items',
       access_token: connection.access_token(),
       (data) ->
@@ -27,6 +29,7 @@ window.nimbus_app.box_directory = (connection, metadata) ->
 
   name = metadata.name
 
+  # Re-enumerates the directory
   update = (promise) ->
     isEnumerated = false
     enumerate(promise)
@@ -50,12 +53,14 @@ window.nimbus_app.box_directory = (connection, metadata) ->
     promise.resolve()
 
 
-  that.connection = -> connection
-  that.files = -> files
-  that.isEnumerated = -> isEnumerated
-  that.name = -> name
-  that.subdirectories = -> subdirectories
-  that.enumerate = enumerate
-  that.update = update
-  that.upload = upload
-  that
+  # The connection the directory belongs to
+  connection: -> connection
+  # Array of files in the directory
+  files: -> files
+  # The name of the directory
+  name: -> name
+  # Array of subdirectories in the directory
+  subdirectories: -> subdirectories
+  enumerate: enumerate
+  update: update
+  upload: upload

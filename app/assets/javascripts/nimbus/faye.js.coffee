@@ -1,12 +1,12 @@
-# Initializes the Faye Client
-#
-# @param opts
-# @option opts socket_uri the URI for Faye to connect to
-# @option opts socket_token the token to use to connect
-# @option opts user_id the users id
-# @option opts update_callback the function to call on a connection_update message
-# @option opts remove_callback the function to call on a connection_remove message
-# @returns the faye client
+'use strict'
+
+# Initializes and returns the Faye Client
+# opts:
+#   socket_uri the URI for Faye to connect to
+#   socket_token the token to use to connect
+#   user_id the users id
+#   update_callback the function to call on a connection_update message
+#   remove_callback the function to call on a connection_remove message
 window.nimbus_app.faye = (opts) ->
   subscription = {}
 
