@@ -13,7 +13,11 @@
 //= require jquery_ujs
 //= require jquery.spin
 //= require jquery-fileupload/basic
-//= require foundation
+//= require foundation/foundation
+//= require foundation/foundation.alerts
+//= require foundation/foundation.dropdown
+//= require foundation/foundation.forms
+//= require foundation/foundation.topbar
 //= require modernizr
 //= require magnific-popup
 //= require_tree .
