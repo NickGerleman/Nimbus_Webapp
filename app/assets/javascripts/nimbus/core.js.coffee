@@ -25,7 +25,7 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
         promise.resolve()
       directory.enumerate(internal_promise)
 
-    # Creates a root metadirectory using the connections in connections_manager
+    # Creates and enumerates a root metadirectory using the connections in connections_manager
     # Returns the metadirectory in the promise
     create_root_metadirectory = (promise) ->
       directories = []
@@ -37,14 +37,17 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
       for connection in connections_manager.all()
         internal_promise = $.Deferred()
         internal_promise.done (directory) ->
-          directories.push(directory)
-          promises.pop().resolve()
+          enumerated_promise = $.Deferred()
+          enumerated_promise.done ->
+            directories.push(directory)
+            promises.pop().resolve()
+          directory.enumerate(enumerated_promise)
         connection.create_root_directory(internal_promise)
 
     # Rebuilds all directories until it reaches the path of the current directory, it then replaces
     # current_directory
     rebuild_directories = (promise) ->
-      paths = current_directory.split('/')
+      paths = current_directory.path().split('/')
       directory = null
       do ->
         if paths.length == 0
@@ -65,7 +68,7 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
           root_created = $.Deferred()
           root_created.done (root) ->
             directory = root
-          directory.enumerate(directory_enumerated)
+            directory_enumerated.resolve()
 
     # Removes the connection with the specified, rebuilds directories, calls UI refresh
     remove_connection = (id) ->
@@ -86,16 +89,12 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
       user_retrieved = $.Deferred()
       connections_retrieved = $.Deferred()
       root_created = $.Deferred()
-      directory_enumerated = $.Deferred()
 
       connections_retrieved.done ->
         create_root_metadirectory(root_created)
 
       root_created.done (root) ->
         current_directory = root
-        root.enumerate(directory_enumerated)
-
-      directory_enumerated.done ->
         promise.resolve()
         user = nimbus_app.user(user_retrieved)
         user_retrieved.done ->
