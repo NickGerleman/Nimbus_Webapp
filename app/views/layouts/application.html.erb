@@ -9,8 +9,6 @@
     <%= stylesheet_link_tag 'application' %>
     <%= jquery_include_tag :google %>
     <%= javascript_include_tag 'application' %>
-    <% faye = ENV['HOST'] ? '/api/socket/client.js' : 'http://127.0.0.1:8081/api/socket/client.js' %>
-    <%= javascript_include_tag(faye) unless Rails.env.production? and !request.ssl? %>
     <%= csrf_meta_tags %>
 </head>
 <body>
