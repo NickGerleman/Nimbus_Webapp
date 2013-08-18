@@ -19,8 +19,8 @@ window.nimbus_app.google_file = (connection, metadata) ->
   rename = (name, promise) ->
     $.ajax
       type: 'PATCH'
-      url: 'https://www.googleapis.com/drive/v2/files/' + metadata.id
-      headers: Authorization: 'Bearer ' + connection.access_token()
+      url: 'https://www.googleapis.com/drive/v2/files/' + metadata.id + '?access_token=' +
+        connection.access_token()
       contentType: 'application/json'
       data: JSON.stringify
         title: name

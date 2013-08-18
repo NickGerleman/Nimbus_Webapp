@@ -23,13 +23,14 @@ window.nimbus_app.skydrive_file = (connection, metadata) ->
   rename = (name, promise) ->
     $.ajax
       type: 'PUT'
-      url: 'https://apis.live.net/v5.0/' + metadata.id
-      data:
-        access_token: connection.access_token()
+      url: 'https://apis.live.net/v5.0/' + metadata.id + '?access_token=' +
+        connection.access_token()
+      contentType: 'application/json'
+      data: JSON.stringify
         name: name
       dataType: 'JSON'
       succes: (data) ->
-        metadata = data.data[0]
+        metadata = data
         promise.resolve()
 
 

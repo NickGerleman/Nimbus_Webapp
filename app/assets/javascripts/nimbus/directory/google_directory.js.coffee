@@ -49,8 +49,8 @@ window.nimbus_app.google_directory = (connection, metadata) ->
   upload_callback = (data, filename, promise) ->
     id = data.id
     $.ajax
-      url: 'https://www.googleapis.com/drive/v2/files/' + id
-      headers: Authorization: 'Bearer ' + connection.access_token()
+      url: 'https://www.googleapis.com/drive/v2/files/' + id + '?access_token=' +
+        connection.access_token()
       contentType: 'application/json'
       dataType: 'json'
       type: 'PATCH'
