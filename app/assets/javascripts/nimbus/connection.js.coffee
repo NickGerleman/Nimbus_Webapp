@@ -7,39 +7,27 @@ window.nimbus_app.connection = (connection) ->
   create_root_directory = (promise) ->
     switch connection.type
       when 'box'
-        $.ajax
-          type: 'GET'
-          url: 'https://api.box.com/2.0/folders/0'
-          headers: Authorization: 'Bearer ' + connection.access_token
-          dataType: 'JSON'
-          success: (data) ->
+        $.getJSON 'https://api.box.com/2.0/folders/0',
+          access_token: connection.access_token,
+          (data) ->
             directory = nimbus_app.box_directory(to_return, data)
             promise.resolve(directory)
       when 'dropbox'
-        $.ajax
-          type: 'GET'
-          url: 'https://api.dropbox.com/1/metadata/dropbox/'
-          headers: Authorization: 'Bearer ' + connection.access_token
-          dataType: 'JSON'
-          success: (data) ->
+        $.getJSON 'https://api.dropbox.com/1/metadata/dropbox/',
+          access_token: connection.access_token,
+          (data) ->
             directory = nimbus_app.dropbox_directory(to_return, data)
             promise.resolve(directory)
       when 'google'
-        $.ajax
-          type: 'GET'
-          url: 'https://www.googleapis.com/drive/v2/files/root'
-          headers: Authorization: 'Bearer ' + connection.access_token
-          dataType: 'JSON'
-          success: (data) ->
+        $.getJSON 'https://www.googleapis.com/drive/v2/files/root',
+          access_token: connection.access_token,
+          (data) ->
             directory = nimbus_app.google_directory(to_return, data)
             promise.resolve(directory)
       when 'skydrive'
-        $.ajax
-          type: 'GET'
-          url: 'https://apis.live.net/v5.0/me/skydrive/files'
-          headers: Authorization: 'Bearer ' + connection.access_token
-          dataType: 'JSON'
-          success: (data) ->
+        $.getJSON 'https://apis.live.net/v5.0/me/skydrive/files',
+          access_token: connection.access_token,
+          (data) ->
             directory = nimbus_app.skydrive_directory(to_return, data)
             promise.resolve(directory)
       else console.log 'Unknown Service'

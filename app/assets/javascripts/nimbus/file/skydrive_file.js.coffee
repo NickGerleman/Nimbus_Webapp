@@ -15,7 +15,7 @@ window.nimbus_app.skydrive_file = (connection, metadata) ->
     $.ajax
       type: 'DELETE'
       url: 'https://apis.live.net/v5.0/' + metadata.id
-      headers: Authorization: 'Bearer ' + connection.access_token()
+      data: access_token: connection.access_token()
       dataType: 'JSON'
       success: -> promise.resolve()
 
@@ -24,8 +24,9 @@ window.nimbus_app.skydrive_file = (connection, metadata) ->
     $.ajax
       type: 'PUT'
       url: 'https://apis.live.net/v5.0/' + metadata.id
-      headers: Authorization: 'Bearer ' + connection.access_token()
-      data: name: name
+      data:
+        access_token: connection.access_token()
+        name: name
       dataType: 'JSON'
       succes: (data) ->
         metadata = data.data[0]
