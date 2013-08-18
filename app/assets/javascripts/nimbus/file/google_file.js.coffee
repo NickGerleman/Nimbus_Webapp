@@ -32,7 +32,7 @@ window.nimbus_app.google_file = (connection, metadata) ->
   # The connection the file belongs to
   that.connection = -> connection
   # The download URL for the file
-  that.download_url = -> metadata.downloadUrl
+  that.download_url = -> metadata.downloadUrl.replace('&gd=true', '')
   # The name with extension of the file
   that.full_name = -> metadata.title
   # The id of the file
