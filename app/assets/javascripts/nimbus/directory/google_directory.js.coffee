@@ -50,10 +50,11 @@ window.nimbus_app.google_directory = (connection, metadata) ->
     id = data.id
     $.ajax
       url: 'https://www.googleapis.com/drive/v2/files/' + id
+      headers: Authorization: 'Bearer ' + connection.access_token()
+      contentType: 'application/json'
       dataType: 'json'
       type: 'PATCH'
-      data:
-        access_token: connection.access_token()
+      data: JSON.stringify
         title: filename
         parents: [
           kind: 'drive#fileLink'
