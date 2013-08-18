@@ -36,14 +36,26 @@ window.nimbus_app.box_directory = (connection, metadata) ->
 
   # Returns options object for jQuery File Upload
   upload = (filename, promise) ->
-    url: 'https://upload.box.com/api/2.0/files/content'
+    file_found = false
+    for file in files
+      if file.full_name()
+        file_found = file
+        break
+    if file_found
+      url = 'https://upload.box.com/api/2.0/files/' + file.id() + '/content'
+      form_data =
+        filename: filename
+    else
+      url = 'https://upload.box.com/api/2.0/files/content'
+      form_data =
+        filename: filename
+        parent_id: metadata.id
+    url: url
     type: 'post'
     dropZone: null
     data:
       access_token: connection.access_token()
-    formData:
-      filename: filename
-      parent_id: metadata.id
+    formData: form_data
     success: (data) -> upload_callback(data, promise)
 
   upload_callback = (data, promise) ->

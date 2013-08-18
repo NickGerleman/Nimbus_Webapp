@@ -53,6 +53,7 @@ window.nimbus_app.google_directory = (connection, metadata) ->
       dataType: 'json'
       type: 'PATCH'
       data:
+        access_token: connection.access_token()
         title: filename
         parents: [
           kind: 'drive#fileLink'

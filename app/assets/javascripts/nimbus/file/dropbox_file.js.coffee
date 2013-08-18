@@ -4,7 +4,6 @@
 window.nimbus_app.dropbox_file = (connection, metadata) ->
   that = nimbus_app.file()
   size = parseFloat(metadata.size)
-  full_name = metadata.path.slice(metadata.path.lastIndexOf('/') + 1)
   time = Date.parse(metadata.modified)
 
   # Get the download URL for the file
@@ -14,14 +13,38 @@ window.nimbus_app.dropbox_file = (connection, metadata) ->
 
   # Delete the file
   destroy = (promise) ->
-    $.post 'https://api.dropbox.com/1/fileops/delete',
-      root: 'dropbox', path: path, access_token: connection.access_token(),
-      -> promise.resolve()
+    $.ajax
+      type: 'POST'
+      url: 'https://api.dropbox.com/1/fileops/delete'
+      data:
+        root: 'dropbox'
+        path: metadata.path
+        access_token: connection.access_token()
+      dataType: 'JSON'
+      success: ->
+        promise.resolve()
+
+  # The name with extension of the file
+  full_name = -> metadata.path.slice(metadata.path.lastIndexOf('/') + 1)
+
+  # Rename the file
+  rename = (name, promise) ->
+    $.ajax
+      type: 'POST'
+      url: 'https://api.dropbox.com/1/fileops/move'
+      data:
+        root: 'dropbox'
+        from_path: metadata.path
+        to_path: metadata.path.replace(full_name(), name)
+        access_token: connection.access_token()
+      dataType: 'JSON'
+      success: (data) ->
+        metadata = data
+        promise.resolve()
+
 
   # The connection the file belongs to
   that.connection = -> connection
-  # The name with extension of the file
-  that.full_name = -> full_name
   # The mime type of the file
   that.mime_type = -> metadata.mime_type
   # The size in KB of the file
@@ -30,4 +53,6 @@ window.nimbus_app.dropbox_file = (connection, metadata) ->
   that.time = -> time
   that.destroy = destroy
   that.download_url = download_url
+  that.full_name = full_name
+  that.rename = rename
   that

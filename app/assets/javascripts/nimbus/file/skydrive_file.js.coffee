@@ -12,18 +12,38 @@ window.nimbus_app.skydrive_file = (connection, metadata) ->
 
   # Delete the file
   destroy = (promise) ->
-    $.delete  'https://apis.live.net/v5.0/' + metadata.id
-      access_token: connection.access_token(),
-      -> promise.resolve()
+    $.ajax
+      type: 'DELETE'
+      url: 'https://apis.live.net/v5.0/' + metadata.id
+      data: access_token: connection.access_token()
+      dataType: 'JSON'
+      success: -> promise.resolve()
+
+  # Rename the file
+  rename = (name, promise) ->
+    $.ajax
+      type: 'PUT'
+      url: 'https://apis.live.net/v5.0/' + metadata.id
+      data:
+        access_token: connection.access_token()
+        name: name
+      dataType: 'JSON'
+      succes: (data) ->
+        metadata = data.data[0]
+        promise.resolve()
+
 
   # The connection the file belongs to
   that.connection = -> connection
   # The name with extension of the file
   that.full_name = -> metadata.name
+  # The id of the file
+  that.id = -> metadata.id
   # The size in KB of the file
   that.size = -> size
   # The date modified of the file
   that.time = -> time
   that.destroy = destroy
   that.download_url = download_url
+  that.rename = rename
   that

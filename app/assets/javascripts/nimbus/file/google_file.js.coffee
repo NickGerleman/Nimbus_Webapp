@@ -8,9 +8,26 @@ window.nimbus_app.google_file = (connection, metadata) ->
 
   # Delete the file
   destroy = (promise) ->
-    $.delete 'https://www.googleapis.com/drive/v2/files/' + metadata.id,
-      access_token: connection.access_token(),
-      -> promise.resolve()
+    $.ajax
+      type: 'DELETE'
+      url: 'https://www.googleapis.com/drive/v2/files/' + metadata.id
+      data: access_token: connection.access_token()
+      dataType: 'JSON'
+      success: -> promise.resolve()
+
+  # Rename the file
+  rename = (name, promise) ->
+    $.ajax
+      type: 'PATCH'
+      url: 'https://www.googleapis.com/drive/v2/files/' + metadata.id
+      data:
+        access_token: connection.access_token()
+        title: name
+      dataType: 'JSON'
+      success: (data) ->
+        metadata = data
+        promise.resolve()
+
 
   # The connection the file belongs to
   that.connection = -> connection
@@ -18,6 +35,8 @@ window.nimbus_app.google_file = (connection, metadata) ->
   that.download_url = -> metadata.downloadUrl
   # The name with extension of the file
   that.full_name = -> metadata.title
+  # The id of the file
+  that.id = -> metadata.id
   # The mime type of the file
   that.mime_type = -> metadata.mimeType
   # The size in KB of the file
@@ -27,4 +46,5 @@ window.nimbus_app.google_file = (connection, metadata) ->
   # The URL to view the file on Google Drive
   that.view_url = -> metadata.alternateLink
   that.destroy = destroy
+  that.rename = rename
   that
