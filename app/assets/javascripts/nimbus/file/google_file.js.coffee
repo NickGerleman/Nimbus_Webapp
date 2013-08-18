@@ -11,7 +11,7 @@ window.nimbus_app.google_file = (connection, metadata) ->
     $.ajax
       type: 'DELETE'
       url: 'https://www.googleapis.com/drive/v2/files/' + metadata.id
-      data: access_token: connection.access_token()
+      headers: Authorization: 'Bearer ' + connection.access_token()
       dataType: 'JSON'
       success: -> promise.resolve()
 
@@ -20,9 +20,8 @@ window.nimbus_app.google_file = (connection, metadata) ->
     $.ajax
       type: 'PATCH'
       url: 'https://www.googleapis.com/drive/v2/files/' + metadata.id
-      data:
-        access_token: connection.access_token()
-        title: name
+      headers: Authorization: 'Bearer ' + connection.access_token()
+      data: title: name
       dataType: 'JSON'
       success: (data) ->
         metadata = data

@@ -15,7 +15,7 @@ window.nimbus_app.box_file = (connection, metadata) ->
     $.ajax
       type: 'DELETE'
       url: 'https://api.box.com/2.0/files/'
-      data: access_token: connection.access_token()
+      headers: Authorization: 'Bearer ' + connection.access_token()
       dataType: 'JSON'
       success: -> promise.resolve()
 
@@ -24,9 +24,8 @@ window.nimbus_app.box_file = (connection, metadata) ->
     $.ajax
       type: 'PUT'
       url: 'https://api.box.com/2.0/files/' + metadata.id
-      data:
-        access_token: connection.access_token()
-        name: name
+      headers: Authorization: 'Bearer ' + connection.access_token()
+      data: name: name
       dataType: 'JSON'
       succes: (data) ->
         metadata = data

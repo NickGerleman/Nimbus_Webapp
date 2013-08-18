@@ -22,9 +22,12 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
     if isEnumerated
       promise.resolve()
       return
-    $.getJSON 'https://apis.live.net/v5.0/' + metadata.id + '/files',
-      access_token: connection.access_token,
-      (data) ->
+    $.ajax
+      type: 'GET'
+      url: 'https://apis.live.net/v5.0/' + metadata.id + '/files'
+      headers: Authorization: 'Bearer ' + connection.access_token()
+      dataType: 'JSON'
+      success: (data) ->
         metadata = data
         resources = metadata.data
         files = []
@@ -48,6 +51,8 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
   # Returns options object for jQuery File Upload
   upload = (filename, promise) ->
     url: metadata.upload_location + filename
+    headers: Authorization: 'Bearer ' + connection.access_token()
+    dataType: 'JSON'
     type: 'put'
     multipart: false
     dropZone: null
@@ -57,9 +62,12 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
 
   upload_callback = (data, promise) ->
     id = data.id
-    $.getJSON 'https://apis.live.net/v5.0/' + id,
-      access_token: connection.access_token(),
-      (data) ->
+    $.ajax
+      type: 'GET'
+      url: 'https://apis.live.net/v5.0/' + id
+      headers: Authorization: 'Bearer ' + connection.access_token()
+      dataType: 'JSON'
+      success: (data) ->
         resources.push(data)
         files.push(nimbus_app.skydrive_file(data))
         promise.resolve()

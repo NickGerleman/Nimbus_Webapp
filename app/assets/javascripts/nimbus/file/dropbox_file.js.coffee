@@ -16,10 +16,10 @@ window.nimbus_app.dropbox_file = (connection, metadata) ->
     $.ajax
       type: 'POST'
       url: 'https://api.dropbox.com/1/fileops/delete'
+      headers: Authorization: 'Bearer ' + connection.access_token()
       data:
         root: 'dropbox'
         path: metadata.path
-        access_token: connection.access_token()
       dataType: 'JSON'
       success: ->
         promise.resolve()
@@ -32,11 +32,11 @@ window.nimbus_app.dropbox_file = (connection, metadata) ->
     $.ajax
       type: 'POST'
       url: 'https://api.dropbox.com/1/fileops/move'
+      headers: Authorization: 'Bearer ' + connection.access_token()
       data:
         root: 'dropbox'
         from_path: metadata.path
         to_path: metadata.path.replace(full_name(), name)
-        access_token: connection.access_token()
       dataType: 'JSON'
       success: (data) ->
         metadata = data

@@ -12,10 +12,13 @@ window.nimbus_app.google_directory = (connection, metadata) ->
     if isEnumerated
       promise.resolve()
       return
-    $.getJSON 'https://www.googleapis.com/drive/v2/files',
-      access_token: connection.access_token()
-      q: "trashed = false and '" + metadata.id + "' in parents",
-      (data) ->
+    $.ajax
+      type: 'GET'
+      url: 'https://www.googleapis.com/drive/v2/files'
+      headers: Authorization: 'Bearer ' + connection.access_token()
+      data: q: "trashed = false and '" + metadata.id + "' in parents"
+      dataType: 'JSON'
+      success: (data) ->
         resources = data.items
         files = []
         subdirectories = []
@@ -38,6 +41,8 @@ window.nimbus_app.google_directory = (connection, metadata) ->
   # Returns options object for jQuery File Upload
   upload = (filename, promise) ->
     url: 'https://www.googleapis.com/upload/drive/v2/files'
+    headers: Authorization: 'Bearer ' + connection.access_token()
+    dataType: 'JSON'
     type: 'put'
     multipart: false
     dropZone: null
@@ -50,10 +55,10 @@ window.nimbus_app.google_directory = (connection, metadata) ->
     id = data.id
     $.ajax
       url: 'https://www.googleapis.com/drive/v2/files/' + id
+      headers: Authorization: 'Bearer ' + connection.access_token()
       dataType: 'json'
       type: 'PATCH'
       data:
-        access_token: connection.access_token()
         title: filename
         parents: [
           kind: 'drive#fileLink'
