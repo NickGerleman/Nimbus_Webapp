@@ -1,5 +1,4 @@
 class SessionsController < ApplicationController
-  force_ssl(except: :destroy) if Rails.env.production?
 
   # Create a new session
   def create

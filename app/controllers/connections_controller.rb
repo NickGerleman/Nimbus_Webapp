@@ -1,5 +1,4 @@
 class ConnectionsController < ApplicationController
-  force_ssl(only: :authorize) if Rails.env.production?
 
   # Get Token after OAuth Callback
   def authorize

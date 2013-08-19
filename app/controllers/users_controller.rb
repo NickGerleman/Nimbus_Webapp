@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  force_ssl(except: :verify) if Rails.env.production?
 
   # Create a new user
   def create

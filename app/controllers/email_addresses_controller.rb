@@ -1,7 +1,5 @@
 class EmailAddressesController < ApplicationController
 
-  force_ssl if Rails.env.production?
-
   def edit
     render partial: 'edit', layout: false
   end
