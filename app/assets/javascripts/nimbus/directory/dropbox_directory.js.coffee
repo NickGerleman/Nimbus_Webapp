@@ -25,9 +25,11 @@ window.nimbus_app.dropbox_directory = (connection, metadata) ->
       return
     params = {access_token: connection.access_token()}
     params.hash = metadata.hash if isEnumerated
-    $.getJSON 'https://api.dropbox.com/1/metadata/dropbox' + metadata.path,
-      params,
-      (data) ->
+    $.ajax
+      url: 'https://api.dropbox.com/1/metadata/dropbox' + metadata.path
+      data: params
+      dataType: 'JSON'
+      success: (data) ->
         metadata = data
         resources = metadata.contents
         files = []
@@ -40,6 +42,7 @@ window.nimbus_app.dropbox_directory = (connection, metadata) ->
             files.push(constructed_file)
         isEnumerated = true
         promise.resolve()
+      error: -> promise.reject()
 
   name = metadata.path.slice(metadata.path.lastIndexOf('/') + 1)
 
@@ -56,6 +59,7 @@ window.nimbus_app.dropbox_directory = (connection, metadata) ->
     data:
       access_token: connection.access_token()
     success: (data) -> upload_callback(data, promise)
+    error: -> promise.reject()
 
   upload_callback = (data, promise) ->
     resources.push(data)

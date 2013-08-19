@@ -21,7 +21,9 @@ window.nimbus_app.metadirectory = (parent, directories) ->
   enumerate = (promise) ->
     promises = []
     promises.push($.Deferred()) for directory in directories
-    $.when.apply($, promises).then ->
+    for p in promises
+      p.fail -> promise.reject()
+    $.when.apply($, promises).done ->
       isEnumerated = true
       promise.resolve()
     directory.enumerate(promises.pop()) for directory in directories

@@ -21,7 +21,6 @@ window.nimbus_app.faye = (opts) ->
           message.ext.auth_token = opts.socket_token
           callback(message)
       subscription = client.subscribe('/' + opts.user_id, callback_handler)
-      subscription.errback( -> alert 'Faye Subscription Failed')
 
       callback_handler = (message) ->
         message = JSON.parse(message)

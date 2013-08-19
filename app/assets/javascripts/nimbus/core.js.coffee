@@ -20,6 +20,7 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
     # Change the current directory to a different metadirectory, enumerates it
     change_directory = (directory, promise) ->
       internal_promise = $.Deferred()
+      internal_promise.fail -> promise.reject()
       internal_promise.done ->
         current_directory = directory
         promise.resolve()
@@ -31,7 +32,9 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
       directories = []
       promises = []
       promises.push($.Deferred()) for connection in connections_manager.all()
-      $.when.apply($, promises).then ->
+      for p in promises
+        p.fail -> promise.reject()
+      $.when.apply($, promises).done ->
         metadirectory = nimbus_app.metadirectory(null, directories)
         promise.resolve(metadirectory)
       for connection in connections_manager.all()
@@ -55,6 +58,7 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
           promise.resolve()
           return
         directory_enumerated = $.Deferred()
+        directory_enumerated.fail -> promise.reject()
         directory_enumerated.done ->
           this()
         path = paths.shift()
@@ -69,6 +73,7 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
           root_created.done (root) ->
             directory = root
             directory_enumerated.resolve()
+          root_created.fail -> promise.reject()
 
     # Removes the connection with the specified, rebuilds directories, calls UI refresh
     remove_connection = (id) ->
@@ -88,7 +93,9 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
     initialize = (promise) ->
       user_retrieved = $.Deferred()
       connections_retrieved = $.Deferred()
+      connections_retrieved.fail -> promise.reject()
       root_created = $.Deferred()
+      root_created.fail -> promise.reject()
 
       connections_retrieved.done ->
         create_root_metadirectory(root_created)

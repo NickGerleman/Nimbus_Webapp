@@ -12,10 +12,13 @@ window.nimbus_app.google_directory = (connection, metadata) ->
     if isEnumerated
       promise.resolve()
       return
-    $.getJSON 'https://www.googleapis.com/drive/v2/files',
-      access_token: connection.access_token()
-      q: "trashed = false and '" + metadata.id + "' in parents",
-      (data) ->
+    $.ajax
+      url: 'https://www.googleapis.com/drive/v2/files'
+      data:
+        access_token: connection.access_token()
+        q: "trashed = false and '" + metadata.id + "' in parents"
+      dataType: 'JSON'
+      success: (data) ->
         resources = data.items
         files = []
         subdirectories = []
@@ -27,6 +30,7 @@ window.nimbus_app.google_directory = (connection, metadata) ->
             files.push(constructed_file)
         isEnumerated = true
         promise.resolve()
+      error: -> promise.reject()
 
   name = metadata.title
 
@@ -45,12 +49,13 @@ window.nimbus_app.google_directory = (connection, metadata) ->
       access_token: connection.access_token()
       uploadType: 'media'
     success: (data) -> upload_callback(data, filename, promise)
+    error: -> promise.reject()
 
   upload_callback = (data, filename, promise) ->
     id = data.id
     $.ajax
-      url: 'https://www.googleapis.com/drive/v2/files/' + id + '?access_token=' +
-        connection.access_token()
+      url: 'https://www.googleapis.com/drive/v2/files/' + id
+      headers: Authorization: 'Bearer ' + connection.access_token()
       contentType: 'application/json'
       dataType: 'json'
       type: 'PATCH'
@@ -64,6 +69,7 @@ window.nimbus_app.google_directory = (connection, metadata) ->
         resources.push(data)
         files.push(nimbus_app.google_file(connection, data))
         promise.resolve()
+      error: -> promise.reject()
 
 
   # The connection the directory belongs to

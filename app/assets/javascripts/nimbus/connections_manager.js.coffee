@@ -5,9 +5,13 @@ window.nimbus_app.connections_manager = (promise) ->
 
   connections = {}
 
-  $.getJSON '/api/user/connections',(data) ->
-    add(connection) for connection in data
-    promise.resolve()
+  $.ajax
+    url: '/api/user/connections'
+    dataType: 'JSON'
+    success: (data) ->
+      add(connection) for connection in data
+      promise.resolve()
+    error: -> promise.reject()
 
   # Adds a new connection (in API form)
   add = (connection) ->

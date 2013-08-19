@@ -23,6 +23,7 @@ window.nimbus_app.dropbox_file = (connection, metadata) ->
       dataType: 'JSON'
       success: ->
         promise.resolve()
+      error: -> promise.reject()
 
   # The name with extension of the file
   full_name = -> metadata.path.slice(metadata.path.lastIndexOf('/') + 1)
@@ -41,6 +42,7 @@ window.nimbus_app.dropbox_file = (connection, metadata) ->
       success: (data) ->
         metadata = data
         promise.resolve()
+      error: -> promise.reject()
 
 
   # The connection the file belongs to

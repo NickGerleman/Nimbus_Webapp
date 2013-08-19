@@ -3,9 +3,13 @@
 # Gets the user's information and return the user object
 window.nimbus_app.user = (promise) ->
   user_info = null
-  $.getJSON '/api/user', (data) ->
-    user_info = data
-    promise.resolve()
+  $.ajax
+    url: '/api/user'
+    dataType: 'JSON'
+    success: (data) ->
+      user_info = data
+      promise.resolve()
+    error: promise.reject()
 
   # The id of the user
   id: -> user_info.id

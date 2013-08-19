@@ -12,9 +12,11 @@ window.nimbus_app.box_directory = (connection, metadata) ->
     if isEnumerated
       promise.resolve()
       return
-    $.getJSON 'https://api.box.com/2.0/folders/' + metadata.id + '/items',
-      access_token: connection.access_token(),
-      (data) ->
+    $.ajax
+      url: 'https://api.box.com/2.0/folders/' + metadata.id + '/items'
+      data: access_token: connection.access_token()
+      dataType: 'JSON'
+      success: (data) ->
         resources = data.entries
         files = []
         subdirectories = []
@@ -26,6 +28,7 @@ window.nimbus_app.box_directory = (connection, metadata) ->
             files.push(constructed_file)
         isEnumerated = true
         promise.resolve()
+      error: -> promise.reject()
 
   name = metadata.name
 
@@ -57,6 +60,7 @@ window.nimbus_app.box_directory = (connection, metadata) ->
       access_token: connection.access_token()
     formData: form_data
     success: (data) -> upload_callback(data, promise)
+    error: -> promise.reject()
 
   upload_callback = (data, promise) ->
     file = data.entries[0]

@@ -18,6 +18,7 @@ window.nimbus_app.skydrive_file = (connection, metadata) ->
       data: access_token: connection.access_token()
       dataType: 'JSON'
       success: -> promise.resolve()
+      error: -> promise.reject()
 
   # Rename the file
   rename = (name, promise) ->
@@ -29,9 +30,10 @@ window.nimbus_app.skydrive_file = (connection, metadata) ->
       data: JSON.stringify
         name: name
       dataType: 'JSON'
-      succes: (data) ->
+      success: (data) ->
         metadata = data
         promise.resolve()
+      error: promise.reject()
 
 
   # The connection the file belongs to

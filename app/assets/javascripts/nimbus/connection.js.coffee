@@ -7,30 +7,44 @@ window.nimbus_app.connection = (connection) ->
   create_root_directory = (promise) ->
     switch connection.type
       when 'box'
-        $.getJSON 'https://api.box.com/2.0/folders/0',
-          access_token: connection.access_token,
-          (data) ->
+        $.ajax
+          url: 'https://api.box.com/2.0/folders/0'
+          data: access_token: connection.access_token
+          dataType: 'JSON'
+          success: (data) ->
             directory = nimbus_app.box_directory(to_return, data)
             promise.resolve(directory)
+          error: -> promise.reject()
       when 'dropbox'
-        $.getJSON 'https://api.dropbox.com/1/metadata/dropbox/',
-          access_token: connection.access_token,
-          (data) ->
+        $.ajax
+          url: 'https://api.dropbox.com/1/metadata/dropbox/'
+          data: access_token: connection.access_token
+          dataType: 'JSON'
+          success: (data) ->
             directory = nimbus_app.dropbox_directory(to_return, data)
             promise.resolve(directory)
+          error: -> promise.reject()
       when 'google'
-        $.getJSON 'https://www.googleapis.com/drive/v2/files/root',
-          access_token: connection.access_token,
-          (data) ->
+        $.ajax
+          url: 'https://www.googleapis.com/drive/v2/files/root'
+          data: access_token: connection.access_token
+          dataType: 'JSON'
+          success: (data) ->
             directory = nimbus_app.google_directory(to_return, data)
             promise.resolve(directory)
+          error: -> promise.reject()
       when 'skydrive'
-        $.getJSON 'https://apis.live.net/v5.0/me/skydrive/files',
-          access_token: connection.access_token,
-          (data) ->
+        $.ajax
+          url: 'https://apis.live.net/v5.0/me/skydrive/files'
+          access_token: connection.access_token
+          dataType: 'JSON'
+          success: (data) ->
             directory = nimbus_app.skydrive_directory(to_return, data)
             promise.resolve(directory)
-      else console.log 'Unknown Service'
+          error: -> promise.reject()
+      else
+        console.log 'Unknown Service'
+        promise.reject()
 
   # Updates a connection with new information (eg title or access_token)
   update = (new_connection) -> connection = new_connection

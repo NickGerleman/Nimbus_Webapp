@@ -22,9 +22,11 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
     if isEnumerated
       promise.resolve()
       return
-    $.getJSON 'https://apis.live.net/v5.0/' + metadata.id + '/files',
-      access_token: connection.access_token,
-      (data) ->
+    $.ajax
+      url: 'https://apis.live.net/v5.0/' + metadata.id + '/files'
+      data: access_token: connection.access_token
+      dataType: 'JSON'
+      success: (data) ->
         metadata = data
         resources = metadata.data
         files = []
@@ -37,6 +39,7 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
             files.push(constructed_file)
         isEnumerated = true
         promise.resolve()
+      error: -> promise.reject()
 
   name = metadata.name
 
@@ -51,18 +54,21 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
     type: 'put'
     multipart: false
     dropZone: null
-    data:
-      access_token: connection.access_token()
+    data: access_token: connection.access_token()
     success: (data) -> upload_callback(data, promise)
+    error: -> promise.reject()
 
   upload_callback = (data, promise) ->
     id = data.id
-    $.getJSON 'https://apis.live.net/v5.0/' + id,
-      access_token: connection.access_token(),
-      (data) ->
+    $.ajax
+      url: 'https://apis.live.net/v5.0/' + id
+      data: access_token: connection.access_token()
+      dataType: 'JSON'
+      success: (data) ->
         resources.push(data)
         files.push(nimbus_app.skydrive_file(data))
         promise.resolve()
+      error: -> promise.reject()
 
 
   # The connection the directory belongs to
