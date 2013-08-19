@@ -9,7 +9,7 @@ window.nimbus_app.user = (promise) ->
     success: (data) ->
       user_info = data
       promise.resolve()
-    error: promise.reject()
+    error: -> promise.reject()
 
   # The id of the user
   id: -> user_info.id
