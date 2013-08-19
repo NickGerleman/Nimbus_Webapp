@@ -32,15 +32,15 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
       directories = []
       promises = []
       promises.push($.Deferred()) for connection in connections_manager.all()
-      for p in promises
-        p.fail -> promise.reject()
       $.when.apply($, promises).done ->
         metadirectory = nimbus_app.metadirectory(null, directories)
         promise.resolve(metadirectory)
       for connection in connections_manager.all()
         internal_promise = $.Deferred()
+        internal_promise.fail -> promise.reject()
         internal_promise.done (directory) ->
           enumerated_promise = $.Deferred()
+          enumerated_promise.fail -> promise.reject()
           enumerated_promise.done ->
             directories.push(directory)
             promises.pop().resolve()

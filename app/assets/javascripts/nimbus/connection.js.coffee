@@ -36,7 +36,7 @@ window.nimbus_app.connection = (connection) ->
       when 'skydrive'
         $.ajax
           url: 'https://apis.live.net/v5.0/me/skydrive/files'
-          access_token: connection.access_token
+          data: access_token: connection.access_token
           dataType: 'JSON'
           success: (data) ->
             directory = nimbus_app.skydrive_directory(to_return, data)
