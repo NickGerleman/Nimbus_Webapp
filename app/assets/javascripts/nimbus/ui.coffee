@@ -15,7 +15,7 @@ window.nimbus_app.ui = (socket_uri) ->
   init_done = $.Deferred();
   init_done.fail (error) ->
     stop_spinner()
-    alert(error? ? error: 'Something went wrong')
+    alert(error || 'Something went wrong')
   init_done.done ->
     stop_spinner()
     refresh()
