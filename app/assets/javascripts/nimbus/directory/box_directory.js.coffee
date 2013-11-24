@@ -20,7 +20,7 @@ window.nimbus_app.box_directory = (connection, metadata) ->
         resources = data.entries
         files = []
         subdirectories = []
-        for file in resources.items
+        for file in resources
           if file.type == 'folder'
             subdirectories.push(nimbus_app.box_directory(connection, file, this))
           else
