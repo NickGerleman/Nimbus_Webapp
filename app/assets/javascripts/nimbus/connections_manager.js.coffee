@@ -11,7 +11,7 @@ window.nimbus_app.connections_manager = (promise) ->
     success: (data) ->
       add(connection) for connection in data
       promise.resolve()
-    error: -> promise.reject()
+    error: -> promise.reject('Unable to get connections from Nimbus API')
 
   # Adds a new connection (in API form)
   add = (connection) ->

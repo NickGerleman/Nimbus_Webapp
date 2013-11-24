@@ -37,10 +37,10 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
         promise.resolve(metadirectory)
       for connection in connections_manager.all()
         internal_promise = $.Deferred()
-        internal_promise.fail -> promise.reject()
+        internal_promise.fail (error) -> promise.reject(error)
         internal_promise.done (directory) ->
           enumerated_promise = $.Deferred()
-          enumerated_promise.fail -> promise.reject()
+          enumerated_promise.fail (error) -> promise.reject(error)
           enumerated_promise.done ->
             directories.push(directory)
             promises.pop().resolve()
@@ -93,9 +93,9 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
     initialize = (promise) ->
       user_retrieved = $.Deferred()
       connections_retrieved = $.Deferred()
-      connections_retrieved.fail -> promise.reject()
+      connections_retrieved.fail -> (error) promise.reject(error)
       root_created = $.Deferred()
-      root_created.fail -> promise.reject()
+      root_created.fail (error) -> promise.reject(error)
 
       connections_retrieved.done ->
         create_root_metadirectory(root_created)

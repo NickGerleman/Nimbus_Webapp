@@ -14,7 +14,7 @@ window.nimbus_app.connection = (connection) ->
           success: (data) ->
             directory = nimbus_app.box_directory(to_return, data)
             promise.resolve(directory)
-          error: -> promise.reject()
+          error: -> promise.reject('Unable to retrieve Data from Box API for ' + connection.name)
       when 'dropbox'
         $.ajax
           url: 'https://api.dropbox.com/1/metadata/dropbox/'
@@ -23,7 +23,7 @@ window.nimbus_app.connection = (connection) ->
           success: (data) ->
             directory = nimbus_app.dropbox_directory(to_return, data)
             promise.resolve(directory)
-          error: -> promise.reject()
+          error: -> promise.reject('Unable to retrieve Data from Dropbox API for ' + connection.name)
       when 'google'
         $.ajax
           url: 'https://www.googleapis.com/drive/v2/files/root'
@@ -32,7 +32,7 @@ window.nimbus_app.connection = (connection) ->
           success: (data) ->
             directory = nimbus_app.google_directory(to_return, data)
             promise.resolve(directory)
-          error: -> promise.reject()
+          error: -> promise.reject('Unable to retrieve Data from Google Drive API for ' + connection.name)
       when 'skydrive'
         $.ajax
           url: 'https://apis.live.net/v5.0/me/skydrive/files'
@@ -41,7 +41,7 @@ window.nimbus_app.connection = (connection) ->
           success: (data) ->
             directory = nimbus_app.skydrive_directory(to_return, data)
             promise.resolve(directory)
-          error: -> promise.reject()
+          error: -> promise.reject('Unable to retrieve Data from SkyDrive API for ' + connection.name)
       else
         console.log 'Unknown Service'
         promise.reject()

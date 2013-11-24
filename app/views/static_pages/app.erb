@@ -4,7 +4,7 @@
     jQuery(function(){
       window.nimbus = nimbus_app.core('<%= socket_url %>');
       var init_done = $.Deferred();
-      init_done.fail(function(){alert('Something went wrong');});
+      init_done.fail(function(error){alert(error == null ? 'Something went wrong' : error);});
       init_done.done(function(){
         var files = nimbus.current_directory().files();
         var files_len = files.length;

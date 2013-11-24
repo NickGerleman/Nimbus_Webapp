@@ -28,7 +28,7 @@ window.nimbus_app.box_directory = (connection, metadata) ->
             files.push(constructed_file)
         isEnumerated = true
         promise.resolve()
-      error: -> promise.reject()
+      error: -> promise.reject('Unable to recieve folder data from Box API')
 
   name = metadata.name
 

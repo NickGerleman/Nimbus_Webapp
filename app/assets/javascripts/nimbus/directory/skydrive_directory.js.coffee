@@ -39,7 +39,7 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
             files.push(constructed_file)
         isEnumerated = true
         promise.resolve()
-      error: -> promise.reject()
+      error: -> promise.reject('Unable to recieve folder data from Skydrive API')
 
   name = metadata.name
 
