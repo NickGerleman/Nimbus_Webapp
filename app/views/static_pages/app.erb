@@ -2,52 +2,6 @@
     var nimbus;
     <% socket_url = ENV['HOST'] ? '/api/socket' : 'http://127.0.0.1:8081/api/socket' %>
     jQuery(function () {
-        show_spinner()
-        window.nimbus = nimbus_app.core('<%= socket_url %>');
-        var init_done = $.Deferred();
-        init_done.fail(function (error) {
-            stop_spinner();
-            alert(error == null ? 'Something went wrong' : error);
-        });
-        init_done.done(function () {
-            var files = nimbus.current_directory().files();
-            var files_len = files.length;
-            var folders = nimbus.current_directory().subdirectories();
-            var folders_len = folders.length;
-            var container = $('#files-body');
-            function createRow(file) {
-                row = $("<tr>");
-                row.append("<td>");
-                if(file.hasOwnProperty("download_url")) {
-                    row.append("<td><a href='" + file.download_url() +"'>"+ file.name() +"</a></td>");
-                }
-                else if(file.hasOwnProperty("view_url")) {
-                    row.append("<td><a href='" + file.view_url() +"'>"+ file.name() +"</a></td>");
-                }
-                else {
-                    row.append("<td>"+ file.name() +"</td>");
-                }
-                if(file.hasOwnProperty("extension")) {
-                    row.append("<td>"+ file.extension() +"</td>");
-                }
-                else {
-                    row.append("<td> folder </td>");
-                }
-                return row;
-            }
-            for (i = 0; i < folders_len; i++) {
-                container.append(createRow(folders[i]));
-            }
-            for (i = 0; i < files_len; i++) {
-                container.append(createRow(files[i]));
-            }
-            stop_spinner();
-        });
-        nimbus.initialize(init_done)
+        nimbus_app.ui('<%= socket_url %>');
     });
 </script>
-<div class="row">
-    <table id="files-table">
-        <tbody id="files-body"></tbody>
-    </table>
-</div>
