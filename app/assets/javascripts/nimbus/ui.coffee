@@ -1,42 +1,58 @@
+# runs the ui for the client
 window.nimbus_app.ui = (socket_uri) ->
-  container = $('<tbody id="files-body">')
-  table = $('<table id="files-table">')
-  outer_row = $('<div class="row">')
   show_spinner()
+  iframe = $("<iframe style='display: none' id='hidden-iframe'></iframe>")
+  $('body').append(iframe)
+  extensions = ["3gp", "divx", "jar", "pdf", "ss", "7z", "dll", "jpeg", "png", "swf", "ace", "dmg", "jpg", "pps", "tgz",
+                "aiff", "doc", "lnk", "psd", "thm", "aif", "dss", "log", "ps", "tif", "ai", "dvf", "m4a", "pst", "tmp",
+                "amr", "dwg", "m4b", "ptb", "torrent", "asf", "eml", "m4p", "pub", "ttf", "asx", "eps", "m4v", "qbb",
+                "txt", "bat", "exe", "mcd", "qbw", "vcd", "bin", "fla", "mdb", "qxd", "vob", "bmp", "flv", "mid", "ram",
+                "wav", "bup", "gif", "mov", "rar", "wma", "cab", "gz", "mp2", "rm", "wmv", "cbr", "hqx", "mp4", "rmvb",
+                "wps", "cda", "html", "mpeg", "rtf", "xls", "cdl", "htm", "mpg", "sea", "xpi", "cdr", "ifo", "msi",
+                "ses", "zip", "chm", "indd", "mswmm", "sit", "dat", "iso", "ogg", "sitx", "folder"]
 
   window.nimbus = nimbus_app.core(socket_uri, refresh);
   init_done = $.Deferred();
   init_done.fail (error) ->
     stop_spinner()
-    alert(error? ? error : 'Something went wrong')
+    alert(error? ? error: 'Something went wrong')
   init_done.done ->
-    files = nimbus.current_directory().files();
-    folders = nimbus.current_directory().subdirectories()
-    for f in folders
-      container.append(createRow(f))
-    for f in files
-      container.append(createRow(f))
     stop_spinner()
-    table.append(container)
-    outer_row.append(table)
-    $('#content').append(outer_row)
+    refresh()
   nimbus.initialize(init_done)
 
+  #refresh callback
   refresh = ->
-    #refresh here
-    console.log("should refresh")
+    container = $('<tbody id="files-body">')
+    table = $('<table id="files-table">')
+    div = $('<div id="files-table-div">')
+    outer_row = $('<div class="row">')
+    breadcrumbs = '<nav class="breadcrumbs"><a href="#">Root</a></nav>'
+    files = nimbus.current_directory().files();
+    folders = nimbus.current_directory().subdirectories()
+    for f, i in folders
+      container.append(createRow(f, i))
+    for f, i in files
+      container.append(createRow(f, i))
+    div.append(breadcrumbs)
+    table.append(container)
+    div.append(table)
+    outer_row.append(div)
+    $('#content').html(outer_row)
 
-  createRow = (file) ->
+  #creates a row for a file or folder
+  createRow = (file, i) ->
     row = $("<tr>");
-    row.append("<td>")
+    if(!file.hasOwnProperty("extension"))
+      row.append("<td class='icon'><img height='16' width='16' alt='icon' src='/icons/folder.png' ></td>")
+    else if(extensions.indexOf(file.extension().toLowerCase()) != -1)
+      row.append("<td class='icon'><img height='16' width='16' alt='icon' src='/icons/" + file.extension().toLowerCase() + ".png' ></td>")
+    else
+      row.append("<td class='icon'><img height='16' width='16' alt='icon' src='/icons/unknown.png' ></td>")
     if(file.hasOwnProperty("download_url"))
-      row.append("<td><a href='" + file.download_url() + "'>" + file.name() + "</a></td>")
+      row.append("<td class='filename'><a href='javascript:void(0)' onclick=\"$('#hidden-iframe').attr('src', nimbus.current_directory().files()[" + i + "].download_url())\">" + file.full_name() + "</a></td>")
     else if(file.hasOwnProperty("view_url"))
-      row.append("<td><a href='" + file.view_url() + "'>" + file.name() + "</a></td>")
+      row.append("<td class='filename'><a href='javascript:void(0)' onclick=\"$('#hidden-iframe').attr('src', nimbus.current_directory().files()[" + i + "].view_url())\">" + file.full_name() + "</a></td>")
     else
-      row.append("<td>"+ file.name() + "</td>")
-    if(file.hasOwnProperty("extension"))
-      row.append("<td>"+ file.extension() + "</td>")
-    else
-      row.append("<td> folder </td>")
+      row.append("<td>" + file.name() + "</td>")
     return row

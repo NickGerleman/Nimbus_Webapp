@@ -83,6 +83,11 @@ footer {
   font-size: 12px;
   line-height: 1.4em;
   margin-top: 15px;
+  li {
+    display: inline;
+    list-style-type: none;
+    padding-right: 20px;
+  }
 }
 
 #content {

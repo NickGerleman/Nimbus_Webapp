@@ -41,8 +41,28 @@
 
 #files-table {
   width: 100%;
-  margin: auto;
   tr td {
-    font-size: 12px;
+    font-size: 13px;
   }
+}
+
+#files-table-div {
+  max-width: 900px;
+  margin: auto;
+  padding: 10px;
+  nav {
+    margin-bottom: 5px;
+  }
+}
+
+.icon {
+  width: 17px;
+  height: 17px;
+}
+.filename {
+  max-width: 400px;
+}
+
+.breadcrumbs {
+  width: 100%;
 }
