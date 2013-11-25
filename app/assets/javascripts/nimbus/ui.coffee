@@ -42,17 +42,30 @@ window.nimbus_app.ui = (socket_uri) ->
 
   #creates a row for a file or folder
   createRow = (file, i) ->
+    isImage = false
     row = $("<tr>");
     if(!file.hasOwnProperty("extension"))
       row.append("<td class='icon'><img height='16' width='16' alt='icon' src='/icons/folder.png' ></td>")
     else if(extensions.indexOf(file.extension().toLowerCase()) != -1)
       row.append("<td class='icon'><img height='16' width='16' alt='icon' src='/icons/" + file.extension().toLowerCase() + ".png' ></td>")
+      if(["png", "gif", "jpg", "bmp"].indexOf(file.extension()) != -1)
+        isImage = true
     else
       row.append("<td class='icon'><img height='16' width='16' alt='icon' src='/icons/unknown.png' ></td>")
     if(file.hasOwnProperty("download_url"))
-      row.append("<td class='filename'><a href='javascript:void(0)' onclick=\"$('#hidden-iframe').attr('src', nimbus.current_directory().files()[" + i + "].download_url())\">" + file.full_name() + "</a></td>")
+      link = $("<a href='" + file.download_url() + "'>" + file.full_name() + "</a>")
+      link.magnificPopup(
+        mainClass: 'modal',
+        type: 'image',
+        preloader: true,
+        removalDelay: 200,
+        closeBtnInside: false
+      )
+      data = $("<td class='filename'></td>")
+      data.html(link)
+      row.append(data)
     else if(file.hasOwnProperty("view_url"))
-      row.append("<td class='filename'><a href='javascript:void(0)' onclick=\"$('#hidden-iframe').attr('src', nimbus.current_directory().files()[" + i + "].view_url())\">" + file.full_name() + "</a></td>")
+      row.append("<td class='filename'><a href='" + file.view_url() + "'>" + file.full_name() + "</a></td>")
     else
       row.append("<td>" + file.name() + "</td>")
     return row

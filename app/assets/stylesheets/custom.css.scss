@@ -182,6 +182,10 @@ footer {
   }
 }
 
+.mfp-close:hover {
+  background: none;
+}
+
 #logo-image {
   background: image-url("banner.svg") no-repeat;
   background-size: 210px 42px;
@@ -206,4 +210,8 @@ footer {
     border-radius: 15px;
     z-index: 1999999999;
   }
+}
+
+.modal figure {
+  margin: 0;
 }
