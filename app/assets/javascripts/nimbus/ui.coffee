@@ -48,19 +48,20 @@ window.nimbus_app.ui = (socket_uri) ->
       row.append("<td class='icon'><img height='16' width='16' alt='icon' src='/icons/folder.png' ></td>")
     else if(extensions.indexOf(file.extension().toLowerCase()) != -1)
       row.append("<td class='icon'><img height='16' width='16' alt='icon' src='/icons/" + file.extension().toLowerCase() + ".png' ></td>")
-      if(["png", "gif", "jpg", "bmp"].indexOf(file.extension()) != -1)
+      if(["png", "gif", "jpg", "bmp"].indexOf(file.extension().toLowerCase()) != -1)
         isImage = true
     else
       row.append("<td class='icon'><img height='16' width='16' alt='icon' src='/icons/unknown.png' ></td>")
     if(file.hasOwnProperty("download_url"))
       link = $("<a href='" + file.download_url() + "'>" + file.full_name() + "</a>")
-      link.magnificPopup(
-        mainClass: 'modal',
-        type: 'image',
-        preloader: true,
-        removalDelay: 200,
-        closeBtnInside: false
-      )
+      if(isImage)
+        link.magnificPopup(
+          mainClass: 'modal',
+          type: 'image',
+          preloader: true,
+          removalDelay: 200,
+          closeBtnInside: false
+        )
       data = $("<td class='filename'></td>")
       data.html(link)
       row.append(data)
