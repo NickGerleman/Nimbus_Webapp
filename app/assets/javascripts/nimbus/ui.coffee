@@ -3,13 +3,14 @@ window.nimbus_app.ui = (socket_uri) ->
   show_spinner()
   iframe = $("<iframe style='display: none' id='hidden-iframe'></iframe>")
   $('body').append(iframe)
-  extensions = ["3gp", "divx", "jar", "pdf", "ss", "7z", "dll", "jpeg", "png", "swf", "ace", "dmg", "jpg", "pps", "tgz",
+  extensions = ["3gp", "divx", "jar", "pdf", "ss", "7z", "dll", "jpeg", "png", "swf", "ace", "dmg", "jpg", "ppt", "tgz",
                 "aiff", "doc", "lnk", "psd", "thm", "aif", "dss", "log", "ps", "tif", "ai", "dvf", "m4a", "pst", "tmp",
                 "amr", "dwg", "m4b", "ptb", "torrent", "asf", "eml", "m4p", "pub", "ttf", "asx", "eps", "m4v", "qbb",
                 "txt", "bat", "exe", "mcd", "qbw", "vcd", "bin", "fla", "mdb", "qxd", "vob", "bmp", "flv", "mid", "ram",
                 "wav", "bup", "gif", "mov", "rar", "wma", "cab", "gz", "mp2", "rm", "wmv", "cbr", "hqx", "mp4", "rmvb",
                 "wps", "cda", "html", "mpeg", "rtf", "xls", "cdl", "htm", "mpg", "sea", "xpi", "cdr", "ifo", "msi",
-                "ses", "zip", "chm", "indd", "mswmm", "sit", "dat", "iso", "ogg", "sitx", "folder"]
+                "ses", "zip", "chm", "indd", "mswmm", "sit", "dat", "iso", "ogg", "sitx", "folder", "flac", "docx",
+                "pptx", "xlsx", "csv"]
 
   window.nimbus = nimbus_app.core(socket_uri, refresh);
   init_done = $.Deferred();

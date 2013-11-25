@@ -8,7 +8,7 @@ window.nimbus_app.skydrive_file = (connection, metadata) ->
 
   # Get the download URL for the file
   download_url = -> 'https://apis.live.net/v5.0/' + metadata.id + '/content' +
-    '?access_token=' + connection.access_token() + '&download=true'
+    '?access_token=' + connection.access_token()
 
   # Delete the file
   destroy = (promise) ->
