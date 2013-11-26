@@ -69,8 +69,6 @@ One runs Clockwork, Redis, Sidekiq, and Nginx as a reverse proxy / load balancer
 
 A second server runs the rails app using Unicorn, as well as the node.js app using Faye.  
 
-Currently Heroku Postgres is used as the databse, although this will probably soon change to a seperate server running Redis and some form of SQL server.
-
 
 [11]: https://www.digitalocean.com/?refcode=1206d329a7f0
 
