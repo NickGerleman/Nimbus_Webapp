@@ -28,21 +28,41 @@ window.nimbus_app.ui = (socket_uri) ->
     table = $('<table id="files-table">')
     div = $('<div id="files-table-div">')
     outer_row = $('<div class="row">')
-    breadcrumbs = '<nav class="breadcrumbs"><a href="#">Root</a></nav>'
+    breadcrumbs = createBreadcrumbs(nimbus.current_directory())
     files = nimbus.current_directory().files();
     folders = nimbus.current_directory().subdirectories()
-    for f, i in folders
-      container.append(createRow(f, i))
-    for f, i in files
-      container.append(createRow(f, i))
+    for f in folders
+      container.append(createRow(f))
+    for f in files
+      container.append(createRow(f))
     div.append(breadcrumbs)
     table.append(container)
     div.append(table)
     outer_row.append(div)
     $('#content').html(outer_row)
 
+  #Creates the breadcrumbs
+  createBreadcrumbs = (metaDirectory) ->
+    breadcrumbs = $('<nav class="breadcrumbs"></nav>')
+    while(metaDirectory != null)
+      crumb = null
+      if(metaDirectory.parent() == null )
+        crumb = $('<a href="javascript:void(0)">Root</a>')
+      else
+        crumb = $('<a href="javascript:void(0)">' + metaDirectory.name() + '</a>')
+      # each iteration shares a common scope, we must make a new one
+      do ->
+        promise = $.Deferred()
+        promise.done -> refresh()
+        promise.fail (error) -> alert(error)
+        dir = metaDirectory.valueOf()
+        crumb.click -> nimbus.change_directory(dir, promise)
+      breadcrumbs.prepend(crumb)
+      metaDirectory = metaDirectory.parent()
+    return breadcrumbs
+
   #creates a row for a file or folder
-  createRow = (file, i) ->
+  createRow = (file) ->
     isImage = false
     row = $("<tr>");
     if(!file.hasOwnProperty("extension"))
@@ -69,5 +89,10 @@ window.nimbus_app.ui = (socket_uri) ->
     else if(file.hasOwnProperty("view_url"))
       row.append("<td class='filename'><a href='" + file.view_url() + "'>" + file.full_name() + "</a></td>")
     else
-      row.append("<td>" + file.name() + "</td>")
+      folder = $("<td class='filename'><a href='javascript:void(0)'</a>" + file.name() + "</td>")
+      promise = $.Deferred()
+      promise.done -> refresh()
+      promise.fail (error) -> alert(error)
+      folder.click -> nimbus.change_directory(file, promise)
+      row.append(folder)
     return row
