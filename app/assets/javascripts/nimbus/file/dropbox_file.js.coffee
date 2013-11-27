@@ -8,7 +8,7 @@ window.nimbus_app.dropbox_file = (connection, metadata) ->
 
   # Get the download URL for the file
   download_url = ->
-    encodeURI 'https://api-content.dropbox.com/1/files/dropbox' + metadata.path + '?access_token=' +
+    'https://api-content.dropbox.com/1/files/dropbox' + encodeURI(metadata.path) + '?access_token=' +
       connection.access_token()
 
   # Delete the file
