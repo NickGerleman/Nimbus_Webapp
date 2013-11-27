@@ -13,7 +13,7 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
     for file in resources
       if file.type == 'folder'
         subdirectories.push(nimbus_app.skydrive_directory(connection, file, this))
-      else
+      else if file.type == 'file'
         constructed_file = nimbus_app.skydrive_file(connection, file)
         files.push(constructed_file)
     isEnumerated = true
@@ -46,7 +46,7 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
         for file in resources
           if file.type == 'folder'
             subdirectories.push(nimbus_app.skydrive_directory(connection, file, this))
-          else
+          else if file.type == 'file'
             constructed_file = nimbus_app.skydrive_file(connection, file)
             files.push(constructed_file)
         isEnumerated = true
