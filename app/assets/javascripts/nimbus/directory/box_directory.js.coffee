@@ -11,7 +11,7 @@ window.nimbus_app.box_directory = (connection, metadata) ->
   destroy = (promise) ->
     $.ajax
       type: 'DELETE'
-      url: 'https://api.box.com/2.0/files/' + metadata.id + '?recursive=true&access_token=' + connection.access_token()
+      url: 'https://api.box.com/2.0/folders/' + metadata.id + '?recursive=true&access_token=' + connection.access_token()
       dataType: 'JSON'
       success: ->
         promise.resolve()
