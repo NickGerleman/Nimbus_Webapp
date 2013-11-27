@@ -35,6 +35,7 @@ create_callbacks = ->
 window.show_spinner = ->
   spin_box = $('<div id="spinner-box">')
   spin_overlay = $('<div id="spinner-overlay">')
+  spin_overlay.css("height", $(window).height())
   spin_overlay.append(spin_box)
   $(document.body).append(spin_overlay)
   opts = {
