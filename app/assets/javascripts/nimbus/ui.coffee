@@ -98,20 +98,19 @@ window.nimbus_app.ui = (socket_uri) ->
         nimbus.change_directory(file, promise)
         show_spinner()
       row.append(folder)
-    if(file.hasOwnProperty("extension"))
-      # Delete the file
-      delete_button = $("<td class='delete-button'><a href='javascript:void(0)'><img alt='delete' width='16' src='/icons/delete.png'></a></td>")
-      delete_promise = $.Deferred()
-      delete_promise.done ->
-        update_promise = $.Deferred()
-        update_promise.done -> refresh()
-        update_promise.fail (error) ->
-          alert(error)
-          refresh()
-        nimbus.current_directory().update(update_promise)
-      delete_promise.fail (error) -> alert(error)
-      delete_button.click ->
-        show_spinner()
-        file.destroy(delete_promise)
-      row.append(delete_button)
+    # Delete the file
+    delete_button = $("<td class='delete-button'><a href='javascript:void(0)'><img alt='delete' width='16' src='/icons/delete.png'></a></td>")
+    delete_promise = $.Deferred()
+    delete_promise.done ->
+      update_promise = $.Deferred()
+      update_promise.done -> refresh()
+      update_promise.fail (error) ->
+        alert(error)
+        refresh()
+      nimbus.current_directory().update(update_promise)
+    delete_promise.fail (error) -> alert(error)
+    delete_button.click ->
+      show_spinner()
+      file.destroy(delete_promise)
+    row.append(delete_button)
     return row

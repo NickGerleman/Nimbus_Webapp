@@ -17,6 +17,16 @@ window.nimbus_app.metadirectory = (parent, directories) ->
       paths = paths.map (path) -> '/' + path if path
       memo_path = paths.join('')
 
+  # Delete the metadirectory
+  destroy = (promise) ->
+    promises = []
+    promises.push($.Deferred()) for directory in directories
+    for p in promises
+      p.fail (error) -> promise.reject(error)
+    $.when.apply($, promises).done ->
+      promise.resolve()
+    directory.destroy(promises.pop()) for directory in directories
+
   # Enumerate the metadirectory
   enumerate = (promise, update) ->
     if isEnumerated
@@ -83,6 +93,7 @@ window.nimbus_app.metadirectory = (parent, directories) ->
     # The parent metadirectory(null if current metadirectory is root)
     parent: -> parent
     # The path of the metadirectory
+    destroy: destroy
     enumerate: enumerate
     files: files
     path: path

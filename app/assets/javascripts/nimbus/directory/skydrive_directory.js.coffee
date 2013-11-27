@@ -18,6 +18,17 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
         files.push(constructed_file)
     isEnumerated = true
 
+  # Delete the directory
+  destroy = (promise) ->
+    $.ajax
+      type: 'DELETE'
+      url: 'https://apis.live.net/v5.0/' + metadata.id + '?access_token=' + connection.access_token()
+      dataType: 'JSON'
+      success: ->
+        promise.resolve()
+      error: (jqXHR, textStatus, errorThrown) ->
+        promise.reject('Unable to delete folder for' + connection.name() + ': ' + errorThrown)
+
   # Enumerate the directory
   enumerate = (promise) ->
     if isEnumerated
@@ -83,6 +94,7 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
   name: -> name
   # Array of subdirectories in the directory
   subdirectories: -> subdirectories
+  destroy: destroy
   enumerate: enumerate
   update: update
   upload: upload

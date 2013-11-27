@@ -7,6 +7,17 @@ window.nimbus_app.google_directory = (connection, metadata) ->
   subdirectories = []
   resources = []
 
+  # Delete the directory
+  destroy = (promise) ->
+    $.ajax
+      type: 'POST'
+      url: 'https://www.googleapis.com/drive/v2/files/' + metadata.id + '/trash?access_token=' + connection.access_token()
+      dataType: 'JSON'
+      success: ->
+        promise.resolve()
+      error: (jqXHR, textStatus, errorThrown) ->
+        promise.reject('Unable to delete folder for' + connection.name() + ': ' + errorThrown)
+
   # Enumerate the directory
   enumerate = (promise) ->
     if isEnumerated
@@ -83,6 +94,7 @@ window.nimbus_app.google_directory = (connection, metadata) ->
   name: -> name
   # Array of subdirectories in the directory
   subdirectories: -> subdirectories
+  destroy: destroy
   enumerate: enumerate
   update: update
   upload: upload

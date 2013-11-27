@@ -17,6 +17,20 @@ window.nimbus_app.dropbox_directory = (connection, metadata) ->
         files.push(constructed_file)
     isEnumerated = true
 
+  # Delete the directory
+  destroy = (promise) ->
+    $.ajax
+      type: 'POST'
+      url: 'https://api.dropbox.com/1/fileops/delete'
+      data:
+        root: 'dropbox'
+        path: metadata.path
+        access_token: connection.access_token()
+      dataType: 'JSON'
+      success: ->
+        promise.resolve()
+      error: (jqXHR, textStatus, errorThrown) ->
+        promise.reject('Unable to delete folder for' + connection.name() + ': ' + errorThrown)
 
   # Enumerate the directory
   enumerate = (promise) ->
@@ -77,6 +91,7 @@ window.nimbus_app.dropbox_directory = (connection, metadata) ->
   name: -> name
   # Array of subdirectories in the directory
   subdirectories: -> subdirectories
+  destroy: destroy
   enumerate: enumerate
   update: update
   upload: upload

@@ -7,6 +7,17 @@ window.nimbus_app.box_directory = (connection, metadata) ->
   subdirectories = []
   resources = []
 
+  # Delete the directory
+  destroy = (promise) ->
+    $.ajax
+      type: 'DELETE'
+      url: 'https://api.box.com/2.0/files/' + metadata.id + '?recursive=true&access_token=' + connection.access_token()
+      dataType: 'JSON'
+      success: ->
+        promise.resolve()
+      error: (jqXHR, textStatus, errorThrown) ->
+        promise.reject('Unable to delete folder for' + connection.name() + ': ' + errorThrown)
+
   # Enumerate the directory
   enumerate = (promise) ->
     if isEnumerated
@@ -79,6 +90,7 @@ window.nimbus_app.box_directory = (connection, metadata) ->
   name: -> name
   # Array of subdirectories in the directory
   subdirectories: -> subdirectories
+  destroy: destroy
   enumerate: enumerate
   update: update
   upload: upload
