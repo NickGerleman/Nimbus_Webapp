@@ -42,7 +42,8 @@ window.nimbus_app.dropbox_directory = (connection, metadata) ->
             files.push(constructed_file)
         isEnumerated = true
         promise.resolve()
-      error: -> promise.reject('Unable to recieve folder data from Dropbox API')
+      error: (jqXHR, textStatus, errorThrown) ->
+        promise.reject('Unable to recieve folder data from Dropbox API:' + errorThrown)
 
   name = metadata.path.slice(metadata.path.lastIndexOf('/') + 1)
 
@@ -59,7 +60,8 @@ window.nimbus_app.dropbox_directory = (connection, metadata) ->
     data:
       access_token: connection.access_token()
     success: (data) -> upload_callback(data, promise)
-    error: -> promise.reject()
+    error: (jqXHR, textStatus, errorThrown) ->
+      promise.reject('Unable to upload file:' + errorThrown)
 
   upload_callback = (data, promise) ->
     resources.push(data)

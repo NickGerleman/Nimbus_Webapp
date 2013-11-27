@@ -9,12 +9,12 @@ window.nimbus_app.google_file = (connection, metadata) ->
   # Delete the file
   destroy = (promise) ->
     $.ajax
-      type: 'DELETE'
-      url: 'https://www.googleapis.com/drive/v2/files/' + metadata.id
-      data: access_token: connection.access_token()
+      type: 'POST'
+      url: 'https://www.googleapis.com/drive/v2/files/' + metadata.id + '/trash?access_token=' + connection.access_token()
       dataType: 'JSON'
       success: -> promise.resolve()
-      error: -> promise.reject()
+      error: (jqXHR, textStatus) ->
+        promise.reject('Unable to delete file: ' + textStatus)
 
   # Rename the file
   rename = (name, promise) ->
@@ -29,7 +29,8 @@ window.nimbus_app.google_file = (connection, metadata) ->
       success: (data) ->
         metadata = data
         promise.resolve()
-      error: -> promise.reject()
+      error: (jqXHR, textStatus, errorThrown) ->
+        promise.reject('Unable to rename file:' + errorThrown)
 
 
   # The connection the file belongs to

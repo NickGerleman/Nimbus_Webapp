@@ -28,7 +28,8 @@ window.nimbus_app.box_directory = (connection, metadata) ->
             files.push(constructed_file)
         isEnumerated = true
         promise.resolve()
-      error: -> promise.reject('Unable to recieve folder data from Box API')
+      error: (jqXHR, textStatus, errorThrown) ->
+        promise.reject('Unable to recieve folder data from Box API:' + errorThrown)
 
   name = metadata.name
 
@@ -60,7 +61,8 @@ window.nimbus_app.box_directory = (connection, metadata) ->
       access_token: connection.access_token()
     formData: form_data
     success: (data) -> upload_callback(data, promise)
-    error: -> promise.reject()
+    error: (jqXHR, textStatus, errorThrown) ->
+      promise.reject('Unable to upload file:' + errorThrown)
 
   upload_callback = (data, promise) ->
     file = data.entries[0]

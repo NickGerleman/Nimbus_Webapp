@@ -18,7 +18,8 @@ window.nimbus_app.skydrive_file = (connection, metadata) ->
       data: access_token: connection.access_token()
       dataType: 'JSON'
       success: -> promise.resolve()
-      error: -> promise.reject()
+      error: (jqXHR, textStatus, errorThrown) ->
+        promise.reject('Unable to delete file:' + errorThrown)
 
   # Rename the file
   rename = (name, promise) ->
@@ -33,8 +34,8 @@ window.nimbus_app.skydrive_file = (connection, metadata) ->
       success: (data) ->
         metadata = data
         promise.resolve()
-      error: promise.reject()
-
+      error: (jqXHR, textStatus, errorThrown) ->
+        promise.reject('Unable to rename file:' + errorThrown)
 
   # The connection the file belongs to
   that.connection = -> connection

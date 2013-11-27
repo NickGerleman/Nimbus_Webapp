@@ -21,9 +21,9 @@ window.nimbus_app.dropbox_file = (connection, metadata) ->
         path: metadata.path
         access_token: connection.access_token()
       dataType: 'JSON'
-      success: ->
-        promise.resolve()
-      error: -> promise.reject()
+      success: -> promise.resolve()
+      error: (jqXHR, textStatus, errorThrown) ->
+        promise.reject('Unable to delete file:' + errorThrown)
 
   # The name with extension of the file
   full_name = -> metadata.path.slice(metadata.path.lastIndexOf('/') + 1)
@@ -42,7 +42,8 @@ window.nimbus_app.dropbox_file = (connection, metadata) ->
       success: (data) ->
         metadata = data
         promise.resolve()
-      error: -> promise.reject()
+      error: (jqXHR, textStatus, errorThrown) ->
+        promise.reject('Unable to rename file:' + errorThrown)
 
 
   # The connection the file belongs to

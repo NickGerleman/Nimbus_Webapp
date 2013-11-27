@@ -30,7 +30,8 @@ window.nimbus_app.google_directory = (connection, metadata) ->
             files.push(constructed_file)
         isEnumerated = true
         promise.resolve()
-      error: -> promise.reject('Unable to recieve folder data from Google Drive API')
+      error: (jqXHR, textStatus, errorThrown) ->
+        promise.reject('Unable to recieve folder data from Google Drive API:' + errorThrown)
 
   name = metadata.title
 
@@ -49,7 +50,8 @@ window.nimbus_app.google_directory = (connection, metadata) ->
       access_token: connection.access_token()
       uploadType: 'media'
     success: (data) -> upload_callback(data, filename, promise)
-    error: -> promise.reject()
+    error: (jqXHR, textStatus, errorThrown) ->
+      promise.reject('Unable to upload file:' + errorThrown)
 
   upload_callback = (data, filename, promise) ->
     id = data.id
@@ -69,7 +71,8 @@ window.nimbus_app.google_directory = (connection, metadata) ->
         resources.push(data)
         files.push(nimbus_app.google_file(connection, data))
         promise.resolve()
-      error: -> promise.reject()
+      error: (jqXHR, textStatus, errorThrown) ->
+        promise.reject('Unable to name uploaded file:' + errorThrown)
 
 
   # The connection the directory belongs to

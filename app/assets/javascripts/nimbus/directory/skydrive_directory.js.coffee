@@ -39,7 +39,8 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
             files.push(constructed_file)
         isEnumerated = true
         promise.resolve()
-      error: -> promise.reject('Unable to recieve folder data from Skydrive API')
+      error: (jqXHR, textStatus, errorThrown) ->
+        promise.reject('Unable to recieve folder data from SkyDrive API:' + errorThrown)
 
   name = metadata.name
 
@@ -56,7 +57,8 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
     dropZone: null
     data: access_token: connection.access_token()
     success: (data) -> upload_callback(data, promise)
-    error: -> promise.reject()
+    error: (jqXHR, textStatus, errorThrown) ->
+      promise.reject('Unable to upload file:' + errorThrown)
 
   upload_callback = (data, promise) ->
     id = data.id
@@ -68,7 +70,8 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
         resources.push(data)
         files.push(nimbus_app.skydrive_file(data))
         promise.resolve()
-      error: -> promise.reject()
+      error: (jqXHR, textStatus, errorThrown) ->
+        promise.reject('Unable to finalize file upload:' + errorThrown)
 
 
   # The connection the directory belongs to

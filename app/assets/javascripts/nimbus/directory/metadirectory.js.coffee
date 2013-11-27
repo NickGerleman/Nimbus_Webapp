@@ -18,7 +18,10 @@ window.nimbus_app.metadirectory = (parent, directories) ->
       memo_path = paths.join('')
 
   # Enumerate the metadirectory
-  enumerate = (promise) ->
+  enumerate = (promise, update) ->
+    if isEnumerated
+      promise.resolve()
+      return
     promises = []
     promises.push($.Deferred()) for directory in directories
     for p in promises
@@ -26,7 +29,10 @@ window.nimbus_app.metadirectory = (parent, directories) ->
     $.when.apply($, promises).done ->
       isEnumerated = true
       promise.resolve()
-    directory.enumerate(promises.pop()) for directory in directories
+    if update
+      directory.update(promises.pop()) for directory in directories
+    else
+      directory.enumerate(promises.pop()) for directory in directories
 
   # Get the files in the metadirectory
   files = ->
@@ -67,7 +73,7 @@ window.nimbus_app.metadirectory = (parent, directories) ->
   # Re-enumerates the directory
   update = (promise) ->
     isEnumerated = false
-    enumerate(promise)
+    enumerate(promise, true)
 
   to_return =
     # The directories(not metadirectories) that represent this metadirectory
