@@ -35,7 +35,7 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
       promise.resolve()
       return
     $.ajax
-      url: 'https://apis.live.net/v5.0/' + (metadata.id || 'me') + '/skydrive/files'
+      url: 'https://apis.live.net/v5.0/' + (metadata.id || 'me/skydrive/files')
       data: access_token: connection.access_token()
       dataType: 'JSON'
       success: (data) ->
@@ -44,7 +44,7 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
         files = []
         subdirectories = []
         for file in resources
-          if file.is_dir
+          if file.name.startsWith("folder")
             subdirectories.push(nimbus_app.skydrive_directory(connection, file, this))
           else
             constructed_file = nimbus_app.skydrive_file(connection, file)
