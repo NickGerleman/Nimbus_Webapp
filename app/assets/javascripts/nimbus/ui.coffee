@@ -1,8 +1,6 @@
 # runs the ui for the client
 window.nimbus_app.ui = (socket_uri) ->
   show_spinner()
-  iframe = $("<iframe style='display: none' id='hidden-iframe'></iframe>")
-  $('body').append(iframe)
   extensions = ["3gp", "divx", "jar", "pdf", "ss", "7z", "dll", "jpeg", "png", "swf", "ace", "dmg", "jpg", "ppt", "tgz",
                 "aiff", "doc", "lnk", "psd", "thm", "aif", "dss", "log", "ps", "tif", "ai", "dvf", "m4a", "pst", "tmp",
                 "amr", "dwg", "m4b", "ptb", "torrent", "asf", "eml", "m4p", "pub", "ttf", "asx", "eps", "m4v", "qbb",
@@ -12,7 +10,7 @@ window.nimbus_app.ui = (socket_uri) ->
                 "ses", "zip", "chm", "indd", "mswmm", "sit", "dat", "iso", "ogg", "sitx", "folder", "flac", "docx",
                 "pptx", "xlsx", "csv"]
 
-  nimbus = nimbus_app.core(socket_uri, refresh);
+  window.nimbus = nimbus_app.core(socket_uri, refresh);
   init_done = $.Deferred();
   init_done.fail (error) ->
     stop_spinner()
@@ -74,7 +72,7 @@ window.nimbus_app.ui = (socket_uri) ->
     else
       row.append("<td class='icon'><img height='16' width='16' alt='icon' src='/icons/unknown.png' ></td>")
     if(file.hasOwnProperty("download_url"))
-      link = $("<a href='" + file.download_url() + "'>" + file.full_name() + "</a>")
+      link = $('<a href="' + file.download_url() + '">' + file.full_name() + '</a>')
       if(isImage)
         link.magnificPopup(
           mainClass: 'modal',
@@ -87,7 +85,7 @@ window.nimbus_app.ui = (socket_uri) ->
       data.html(link)
       row.append(data)
     else if(file.hasOwnProperty("view_url"))
-      row.append("<td class='filename'><a href='" + file.view_url() + "'>" + file.full_name() + "</a></td>")
+      row.append('<td class="filename"><a href="' + file.view_url() + '">' + file.full_name() + '</a></td>')
     else
       folder = $("<td class='filename'><a href='javascript:void(0)'</a>" + file.name() + "</td>")
       # Change Directory
