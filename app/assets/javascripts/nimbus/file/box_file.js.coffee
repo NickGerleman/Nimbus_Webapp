@@ -14,8 +14,7 @@ window.nimbus_app.box_file = (connection, metadata) ->
   destroy = (promise) ->
     $.ajax
       type: 'DELETE'
-      url: 'https://api.box.com/2.0/files/'
-      data: access_token: connection.access_token()
+      url: 'https://api.box.com/2.0/files/' + metadata.id + '?access_token=' + connection.access_token()
       dataType: 'JSON'
       success: -> promise.resolve()
       error: (jqXHR, textStatus, errorThrown) ->
