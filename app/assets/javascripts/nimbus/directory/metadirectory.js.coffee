@@ -25,7 +25,7 @@ window.nimbus_app.metadirectory = (parent, directories) ->
     promises = []
     promises.push($.Deferred()) for directory in directories
     for p in promises
-      p.fail -> promise.reject()
+      p.fail -> promise.reject("Unable to enumerate metadirectory")
     $.when.apply($, promises).done ->
       isEnumerated = true
       promise.resolve()
