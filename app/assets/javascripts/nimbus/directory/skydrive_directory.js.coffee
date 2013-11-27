@@ -23,9 +23,8 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
     if isEnumerated
       promise.resolve()
       return
-    id ||= metadata.id
     $.ajax
-      url: 'https://apis.live.net/v5.0/' + id + '/files'
+      url: 'https://apis.live.net/v5.0/' + metadata.id || 'me' + '/files'
       data: access_token: connection.access_token()
       dataType: 'JSON'
       success: (data) ->
