@@ -45,9 +45,9 @@ window.nimbus_app.ui = (socket_uri) ->
     while(metaDirectory != null)
       crumb = null
       if(metaDirectory.parent() == null )
-        crumb = $('<a href="javascript:void(0)">Root</a>')
+        crumb = $('<a>Root</a>')
       else
-        crumb = $('<a href="javascript:void(0)">' + metaDirectory.name() + '</a>')
+        crumb = $('<a>' + metaDirectory.name() + '</a>')
       # each iteration shares a common scope, we must make a new one
       do ->
         promise = $.Deferred()
@@ -87,7 +87,7 @@ window.nimbus_app.ui = (socket_uri) ->
     else if(file.hasOwnProperty("view_url"))
       row.append('<td class="filename"><a href="' + file.view_url() + '">' + file.full_name() + '</a></td>')
     else
-      folder = $("<td class='filename'><a href='javascript:void(0)'</a>" + file.name() + "</td>")
+      folder = $("<td class='filename'><a>" + file.name() + "</a></td>")
       # Change Directory
       promise = $.Deferred()
       promise.done -> refresh()
@@ -97,7 +97,7 @@ window.nimbus_app.ui = (socket_uri) ->
         show_spinner()
       row.append(folder)
     # Delete the file
-    delete_button = $("<td class='delete-button'><a href='javascript:void(0)'><img alt='delete' width='16' src='/icons/delete.png'></a></td>")
+    delete_button = $("<td class='delete-button'><a><img alt='delete' width='16' src='/icons/delete.png'></a></td>")
     delete_promise = $.Deferred()
     delete_promise.done ->
       update_promise = $.Deferred()
