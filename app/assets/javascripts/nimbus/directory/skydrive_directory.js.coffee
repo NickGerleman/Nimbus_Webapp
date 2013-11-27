@@ -11,7 +11,7 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
   if metadata.data
     resources = metadata.data
     for file in resources
-      if file.id.startsWith("folder")
+      if file.id.indexOf("folder") == 0
         subdirectories.push(nimbus_app.skydrive_directory(connection, file, this))
       else
         constructed_file = nimbus_app.skydrive_file(connection, file)
@@ -44,7 +44,7 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
         files = []
         subdirectories = []
         for file in resources
-          if file.name.startsWith("folder")
+          if file.name.indexOf("folder") == 0
             subdirectories.push(nimbus_app.skydrive_directory(connection, file, this))
           else
             constructed_file = nimbus_app.skydrive_file(connection, file)
