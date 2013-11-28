@@ -25,7 +25,9 @@ window.nimbus_app.box_directory = (connection, metadata) ->
       return
     $.ajax
       url: 'https://api.box.com/2.0/folders/' + metadata.id + '/items'
-      data: access_token: connection.access_token()
+      data:
+        access_token: connection.access_token()
+        fields: 'name,id,modified_at,size'
       dataType: 'JSON'
       success: (data) ->
         resources = data.entries
