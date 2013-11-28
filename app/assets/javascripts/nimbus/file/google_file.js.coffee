@@ -3,7 +3,7 @@
 # Construct a google file from a connection it belongs to and API metadata
 window.nimbus_app.google_file = (connection, metadata) ->
   that = nimbus_app.file()
-  size = metadata.fileSize / 1024
+  size = metadata.fileSize
   time = Date.parse(metadata.modifiedDate)
 
   # Delete the file

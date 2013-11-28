@@ -3,7 +3,7 @@
 # Construct a skydrive file from a connection it belongs to and API metadata
 window.nimbus_app.skydrive_file = (connection, metadata) ->
   that = nimbus_app.file()
-  size = metadata.size / 1024
+  size = metadata.size
   time = Date.parse(metadata.updated_time)
 
   # Get the download URL for the file

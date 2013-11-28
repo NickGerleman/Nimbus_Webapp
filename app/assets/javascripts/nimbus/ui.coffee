@@ -10,7 +10,7 @@ window.nimbus_app.ui = (socket_uri) ->
                 "ses", "zip", "chm", "indd", "mswmm", "sit", "dat", "iso", "ogg", "sitx", "folder", "flac", "docx",
                 "pptx", "xlsx", "csv"]
 
-  window.nimbus = nimbus_app.core(socket_uri, refresh);
+  nimbus = nimbus_app.core(socket_uri, refresh);
   init_done = $.Deferred();
   init_done.fail (error) ->
     stop_spinner()
@@ -26,13 +26,13 @@ window.nimbus_app.ui = (socket_uri) ->
     table = $('<table id="files-table">')
     div = $('<div id="files-table-div">')
     outer_row = $('<div class="row">')
-    breadcrumbs = createBreadcrumbs(nimbus.current_directory())
+    breadcrumbs = create_breadcrumbs(nimbus.current_directory())
     files = nimbus.current_directory().files();
     folders = nimbus.current_directory().subdirectories()
     for f in folders
-      container.append(createRow(f))
+      container.append(create_row(f))
     for f in files
-      container.append(createRow(f))
+      container.append(create_row(f))
     div.append(breadcrumbs)
     table.append(container)
     div.append(table)
@@ -40,7 +40,7 @@ window.nimbus_app.ui = (socket_uri) ->
     $('#content').html(outer_row)
 
   #Creates the breadcrumbs
-  createBreadcrumbs = (metaDirectory) ->
+  create_breadcrumbs = (metaDirectory) ->
     breadcrumbs = $('<nav class="breadcrumbs"></nav>')
     while(metaDirectory != null)
       crumb = null
@@ -59,56 +59,94 @@ window.nimbus_app.ui = (socket_uri) ->
       metaDirectory = metaDirectory.parent()
     return breadcrumbs
 
-  #creates a row for a file or folder
-  createRow = (file) ->
-    isImage = false
-    row = $("<tr>");
-    if(!file.hasOwnProperty("extension"))
-      row.append("<td class='icon'><img height='16' width='16' alt='icon' src='/icons/folder.png' ></td>")
-    else if(extensions.indexOf(file.extension().toLowerCase()) != -1)
-      row.append("<td class='icon'><img height='16' width='16' alt='icon' src='/icons/" + file.extension().toLowerCase() + ".png' ></td>")
-      if(["png", "gif", "jpg", "bmp"].indexOf(file.extension().toLowerCase()) != -1)
-        isImage = true
-    else
-      row.append("<td class='icon'><img height='16' width='16' alt='icon' src='/icons/unknown.png' ></td>")
+  # Creates a row for a file or folder
+  create_row = (file) ->
+    row = $("<tr></tr>")
+    row.append icon_column(file)
+    row.append name_column(file)
+    row.append size_column(file)
+    row.append delete_button(file)
+    return row
+
+  # Creates column for delete button
+  delete_button = (file) ->
+    button = $("<td class='delete-button'><a><img alt='delete' width='16' src='/icons/delete.png'></a></td>")
+    delete_promise = $.Deferred()
+    delete_promise.done ->
+      update_promise = $.Deferred()
+      update_promise.done ->
+        refresh()
+      update_promise.fail (error) ->
+        alert(error)
+        refresh()
+      nimbus.current_directory().update(update_promise)
+    delete_promise.fail (error) ->
+      alert(error)
+    button.click ->
+      show_spinner()
+      file.destroy(delete_promise)
+    return button
+
+  # Creates column for a file link
+  file_column = (file) ->
+    is_image = false
+    if ["png", "gif", "jpg", "bmp"].indexOf(file.extension().toLowerCase()) != -1
+      is_image = true
     if(file.hasOwnProperty("download_url"))
       link = $('<a href="' + file.download_url() + '">' + file.full_name() + '</a>')
-      if(isImage)
-        link.magnificPopup(
+      if is_image
+        link.magnificPopup
           mainClass: 'modal',
           type: 'image',
           preloader: true,
           removalDelay: 200,
           closeBtnInside: false
-        )
       data = $("<td class='filename'></td>")
       data.html(link)
-      row.append(data)
+      return data
     else if(file.hasOwnProperty("view_url"))
-      row.append('<td class="filename"><a href="' + file.view_url() + '">' + file.full_name() + '</a></td>')
-    else
-      folder = $("<td class='filename'><a>" + file.name() + "</a></td>")
-      # Change Directory
-      promise = $.Deferred()
-      promise.done -> refresh()
-      promise.fail (error) -> alert(error)
-      folder.click ->
-        nimbus.change_directory(file, promise)
-        show_spinner()
-      row.append(folder)
-    # Delete the file
-    delete_button = $("<td class='delete-button'><a><img alt='delete' width='16' src='/icons/delete.png'></a></td>")
-    delete_promise = $.Deferred()
-    delete_promise.done ->
-      update_promise = $.Deferred()
-      update_promise.done -> refresh()
-      update_promise.fail (error) ->
-        alert(error)
-        refresh()
-      nimbus.current_directory().update(update_promise)
-    delete_promise.fail (error) -> alert(error)
-    delete_button.click ->
+      return $('<td class="filename"><a href="' + file.view_url() + '">' + file.full_name() + '</a></td>')
+
+  # Creates column for a folder link
+  folder_column = (file) ->
+    folder = $("<td class='filename'><a>" + file.name() + "</a></td>")
+    promise = $.Deferred()
+    promise.done ->
+      refresh()
+    promise.fail (error) ->
+      alert(error)
+    folder.click ->
+      nimbus.change_directory(file, promise)
       show_spinner()
-      file.destroy(delete_promise)
-    row.append(delete_button)
-    return row
+    return folder
+
+  # Create column for icon
+  icon_column = (file) ->
+    is_file = file.hasOwnProperty("extension")
+    if is_file and extensions.indexOf(file.extension().toLowerCase()) != -1
+      $("<td class='icon'><img height='16' width='16' alt='icon' src='/icons/" + file.extension().toLowerCase() + ".png' ></td>")
+    else if is_file
+      $("<td class='icon'><img height='16' width='16' alt='icon' src='/icons/unknown.png' ></td>")
+    else
+      $("<td class='icon'><img height='16' width='16' alt='icon' src='/icons/folder.png' ></td>")
+
+  # Create column for file/folder name/link
+  name_column = (file) ->
+    if file.hasOwnProperty("extension")
+      file_column(file)
+    else
+      folder_column(file)
+
+  # Create column for size
+  size_column = (file) ->
+    sizeString = (size) ->
+      iter = 0
+      suffixes = ['B', 'KB', 'MB', 'GB', 'TB']
+      while(size > 1024)
+        size /= 1024
+        iter++
+      return Math.round(size) + ' ' + suffixes[iter]
+    if file.hasOwnProperty("extension") and !isNaN(file.size())
+      $("<td>" + sizeString(file.size()) + "</td>")
+    else
+      $("<td></td>")

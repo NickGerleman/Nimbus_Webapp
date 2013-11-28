@@ -3,7 +3,7 @@
 # Construct a box file from a connection it belongs to and API metadata
 window.nimbus_app.box_file = (connection, metadata) ->
   that = nimbus_app.file()
-  size = metadata.size / 1024
+  size = metadata.size
   time = Date.parse(metadata.modified_at)
 
   # Get the download URL for the file
