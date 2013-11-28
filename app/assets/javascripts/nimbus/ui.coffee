@@ -126,15 +126,17 @@ window.nimbus_app.ui = (socket_uri) ->
 
   # Creates column for a folder link
   folder_column = (file) ->
-    folder = $("<td class='filename'><a>" + file.name() + "</a></td>")
+    link = $("<a>" + file.name() + "</a>")
+    folder = $("<td class='filename'></td>")
     promise = $.Deferred()
     promise.done ->
       refresh()
     promise.fail (error) ->
       alert(error)
-    folder.click ->
+    link.click ->
       nimbus.change_directory(file, promise)
       show_spinner()
+    folder.html(link)
     return folder
 
   # Create column for icon
