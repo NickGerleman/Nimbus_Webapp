@@ -48,14 +48,20 @@
   }
 
   tr td {
-    font-size: 13px;
+    font-size: 14px;
+    padding: 6px 5px 6px 5px;
+    vertical-align: middle;
   }
 
-  .icon, .delete-button {
-    width: 17px;
-    height: 17px;
+  .rename {
+    margin-left: 10px;
+  }
+
+  .icon, .menu-button {
+    width: 26px;
+    height: 26px;
     img {
-      max-width: 16px;
+      max-width: 24px;
     }
   }
 

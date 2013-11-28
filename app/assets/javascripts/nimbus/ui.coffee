@@ -1,14 +1,84 @@
 # runs the ui for the client
 window.nimbus_app.ui = (socket_uri) ->
   show_spinner()
-  extensions = ["3gp", "divx", "jar", "pdf", "ss", "7z", "dll", "jpeg", "png", "swf", "ace", "dmg", "jpg", "ppt", "tgz",
-                "aiff", "doc", "lnk", "psd", "thm", "aif", "dss", "log", "ps", "tif", "ai", "dvf", "m4a", "pst", "tmp",
-                "amr", "dwg", "m4b", "ptb", "torrent", "asf", "eml", "m4p", "pub", "ttf", "asx", "eps", "m4v", "qbb",
-                "txt", "bat", "exe", "mcd", "qbw", "vcd", "bin", "fla", "mdb", "qxd", "vob", "bmp", "flv", "mid", "ram",
-                "wav", "bup", "gif", "mov", "rar", "wma", "cab", "gz", "mp2", "rm", "wmv", "cbr", "hqx", "mp4", "rmvb",
-                "wps", "cda", "html", "mpeg", "rtf", "xls", "cdl", "htm", "mpg", "sea", "xpi", "cdr", "ifo", "msi",
-                "ses", "zip", "chm", "indd", "mswmm", "sit", "dat", "iso", "ogg", "sitx", "folder", "flac", "docx",
-                "pptx", "xlsx", "csv"]
+  extensions_map =
+    txt: 'text'
+    epub: 'application-epub+zip'
+    zip: 'application-epub+zip'
+    rar: 'application-epub+zip'
+    '7z': 'application-epub+zip'
+    cab: 'application-epub+zip'
+    ai: 'application-illustrator'
+    doc: 'application-msword'
+    docx: 'application-msword'
+    rtf: 'office-document'
+    accdb: 'application-vnd.ms-access'
+    mdb: 'application-vnd.ms-access'
+    xls: 'application-vnd.ms-excel'
+    xlsx: 'application-vnd.ms-excel'
+    ppt: 'application-vnd.ms-powerpoint'
+    pptx: 'application-vnd.ms-powerpoint'
+    odt: 'office-document'
+    odf: 'office-document'
+    card: 'office-contact'
+    torrent: 'application-x-bittorrent'
+    iso: 'application-x-cd-image'
+    nrg: 'application-x-cd-image'
+    mdf: 'application-x-cd-image'
+    flv: 'application-x-flash-video'
+    fla: 'application-x-flash-video'
+    swf: 'application-x-flash-video'
+    exe: 'application-x-ms-dos-executable'
+    msi: 'application-x-ms-dos-executable'
+    mp3: 'audio-x-generic'
+    aac: 'audio-x-generic'
+    m4a: 'audio-x-generic'
+    ogg: 'audio-x-generic'
+    flac: 'audio-x-generic'
+    opus: 'audio-x-generic'
+    wma: 'audio-x-generic'
+    ape: 'audio-x-generic'
+    png: 'image-x-generic'
+    bmp: 'image-x-generic'
+    jpg: 'image-x-generic'
+    jpeg: 'image-x-generic'
+    gif: 'image-x-generic'
+    webp: 'image-x-generic'
+    m3u: 'playlist'
+    cue: 'playlist'
+    htm: 'text-html'
+    html: 'text-html'
+    xhtml: 'text-html'
+    mhtm: 'text-html'
+    dmg: 'text-x-install'
+    rpm: 'text-x-install'
+    deb: 'text-x-install'
+    nfo: 'text-x-readme'
+    odg: 'x-office-drawing'
+    otg: 'x-office-drawing'
+    svg: 'x-office-drawing'
+    odp: 'x-office-presentation'
+    ods: 'x-office-spreadsheet'
+    ots: 'x-office-spreadsheet'
+    csv: 'x-office-spreadsheet'
+    tsv: 'x-office-spreadsheet'
+    ini: 'application-x-desktop'
+    xml: 'application-x-desktop'
+    conf: 'application-x-desktop'
+    cnf: 'application-x-desktop'
+    js: 'application-x-executable'
+    coffee: 'application-x-executable'
+    c: 'application-x-executable'
+    cpp: 'application-x-executable'
+    rb: 'application-x-executable'
+    java: 'application-x-executable'
+    jar: 'application-x-executable'
+    scala: 'application-x-executable'
+    py: 'application-x-executable'
+    pyc: 'application-x-executable'
+    sh: 'application-x-executable'
+    pl: 'application-x-executable'
+
 
   nimbus = nimbus_app.core(socket_uri, refresh);
   init_done = $.Deferred();
@@ -61,7 +131,12 @@ window.nimbus_app.ui = (socket_uri) ->
 
   # Creates a row for a file or folder
   create_row = (file) ->
-    row = $("<tr></tr>")
+    row = $("<tr oncontextmenu='return false;'></tr>")
+    row.mousedown (event) ->
+      if event.button == 2
+        x = event.clientX
+        y = event.clientY
+        alert "X: " + x + " Y: " + y
     row.append icon_column(file)
     row.append name_column(file)
     row.append date_column(file)
@@ -87,27 +162,28 @@ window.nimbus_app.ui = (socket_uri) ->
 
   # Creates column for delete button
   delete_button = (file) ->
-    button = $("<td class='delete-button'><a><img alt='delete' width='16' src='/icons/delete.png'></a></td>")
-    delete_promise = $.Deferred()
-    delete_promise.done ->
-      update_promise = $.Deferred()
-      update_promise.done ->
-        refresh()
-      update_promise.fail (error) ->
-        alert(error)
-        refresh()
-      nimbus.current_directory().update(update_promise)
-    delete_promise.fail (error) ->
-      alert(error)
-    button.click ->
-      show_spinner()
-      file.destroy(delete_promise)
+    button = $("<td class='menu-button'><a><img alt='delete' width='30' height='30' src='/icons/menu.svg'></a></td>")
+#    delete_promise = $.Deferred()
+#    delete_promise.done ->
+#      update_promise = $.Deferred()
+#      update_promise.done ->
+#        refresh()
+#      update_promise.fail (error) ->
+#        alert(error)
+#        refresh()
+#      nimbus.current_directory().update(update_promise)
+#    delete_promise.fail (error) ->
+#      alert(error)
+#    button.click ->
+#      show_spinner()
+#      file.destroy(delete_promise)
     return button
 
   # Creates column for a file link
   file_column = (file) ->
+    data = $("<td class='filename'></td>")
     is_image = false
-    if ["png", "gif", "jpg", "bmp"].indexOf(file.extension().toLowerCase()) != -1
+    if ["png", "gif", "jpg", "jpeg", "bmp"].indexOf(file.extension().toLowerCase()) != -1
       is_image = true
     if(file.hasOwnProperty("download_url"))
       link = $('<a href="' + file.download_url() + '">' + file.full_name() + '</a>')
@@ -118,11 +194,10 @@ window.nimbus_app.ui = (socket_uri) ->
           preloader: true,
           removalDelay: 200,
           closeBtnInside: false
-      data = $("<td class='filename'></td>")
       data.html(link)
-      return data
     else if(file.hasOwnProperty("view_url"))
-      return $('<td class="filename"><a href="' + file.view_url() + '">' + file.full_name() + '</a></td>')
+      data.html $('<a href="' + file.view_url() + '">' + file.full_name() + '</a>')
+    return data
 
   # Creates column for a folder link
   folder_column = (file) ->
@@ -142,12 +217,12 @@ window.nimbus_app.ui = (socket_uri) ->
   # Create column for icon
   icon_column = (file) ->
     is_file = file.is_file()
-    if is_file and extensions.indexOf(file.extension().toLowerCase()) != -1
-      $("<td class='icon'><img height='16' width='16' alt='icon' src='/icons/" + file.extension().toLowerCase() + ".png' ></td>")
+    if is_file and extensions_map.hasOwnProperty(file.extension().toLowerCase())
+      $("<td class='icon'><img width='32' alt='icon' src='/icons/" + extensions_map[file.extension().toLowerCase()] + ".svg' ></td>")
     else if is_file
-      $("<td class='icon'><img height='16' width='16' alt='icon' src='/icons/unknown.png' ></td>")
+      $("<td class='icon'><img height='32' width='32' alt='icon' src='/icons/blank.svg' ></td>")
     else
-      $("<td class='icon'><img height='16' width='16' alt='icon' src='/icons/folder.png' ></td>")
+      $("<td class='icon'><img height='32' width='32' alt='icon' src='/icons/folder.svg' ></td>")
 
   # Create column for file/folder name/link
   name_column = (file) ->

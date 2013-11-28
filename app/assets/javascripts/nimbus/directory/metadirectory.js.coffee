@@ -72,7 +72,7 @@ window.nimbus_app.metadirectory = (parent, directories) ->
     directory_buffer = []
     while initial_directories.length > 0
       directory = initial_directories.shift()
-      if directory_buffer.length == 0 or directory_buffer[0].name() == directory.name
+      if directory_buffer.length == 0 or directory_buffer[0].name() == directory.name()
         directory_buffer.push(directory)
       else
         subdirectories.push(nimbus_app.metadirectory(this, directory_buffer))
