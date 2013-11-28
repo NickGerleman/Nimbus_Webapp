@@ -155,14 +155,14 @@ window.nimbus_app.ui = (socket_uri) ->
       minutes = date.getMinutes()
       minutes++ if date.getSeconds() > 30
       minute_string = if minutes < 10 then '0' + minutes else minutes + ''
-      timeString = hours + ':' + minute_string + suffix
+      timeString = "<span class='time'>" + hours + ':' + minute_string + suffix + "</span>"
       $("<td class='date-column'>" + timeString + " " + date.toLocaleDateString() + "</td>")
     else
       $("<td class='date-column'>--</td> ")
 
   # Creates column for delete button
   delete_button = (file) ->
-    button = $("<td class='menu-button'><a><img alt='delete' width='30' height='30' src='/icons/menu.svg'></a></td>")
+    button = $("<td class='menu-button'><a><img alt='delete' width='12' height='24' src='/icons/menu.svg'></a></td>")
 #    delete_promise = $.Deferred()
 #    delete_promise.done ->
 #      update_promise = $.Deferred()
