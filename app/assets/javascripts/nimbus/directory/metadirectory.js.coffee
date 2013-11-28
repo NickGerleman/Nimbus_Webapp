@@ -88,6 +88,8 @@ window.nimbus_app.metadirectory = (parent, directories) ->
   to_return =
     # The directories(not metadirectories) that represent this metadirectory
     directories: -> directories
+    # Whether the directory is a file
+    is_file: -> false
     # The name of the directory
     name: -> name
     # The parent metadirectory(null if current metadirectory is root)

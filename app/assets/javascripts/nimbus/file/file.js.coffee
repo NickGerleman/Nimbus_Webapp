@@ -16,5 +16,7 @@ window.nimbus_app.file = ->
       that.full_name()
 
   that =
+    # Whether this is a file
+    is_file: -> true
     extension: extension
     name: name

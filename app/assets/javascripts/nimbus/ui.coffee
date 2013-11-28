@@ -64,9 +64,26 @@ window.nimbus_app.ui = (socket_uri) ->
     row = $("<tr></tr>")
     row.append icon_column(file)
     row.append name_column(file)
+    row.append date_column(file)
     row.append size_column(file)
     row.append delete_button(file)
     return row
+
+  # Creates a column for modified date
+  date_column = (file) ->
+    if file.is_file()
+      date = new Date(file.time())
+      hours = date.getHours()
+      suffix = if hours < 12 then 'AM' else 'PM'
+      hours %= 12
+      hours = 12 if hours == 0
+      minutes = date.getMinutes()
+      minutes++ if date.getSeconds() > 30
+      minute_string = if minutes < 10 then '0' + minutes else minutes + ''
+      timeString = hours + ':' + minute_string + suffix
+      $("<td class='date-column'>" + timeString + " " + date.toLocaleDateString() + "</td>")
+    else
+      $("<td class='date-column'>--</td> ")
 
   # Creates column for delete button
   delete_button = (file) ->
@@ -122,7 +139,7 @@ window.nimbus_app.ui = (socket_uri) ->
 
   # Create column for icon
   icon_column = (file) ->
-    is_file = file.hasOwnProperty("extension")
+    is_file = file.is_file()
     if is_file and extensions.indexOf(file.extension().toLowerCase()) != -1
       $("<td class='icon'><img height='16' width='16' alt='icon' src='/icons/" + file.extension().toLowerCase() + ".png' ></td>")
     else if is_file
@@ -132,7 +149,7 @@ window.nimbus_app.ui = (socket_uri) ->
 
   # Create column for file/folder name/link
   name_column = (file) ->
-    if file.hasOwnProperty("extension")
+    if file.is_file()
       file_column(file)
     else
       folder_column(file)
@@ -146,7 +163,7 @@ window.nimbus_app.ui = (socket_uri) ->
         size /= 1024
         iter++
       return Math.round(size) + ' ' + suffixes[iter]
-    if file.hasOwnProperty("extension") and !isNaN(file.size())
-      $("<td>" + sizeString(file.size()) + "</td>")
+    if file.is_file() and !isNaN(file.size())
+      $("<td class='size-column'>" + sizeString(file.size()) + "</td>")
     else
-      $("<td></td>")
+      $("<td class='size-column'>--</td>")

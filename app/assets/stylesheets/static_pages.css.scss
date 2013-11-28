@@ -1,3 +1,5 @@
+@import 'foundation_and_overrides';
+
 #scene {
   background: image_url('scene400.jpg');
   @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 1.5dppx) {
@@ -41,8 +43,38 @@
 
 #files-table {
   width: 100%;
+  a:not(:hover) {
+    color: $body-font-color;
+  }
+
   tr td {
     font-size: 13px;
+  }
+
+  .icon, .delete-button {
+    width: 17px;
+    height: 17px;
+    img {
+      max-width: 16px;
+    }
+  }
+
+  .filename {
+    max-width: 400px;
+  }
+
+  .size-column {
+    width: 60px;
+    text-align: center;
+  }
+
+  .date-column {
+    width: 150px;
+    text-align: center;
+  }
+
+  .breadcrumbs {
+    width: 100%;
   }
 }
 
@@ -53,19 +85,4 @@
   nav {
     margin-bottom: 5px;
   }
-}
-
-.icon {
-  width: 17px;
-  height: 17px;
-  img {
-    max-width: 16px;
-  }
-}
-.filename {
-  max-width: 400px;
-}
-
-.breadcrumbs {
-  width: 100%;
 }
