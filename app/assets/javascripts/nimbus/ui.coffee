@@ -83,7 +83,8 @@ window.nimbus_app.ui = (socket_uri) ->
       outside_y = click_y < y or click_y > y + height
       if outside_x or outside_y
         menu.remove()
-        $('body').off('mouseDown', this)
+        $('.selected-row').removeClass('selected-row')
+        $('body').off()
 
   #Creates the breadcrumbs
   create_breadcrumbs = (metaDirectory) ->
@@ -111,8 +112,10 @@ window.nimbus_app.ui = (socket_uri) ->
   # Creates a row for a file or folder
   create_row = (file) ->
     row = $("<tr oncontextmenu='return false;'></tr>")
-    row.mousedown (event) ->
-      context_menu(event, file) if event.button == 2
+    row.on 'contextmenu', (event) ->
+      context_menu(event, file)
+      event.preventDefault()
+      row.addClass('selected-row')
     row.append icon_column(file)
     row.append name_column(file)
     row.append date_column(file)
@@ -193,7 +196,14 @@ window.nimbus_app.ui = (socket_uri) ->
 
   # Creates the contents of a context menu
   menu_contents = (file) ->
-    $('<div class="context-menu">' + file.name() + '</div>')
+    div = $('<div class="context-menu"></div>')
+    list = $("<ul></ul>")
+    del = $("<li>Delete</li>")
+    rename = $("<li>Rename</li>")
+    list.append del
+    list.append rename
+    div.html list
+    return div
 
   # Create column for file/folder name/link
   name_column = (file) ->
