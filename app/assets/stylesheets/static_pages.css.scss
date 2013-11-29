@@ -130,7 +130,7 @@
 #files-table-div {
   max-width: 900px;
   margin: auto;
-  padding: 0 10px;
+  padding: 0;
   nav {
     margin-bottom: 5px;
   }
@@ -141,4 +141,13 @@
   min-width: 90px;
   padding: 20px 10px;
   text-align: center;
+}
+
+.context-menu {
+  height: 60px;
+  width: 200px;
+  position: fixed;
+  background-color: white;
+  border-radius: 3px;
+  border: 1px solid #ddd;
 }

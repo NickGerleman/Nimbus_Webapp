@@ -3,107 +3,32 @@ window.nimbus_app.ui = (socket_uri) ->
   show_spinner()
   sidebar = $('#app-side')
   extensions_map =
-    txt: 'text'
-    epub: 'application-book'
-    mobi: 'application-book'
-    azw: 'application-book'
-    zip: 'package-x-generic'
-    rar: 'package-x-generic'
-    '7z': 'package-x-generic'
-    cab: 'package-x-generic'
-    gz: 'package-x-generic'
-    bz2: 'package-x-generic'
-    tar: 'package-x-generic'
-    ai: 'application-illustrator'
-    doc: 'application-msword'
-    docx: 'application-msword'
-    rtf: 'office-document'
-    accdb: 'application-vnd.ms-access'
-    mdb: 'application-vnd.ms-access'
-    xls: 'application-vnd.ms-excel'
-    xlsx: 'application-vnd.ms-excel'
-    ppt: 'application-vnd.ms-powerpoint'
-    pptx: 'application-vnd.ms-powerpoint'
-    odt: 'office-document'
-    odf: 'office-document'
-    card: 'office-contact'
-    torrent: 'application-x-bittorrent'
-    iso: 'application-x-cd-image'
-    nrg: 'application-x-cd-image'
-    mdf: 'application-x-cd-image'
-    flv: 'application-x-flash-video'
-    fla: 'application-x-flash-video'
-    swf: 'application-x-flash-video'
-    exe: 'application-x-ms-dos-executable'
-    msi: 'application-x-ms-dos-executable'
-    mp3: 'audio-x-generic'
-    aac: 'audio-x-generic'
-    m4a: 'audio-x-generic'
-    ogg: 'audio-x-generic'
-    flac: 'audio-x-generic'
-    wav: 'audio-x-generic'
-    opus: 'audio-x-generic'
-    wma: 'audio-x-generic'
-    ape: 'audio-x-generic'
-    png: 'image-x-generic'
-    bmp: 'image-x-generic'
-    jpg: 'image-x-generic'
-    jpeg: 'image-x-generic'
-    gif: 'image-x-generic'
-    tif: 'image-x-generic'
-    tiff: 'image-x-generic'
-    webp: 'image-x-generic'
-    targa: 'image-x-generic'
-    raw: 'image-x-generic'
-    exr: 'image-x-generic'
-    tga: 'image-x-generic'
-    hdr: 'image-x-generic'
-    m3u: 'playlist'
-    cue: 'playlist'
-    htm: 'text-html'
-    html: 'text-html'
-    xhtml: 'text-html'
-    mhtm: 'text-html'
-    dmg: 'text-x-install'
-    rpm: 'text-x-install'
-    deb: 'text-x-install'
-    nfo: 'text-x-readme'
-    odg: 'x-office-drawing'
-    otg: 'x-office-drawing'
-    svg: 'x-office-drawing'
-    odp: 'x-office-presentation'
-    ods: 'x-office-spreadsheet'
-    ots: 'x-office-spreadsheet'
-    csv: 'x-office-spreadsheet'
-    tsv: 'x-office-spreadsheet'
-    ini: 'application-x-desktop'
-    xml: 'application-x-desktop'
-    conf: 'application-x-desktop'
-    cnf: 'application-x-desktop'
-    js: 'text-x-script'
-    coffee: 'text-x-script'
-    c: 'text-x-script'
-    cpp: 'text-x-script'
-    cs: 'text-x-script'
-    rb: 'text-x-script'
-    java: 'text-x-script'
-    jar: 'text-x-java'
-    class: 'application-x-executable'
-    scala: 'text-x-script'
-    py: 'text-x-script'
-    pyc: 'application-x-executable'
-    css: 'text-x-script'
-    sh: 'text-x-script'
-    pl: 'text-x-script'
-    ott: 'x-office-document-template'
-    pdf: 'application-pdf'
-    mp4: 'video-x-generic'
-    m4v: 'video-x-generic'
-    avi: 'video-x-generic'
-    wmv: 'video-x-generic'
-    mkv: 'video-x-generic'
-    vob: 'video-x-generic'
-    webm: 'video-x-generic'
+    txt: 'text', epub: 'application-book', mobi: 'application-book', azw: 'application-book',
+    zip: 'package-x-generic', rar: 'package-x-generic', '7z': 'package-x-generic', cab: 'package-x-generic',
+    gz: 'package-x-generic', bz2: 'package-x-generic', tar: 'package-x-generic', ai: 'application-illustrator',
+    doc: 'application-msword', docx: 'application-msword', rtf: 'office-document', accdb: 'application-vnd.ms-access',
+    mdb: 'application-vnd.ms-access', xls: 'application-vnd.ms-excel', xlsx: 'application-vnd.ms-excel',
+    ppt: 'application-vnd.ms-powerpoint', pptx: 'application-vnd.ms-powerpoint', odt: 'office-document',
+    odf: 'office-document', card: 'office-contact', torrent: 'application-x-bittorrent',
+    iso: 'application-x-cd-image', nrg: 'application-x-cd-image', mdf: 'application-x-cd-image',
+    flv: 'application-x-flash-video', fla: 'application-x-flash-video', swf: 'application-x-flash-video',
+    exe: 'application-x-ms-dos-executable', msi: 'application-x-ms-dos-executable', mp3: 'audio-x-generic',
+    aac: 'audio-x-generic', m4a: 'audio-x-generic', ogg: 'audio-x-generic', flac: 'audio-x-generic',
+    wav: 'audio-x-generic', opus: 'audio-x-generic', wma: 'audio-x-generic', ape: 'audio-x-generic',
+    png: 'image-x-generic', bmp: 'image-x-generic', jpg: 'image-x-generic', jpeg: 'image-x-generic',
+    gif: 'image-x-generic', tif: 'image-x-generic', tiff: 'image-x-generic', webp: 'image-x-generic',
+    targa: 'image-x-generic', raw: 'image-x-generic', exr: 'image-x-generic', tga: 'image-x-generic',
+    hdr: 'image-x-generic', m3u: 'playlist', cue: 'playlist', htm: 'text-html', html: 'text-html', xhtml: 'text-html',
+    mhtm: 'text-html', dmg: 'text-x-install', rpm: 'text-x-install', deb: 'text-x-install', nfo: 'text-x-readme',
+    odg: 'x-office-drawing', otg: 'x-office-drawing', svg: 'x-office-drawing', odp: 'x-office-presentation',
+    ods: 'x-office-spreadsheet', ots: 'x-office-spreadsheet', csv: 'x-office-spreadsheet', tsv: 'x-office-spreadsheet',
+    ini: 'application-x-desktop', xml: 'application-x-desktop', conf: 'application-x-desktop',
+    cnf: 'application-x-desktop', js: 'text-x-script', coffee: 'text-x-script', c: 'text-x-script',
+    cpp: 'text-x-script', cs: 'text-x-script', rb: 'text-x-script', java: 'text-x-script', jar: 'text-x-java',
+    class: 'application-x-executable', scala: 'text-x-script', py: 'text-x-script', pyc: 'application-x-executable',
+    css: 'text-x-script', sh: 'text-x-script', pl: 'text-x-script', ott: 'x-office-document-template',
+    pdf: 'application-pdf', mp4: 'video-x-generic', m4v: 'video-x-generic', avi: 'video-x-generic',
+    wmv: 'video-x-generic', mkv: 'video-x-generic', vob: 'video-x-generic', webm: 'video-x-generic'
 
   nimbus = nimbus_app.core(socket_uri, refresh);
   init_done = $.Deferred();
@@ -116,7 +41,6 @@ window.nimbus_app.ui = (socket_uri) ->
 
   #refresh callback
   refresh = ->
-    stop_spinner()
     container = $('<tbody id="files-body">')
     table = $('<table id="files-table">')
     div = $('<div id="files-table-div">')
@@ -135,6 +59,31 @@ window.nimbus_app.ui = (socket_uri) ->
     scroll.append(table)
     div.append(scroll)
     $('#app-container').html(div)
+    stop_spinner()
+
+  # Creates a context menu around the mouse
+  context_menu = (mouseDown, file) ->
+    menu = menu_contents(file)
+    x = mouseDown.clientX
+    y = mouseDown.clientY
+    # Change corner at edges
+    width = menu.width()
+    height = menu.height()
+    hor_margin = $(window).width() - (width + x)
+    vert_margin = $(window).height() - (height + y)
+    x -= width if hor_margin < 20
+    y -= height if vert_margin < 20
+    menu.css(left: x, top: y)
+    $('body').append(menu)
+    # Handle exiting menu
+    $('body').mousedown (event) ->
+      click_x = event.clientX
+      click_y = event.clientY
+      outside_x = click_x < x or click_x > x + width
+      outside_y = click_y < y or click_y > y + height
+      if outside_x or outside_y
+        menu.remove()
+        $('body').off('mouseDown', this)
 
   #Creates the breadcrumbs
   create_breadcrumbs = (metaDirectory) ->
@@ -148,10 +97,13 @@ window.nimbus_app.ui = (socket_uri) ->
       # each iteration shares a common scope, we must make a new one
       do ->
         promise = $.Deferred()
-        promise.done -> refresh()
-        promise.fail (error) -> alert(error)
+        promise.done ->
+          refresh()
+        promise.fail (error) ->
+          alert(error)
         dir = metaDirectory.valueOf()
-        crumb.click -> nimbus.change_directory(dir, promise)
+        crumb.click ->
+          nimbus.change_directory(dir, promise)
       breadcrumbs.prepend(crumb)
       metaDirectory = metaDirectory.parent()
     return breadcrumbs
@@ -160,10 +112,7 @@ window.nimbus_app.ui = (socket_uri) ->
   create_row = (file) ->
     row = $("<tr oncontextmenu='return false;'></tr>")
     row.mousedown (event) ->
-      if event.button == 2
-        x = event.clientX
-        y = event.clientY
-        alert "X: " + x + " Y: " + y
+      context_menu(event, file) if event.button == 2
     row.append icon_column(file)
     row.append name_column(file)
     row.append date_column(file)
@@ -218,7 +167,7 @@ window.nimbus_app.ui = (socket_uri) ->
       alert(error)
     link.click ->
       nimbus.change_directory(file, promise)
-      show_spinner()
+      show_spinner() unless file.is_enumerated()
     folder.html(link)
     return folder
 
@@ -226,7 +175,8 @@ window.nimbus_app.ui = (socket_uri) ->
   icon_column = (file) ->
     is_file = file.is_file()
     if is_file and extensions_map.hasOwnProperty(file.extension().toLowerCase())
-      $("<td class='icon'><img width='32' alt='icon' src='/icons/" + extensions_map[file.extension().toLowerCase()] + ".svg' ></td>")
+      $("<td class='icon'><img height='32' width='32' alt='icon' src='/icons/" +
+        extensions_map[file.extension().toLowerCase()] + ".svg' ></td>")
     else if is_file
       $("<td class='icon'><img height='32' width='32' alt='icon' src='/icons/blank.svg' ></td>")
     else
@@ -234,22 +184,16 @@ window.nimbus_app.ui = (socket_uri) ->
 
   # Creates column for menu button
   menu_button = (file) ->
-    button = $('<td class="menu-button"><a><svg xmlns="http://www.w3.org/2000/svg" height="24" width="12"><g class="menu-svg"><rect height="4" width="4" y="2" x="5"/><rect height="4" width="4" y="10" x="5"/><rect height="4" width="4" y="18" x="5"/></g></svg></a></td>')
-    #    delete_promise = $.Deferred()
-    #    delete_promise.done ->
-    #      update_promise = $.Deferred()
-    #      update_promise.done ->
-    #        refresh()
-    #      update_promise.fail (error) ->
-    #        alert(error)
-    #        refresh()
-    #      nimbus.current_directory().update(update_promise)
-    #    delete_promise.fail (error) ->
-    #      alert(error)
-    #    button.click ->
-    #      show_spinner()
-    #      file.destroy(delete_promise)
+    button = $('<td class="menu-button"><a><svg xmlns="http://www.w3.org/2000/svg" height="24" width="12">' +
+      '<g class="menu-svg"><rect height="4" width="4" y="2" x="5"/><rect height="4" width="4" y="10" x="5"/>'+
+      '<rect height="4" width="4" y="18" x="5"/></g></svg></a></td>')
+    button.mousedown (event) ->
+      context_menu(event, file)
     return button
+
+  # Creates the contents of a context menu
+  menu_contents = (file) ->
+    $('<div class="context-menu">' + file.name() + '</div>')
 
   # Create column for file/folder name/link
   name_column = (file) ->
