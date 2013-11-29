@@ -3,11 +3,16 @@ window.nimbus_app.ui = (socket_uri) ->
   show_spinner()
   extensions_map =
     txt: 'text'
-    epub: 'application-epub+zip'
-    zip: 'application-epub+zip'
-    rar: 'application-epub+zip'
-    '7z': 'application-epub+zip'
-    cab: 'application-epub+zip'
+    epub: 'application-book'
+    mobi: 'application-book'
+    azw: 'application-book'
+    zip: 'package-x-generic'
+    rar: 'package-x-generic'
+    '7z': 'package-x-generic'
+    cab: 'package-x-generic'
+    gz: 'package-x-generic'
+    bz2: 'package-x-generic'
+    tar: 'package-x-generic'
     ai: 'application-illustrator'
     doc: 'application-msword'
     docx: 'application-msword'
@@ -35,6 +40,7 @@ window.nimbus_app.ui = (socket_uri) ->
     m4a: 'audio-x-generic'
     ogg: 'audio-x-generic'
     flac: 'audio-x-generic'
+    wav: 'audio-x-generic'
     opus: 'audio-x-generic'
     wma: 'audio-x-generic'
     ape: 'audio-x-generic'
@@ -43,7 +49,14 @@ window.nimbus_app.ui = (socket_uri) ->
     jpg: 'image-x-generic'
     jpeg: 'image-x-generic'
     gif: 'image-x-generic'
+    tif: 'image-x-generic'
+    tiff: 'image-x-generic'
     webp: 'image-x-generic'
+    targa: 'image-x-generic'
+    raw: 'image-x-generic'
+    exr: 'image-x-generic'
+    tga: 'image-x-generic'
+    hdr: 'image-x-generic'
     m3u: 'playlist'
     cue: 'playlist'
     htm: 'text-html'
@@ -66,19 +79,30 @@ window.nimbus_app.ui = (socket_uri) ->
     xml: 'application-x-desktop'
     conf: 'application-x-desktop'
     cnf: 'application-x-desktop'
-    js: 'application-x-executable'
-    coffee: 'application-x-executable'
-    c: 'application-x-executable'
-    cpp: 'application-x-executable'
-    rb: 'application-x-executable'
-    java: 'application-x-executable'
-    jar: 'application-x-executable'
-    scala: 'application-x-executable'
-    py: 'application-x-executable'
+    js: 'text-x-script'
+    coffee: 'text-x-script'
+    c: 'text-x-script'
+    cpp: 'text-x-script'
+    cs: 'text-x-script'
+    rb: 'text-x-script'
+    java: 'text-x-script'
+    jar: 'text-x-java'
+    class: 'application-x-executable'
+    scala: 'text-x-script'
+    py: 'text-x-script'
     pyc: 'application-x-executable'
-    sh: 'application-x-executable'
-    pl: 'application-x-executable'
-
+    css: 'text-x-script'
+    sh: 'text-x-script'
+    pl: 'text-x-script'
+    ott: 'x-office-document-template'
+    pdf: 'application-pdf'
+    mp4: 'video-x-generic'
+    m4v: 'video-x-generic'
+    avi: 'video-x-generic'
+    wmv: 'video-x-generic'
+    mkv: 'video-x-generic'
+    vob: 'video-x-generic'
+    webm: 'video-x-generic'
 
   nimbus = nimbus_app.core(socket_uri, refresh);
   init_done = $.Deferred();
@@ -141,7 +165,7 @@ window.nimbus_app.ui = (socket_uri) ->
     row.append name_column(file)
     row.append date_column(file)
     row.append size_column(file)
-    row.append delete_button(file)
+    row.append menu_button(file)
     return row
 
   # Creates a column for modified date
@@ -159,25 +183,6 @@ window.nimbus_app.ui = (socket_uri) ->
       $("<td class='date-column'>" + timeString + " " + date.toLocaleDateString() + "</td>")
     else
       $("<td class='date-column'>--</td> ")
-
-  # Creates column for delete button
-  delete_button = (file) ->
-    button = $("<td class='menu-button'><a><img alt='delete' width='12' height='24' src='/icons/menu.svg'></a></td>")
-#    delete_promise = $.Deferred()
-#    delete_promise.done ->
-#      update_promise = $.Deferred()
-#      update_promise.done ->
-#        refresh()
-#      update_promise.fail (error) ->
-#        alert(error)
-#        refresh()
-#      nimbus.current_directory().update(update_promise)
-#    delete_promise.fail (error) ->
-#      alert(error)
-#    button.click ->
-#      show_spinner()
-#      file.destroy(delete_promise)
-    return button
 
   # Creates column for a file link
   file_column = (file) ->
@@ -223,6 +228,25 @@ window.nimbus_app.ui = (socket_uri) ->
       $("<td class='icon'><img height='32' width='32' alt='icon' src='/icons/blank.svg' ></td>")
     else
       $("<td class='icon'><img height='32' width='32' alt='icon' src='/icons/folder.svg' ></td>")
+
+  # Creates column for menu button
+  menu_button = (file) ->
+    button = $("<td class='menu-button'><a><img alt='delete' width='12' height='24' src='/icons/menu.svg'></a></td>")
+    #    delete_promise = $.Deferred()
+    #    delete_promise.done ->
+    #      update_promise = $.Deferred()
+    #      update_promise.done ->
+    #        refresh()
+    #      update_promise.fail (error) ->
+    #        alert(error)
+    #        refresh()
+    #      nimbus.current_directory().update(update_promise)
+    #    delete_promise.fail (error) ->
+    #      alert(error)
+    #    button.click ->
+    #      show_spinner()
+    #      file.destroy(delete_promise)
+    return button
 
   # Create column for file/folder name/link
   name_column = (file) ->
