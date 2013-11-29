@@ -84,7 +84,7 @@ window.nimbus_app.ui = (socket_uri) ->
       if outside_x or outside_y
         menu.remove()
         $('.selected-row').removeClass('selected-row')
-        $('body').off()
+        $('body').off('mousedown', '**')
 
   #Creates the breadcrumbs
   create_breadcrumbs = (metaDirectory) ->
