@@ -119,6 +119,8 @@ window.nimbus_app.ui = (socket_uri) ->
     container = $('<tbody id="files-body">')
     table = $('<table id="files-table">')
     div = $('<div id="files-table-div">')
+    scroll = $('<div id="files-scroll"></div>')
+    scroll.height($(window).height() - 175)
     outer_row = $('<div class="row">')
     breadcrumbs = create_breadcrumbs(nimbus.current_directory())
     files = nimbus.current_directory().files();
@@ -129,7 +131,8 @@ window.nimbus_app.ui = (socket_uri) ->
       container.append(create_row(f))
     div.append(breadcrumbs)
     table.append(container)
-    div.append(table)
+    scroll.append(table)
+    div.append(scroll)
     outer_row.append(div)
     $('#content').html(outer_row)
 
@@ -231,7 +234,7 @@ window.nimbus_app.ui = (socket_uri) ->
 
   # Creates column for menu button
   menu_button = (file) ->
-    button = $("<td class='menu-button'><a><img alt='delete' width='12' height='24' src='/icons/menu.svg'></a></td>")
+    button = $('<td class="menu-button"><a><svg xmlns="http://www.w3.org/2000/svg" height="24" width="12"><g class="menu-svg"><rect height="4" width="4" y="2" x="5"/><rect height="4" width="4" y="10" x="5"/><rect height="4" width="4" y="18" x="5"/></g></svg></a></td>')
     #    delete_promise = $.Deferred()
     #    delete_promise.done ->
     #      update_promise = $.Deferred()
@@ -268,3 +271,8 @@ window.nimbus_app.ui = (socket_uri) ->
       $("<td class='size-column'>" + sizeString(file.size()) + "</td>")
     else
       $("<td class='size-column'>--</td>")
+
+#Adjust scroll area
+window.nimbus_app.ui.adjust_files_scroll = ->
+  height = $(window).height() - 200
+  $('#files-scroll').height(height)

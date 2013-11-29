@@ -20,9 +20,7 @@ body {
 }
 
 .top-bar {
-  @media only screen and(max-width: 799px) {
-    margin-bottom: 1em !important;
-  }
+  margin-bottom: 1em !important;
   -moz-box-shadow: 0 0 3px black;
   -webkit-box-shadow: 0 0 3px black;
   box-shadow: 0 0 3px black;

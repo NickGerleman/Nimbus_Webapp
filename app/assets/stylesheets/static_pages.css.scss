@@ -40,9 +40,15 @@
     padding: 5px 0;
   }
 }
+#files-scroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 1px solid #ddd;
+}
 
 #files-table {
   width: 100%;
+  border-collapse: collapse;
   a:not(:hover) {
     color: $body-font-color;
   }
@@ -85,8 +91,13 @@
     width: 24px;
     height: 24px;
     cursor: pointer;
-    img {
-      max-width: 12px;
+    .menu-svg {
+      fill: #aaa;
+    }
+    &:hover {
+      .menu-svg {
+        fill: #666;
+      }
     }
   }
 
@@ -119,7 +130,7 @@
 #files-table-div {
   max-width: 900px;
   margin: auto;
-  padding: 10px;
+  padding: 0 10px;
   nav {
     margin-bottom: 5px;
   }
