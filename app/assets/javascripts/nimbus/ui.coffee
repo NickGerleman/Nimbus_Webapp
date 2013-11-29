@@ -1,6 +1,7 @@
 # runs the ui for the client
 window.nimbus_app.ui = (socket_uri) ->
   show_spinner()
+  sidebar = $('#app-side')
   extensions_map =
     txt: 'text'
     epub: 'application-book'
@@ -120,8 +121,8 @@ window.nimbus_app.ui = (socket_uri) ->
     table = $('<table id="files-table">')
     div = $('<div id="files-table-div">')
     scroll = $('<div id="files-scroll"></div>')
-    scroll.height($(window).height() - 175)
-    outer_row = $('<div class="row">')
+    scroll.height($(window).height() - 130)
+    sidebar.height($(window).height() - 133)
     breadcrumbs = create_breadcrumbs(nimbus.current_directory())
     files = nimbus.current_directory().files();
     folders = nimbus.current_directory().subdirectories()
@@ -133,8 +134,7 @@ window.nimbus_app.ui = (socket_uri) ->
     table.append(container)
     scroll.append(table)
     div.append(scroll)
-    outer_row.append(div)
-    $('#content').html(outer_row)
+    $('#app-container').html(div)
 
   #Creates the breadcrumbs
   create_breadcrumbs = (metaDirectory) ->
@@ -274,5 +274,5 @@ window.nimbus_app.ui = (socket_uri) ->
 
 #Adjust scroll area
 window.nimbus_app.ui.adjust_files_scroll = ->
-  height = $(window).height() - 200
-  $('#files-scroll').height(height)
+  $('#files-scroll').height($(window).height() - 130)
+  $('#app-side').height($(window).height() - 133)
