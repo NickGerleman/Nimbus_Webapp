@@ -1,7 +1,7 @@
 'use strict'
 
 # Constructs and returns a connection object from the API representation of a connection
-window.nimbus_app.connection = (connection) ->
+window.NimbusApp.Connection = (connection) ->
 
   # Creates a root directory of the type of the connection
   create_root_directory = (promise) ->
@@ -12,7 +12,7 @@ window.nimbus_app.connection = (connection) ->
           data: access_token: connection.access_token
           dataType: 'JSON'
           success: (data) ->
-            directory = nimbus_app.box_directory(to_return, data)
+            directory = NimbusApp.BoxDirectory(to_return, data)
             promise.resolve(directory)
           error: -> promise.reject('Unable to retrieve Data from Box API for ' + connection.name)
       when 'dropbox'
@@ -21,7 +21,7 @@ window.nimbus_app.connection = (connection) ->
           data: access_token: connection.access_token
           dataType: 'JSON'
           success: (data) ->
-            directory = nimbus_app.dropbox_directory(to_return, data)
+            directory = NimbusApp.DropboxDirectory(to_return, data)
             promise.resolve(directory)
           error: -> promise.reject('Unable to retrieve Data from Dropbox API for ' + connection.name)
       when 'google'
@@ -30,7 +30,7 @@ window.nimbus_app.connection = (connection) ->
           data: access_token: connection.access_token
           dataType: 'JSON'
           success: (data) ->
-            directory = nimbus_app.google_directory(to_return, data)
+            directory = NimbusApp.GoogleDirectory(to_return, data)
             promise.resolve(directory)
           error: -> promise.reject('Unable to retrieve Data from Google Drive API for ' + connection.name)
       when 'skydrive'
@@ -39,7 +39,7 @@ window.nimbus_app.connection = (connection) ->
           data: access_token: connection.access_token
           dataType: 'JSON'
           success: (data) ->
-            directory = nimbus_app.skydrive_directory(to_return, data)
+            directory = NimbusApp.SkydriceDirectory(to_return, data)
             promise.resolve(directory)
           error: -> promise.reject('Unable to retrieve Data from SkyDrive API for ' + connection.name)
       else

@@ -1,6 +1,6 @@
 'use strict'
 
-window.nimbus_app.core = (socket_uri, refresh_callback) ->
+window.NimbusApp.Core = (socket_uri, refresh_callback) ->
   # put inside a second anonymous function so that changing instance variables are only visible to
   # those with direct reference to this
   do ->
@@ -33,7 +33,7 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
       promises = []
       promises.push($.Deferred()) for connection in connections_manager.all()
       $.when.apply($, promises).done ->
-        metadirectory = nimbus_app.metadirectory(null, directories)
+        metadirectory = NimbusApp.MetaDirectory(null, directories)
         promise.resolve(metadirectory)
       for connection in connections_manager.all()
         internal_promise = $.Deferred()
@@ -103,11 +103,11 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
       root_created.done (root) ->
         current_directory = root
         promise.resolve()
-        user = nimbus_app.user(user_retrieved)
+        user = NimbusApp.User(user_retrieved)
         user_retrieved.done ->
           faye_loaded = $.Deferred()
           faye_loaded.done (client) -> faye = client
-          nimbus_app.faye
+          NimbusApp.FayeClient
             socket_uri: socket_uri
             socket_token: user.socket_token()
             user_id: user.id()
@@ -115,7 +115,7 @@ window.nimbus_app.core = (socket_uri, refresh_callback) ->
             remove_callback: remove_connection
             promise: faye_loaded
 
-      connections_manager = nimbus_app.connections_manager(connections_retrieved)
+      connections_manager = NimbusApp.ConnectionManager(connections_retrieved)
 
 
     # the current metadirectory

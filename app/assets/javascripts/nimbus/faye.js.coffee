@@ -8,7 +8,7 @@
 #   update_callback the function to call on a connection_update message
 #   remove_callback the function to call on a connection_remove message
 #   promise the promise to resolve once the client is created
-window.nimbus_app.faye = (opts) ->
+window.NimbusApp.FayeClient = (opts) ->
   $.getScript opts.socket_uri + '/client.js',
     ->
       subscription = {}

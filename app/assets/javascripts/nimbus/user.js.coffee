@@ -1,7 +1,7 @@
 'use strict'
 
 # Gets the user's information and return the user object
-window.nimbus_app.user = (promise) ->
+window.NimbusApp.User = (promise) ->
   user_info = null
   $.ajax
     url: '/api/user'

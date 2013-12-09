@@ -1,7 +1,7 @@
 'use strict'
 
 # The equivalent of a file superclass
-window.nimbus_app.file = ->
+window.NimbusApp.File = ->
 
   # The extension of the file
   extension = ->

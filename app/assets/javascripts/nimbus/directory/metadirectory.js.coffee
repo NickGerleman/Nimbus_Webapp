@@ -1,6 +1,6 @@
 'use strict'
 
-window.nimbus_app.metadirectory = (parent, directories) ->
+window.NimbusApp.MetaDirectory = (parent, directories) ->
   isEnumerated = false
   memo_path = null
 
@@ -35,7 +35,7 @@ window.nimbus_app.metadirectory = (parent, directories) ->
     promises = []
     promises.push($.Deferred()) for directory in directories
     for p in promises
-      p.fail -> promise.reject("Unable to enumerate metadirectory")
+      p.fail -> promise.reject("Unable to enumerate MetaDirectory")
     $.when.apply($, promises).done ->
       isEnumerated = true
       promise.resolve()
@@ -75,9 +75,9 @@ window.nimbus_app.metadirectory = (parent, directories) ->
       if directory_buffer.length == 0 or directory_buffer[0].name() == directory.name()
         directory_buffer.push(directory)
       else
-        subdirectories.push(nimbus_app.metadirectory(this, directory_buffer))
+        subdirectories.push(NimbusApp.MetaDirectory(this, directory_buffer))
         directory_buffer = [directory]
-    subdirectories.push(nimbus_app.metadirectory(this, directory_buffer))
+    subdirectories.push(NimbusApp.MetaDirectory(this, directory_buffer))
     subdirectories
 
   # Re-enumerates the directory

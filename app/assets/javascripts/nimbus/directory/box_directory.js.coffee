@@ -1,7 +1,7 @@
 'use strict'
 
 # Construct a box directory from a connection it belongs to and API metadata
-window.nimbus_app.box_directory = (connection, metadata) ->
+window.NimbusApp.BoxDirectory = (connection, metadata) ->
   isEnumerated = false
   files = []
   subdirectories = []
@@ -35,9 +35,9 @@ window.nimbus_app.box_directory = (connection, metadata) ->
         subdirectories = []
         for file in resources
           if file.type == 'folder'
-            subdirectories.push(nimbus_app.box_directory(connection, file, this))
+            subdirectories.push(NimbusApp.BoxDirectory(connection, file, this))
           else
-            constructed_file = nimbus_app.box_file(connection, file)
+            constructed_file = NimbusApp.BoxFile(connection, file)
             files.push(constructed_file)
         isEnumerated = true
         promise.resolve()
@@ -80,7 +80,7 @@ window.nimbus_app.box_directory = (connection, metadata) ->
   upload_callback = (data, promise) ->
     file = data.entries[0]
     resources.push(file)
-    files.push(nimbus_app.box_file(connection, file))
+    files.push(NimbusApp.BoxFile(connection, file))
     promise.resolve()
 
 

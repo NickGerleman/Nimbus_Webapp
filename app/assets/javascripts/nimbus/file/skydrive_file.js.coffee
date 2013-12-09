@@ -1,8 +1,8 @@
 'use strict'
 
 # Construct a skydrive file from a connection it belongs to and API metadata
-window.nimbus_app.skydrive_file = (connection, metadata) ->
-  that = nimbus_app.file()
+window.NimbusApp.SkydriveFile = (connection, metadata) ->
+  that = NimbusApp.File()
   size = metadata.size
   time = Date.parse(metadata.updated_time)
 

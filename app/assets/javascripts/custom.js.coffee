@@ -12,7 +12,7 @@ $(window).resize ->
 
 refresh_layout = ->
   adjust_footer()
-  nimbus_app.ui.adjust_files_scroll()
+  NimbusApp.UI.adjust_files_scroll()
 
 # Should eventually move to CSS
 adjust_footer = ->

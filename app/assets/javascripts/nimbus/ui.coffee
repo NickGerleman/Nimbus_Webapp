@@ -1,5 +1,5 @@
 # runs the ui for the client
-window.nimbus_app.ui = (socket_uri) ->
+window.NimbusApp.UI = (socket_uri) ->
   show_spinner()
   sidebar = $('#app-side')
   extensions_map =
@@ -25,12 +25,12 @@ window.nimbus_app.ui = (socket_uri) ->
     ini: 'application-x-desktop', xml: 'application-x-desktop', conf: 'application-x-desktop',
     cnf: 'application-x-desktop', js: 'text-x-script', coffee: 'text-x-script', c: 'text-x-script',
     cpp: 'text-x-script', cs: 'text-x-script', rb: 'text-x-script', java: 'text-x-script', jar: 'text-x-java',
-    class: 'application-x-executable', scala: 'text-x-script', py: 'text-x-script', pyc: 'application-x-executable',
+    'class': 'application-x-executable', scala: 'text-x-script', py: 'text-x-script', pyc: 'application-x-executable',
     css: 'text-x-script', sh: 'text-x-script', pl: 'text-x-script', ott: 'x-office-document-template',
     pdf: 'application-pdf', mp4: 'video-x-generic', m4v: 'video-x-generic', avi: 'video-x-generic',
     wmv: 'video-x-generic', mkv: 'video-x-generic', vob: 'video-x-generic', webm: 'video-x-generic'
 
-  nimbus = nimbus_app.core(socket_uri, refresh);
+  nimbus = NimbusApp.Core(socket_uri, refresh);
   init_done = $.Deferred();
   init_done.fail (error) ->
     stop_spinner()
@@ -102,7 +102,7 @@ window.nimbus_app.ui = (socket_uri) ->
           refresh()
         promise.fail (error) ->
           alert(error)
-        dir = metaDirectory.valueOf()
+        dir = metaDirectory
         crumb.click ->
           nimbus.change_directory(dir, promise)
       breadcrumbs.prepend(crumb)
@@ -111,7 +111,7 @@ window.nimbus_app.ui = (socket_uri) ->
 
   # Creates a row for a file or folder
   create_row = (file) ->
-    row = $("<tr oncontextmenu='return false;'></tr>")
+    row = $("<tr></tr>")
     row.on 'contextmenu', (event) ->
       context_menu(event, file)
       event.preventDefault()
@@ -135,7 +135,8 @@ window.nimbus_app.ui = (socket_uri) ->
       minutes++ if date.getSeconds() > 30
       minute_string = if minutes < 10 then '0' + minutes else minutes + ''
       timeString = "<span class='time'>" + hours + ':' + minute_string + suffix + "</span>"
-      $("<td class='date-column'>" + timeString + " " + date.toLocaleDateString() + "</td>")
+      dateString = date.getMonth() + '/' + date.getDay() + '/' + date.getFullYear()
+      $("<td class='date-column'>" + timeString + " " + dateString + "</td>")
     else
       $("<td class='date-column'>--</td> ")
 
@@ -227,6 +228,6 @@ window.nimbus_app.ui = (socket_uri) ->
       $("<td class='size-column'>--</td>")
 
 #Adjust scroll area
-window.nimbus_app.ui.adjust_files_scroll = ->
+window.NimbusApp.UI.adjust_files_scroll = ->
   $('#files-scroll').height($(window).height() - 130)
   $('#app-side').height($(window).height() - 133)

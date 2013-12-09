@@ -1,7 +1,7 @@
 'use strict'
 
 # Construct a dropbox directory from a connection it belongs to and API metadata
-window.nimbus_app.dropbox_directory = (connection, metadata) ->
+window.NimbusApp.DropboxDirectory = (connection, metadata) ->
   isEnumerated = false
   files = []
   subdirectories = []
@@ -11,9 +11,9 @@ window.nimbus_app.dropbox_directory = (connection, metadata) ->
     resources = metadata.contents
     for file in resources
       if file.is_dir
-        subdirectories.push(nimbus_app.dropbox_directory(connection, file, this))
+        subdirectories.push(NimbusApp.DropboxDirectory(connection, file, this))
       else
-        constructed_file = nimbus_app.dropbox_file(connection, file)
+        constructed_file = NimbusApp.DropboxFile(connection, file)
         files.push(constructed_file)
     isEnumerated = true
 
@@ -50,9 +50,9 @@ window.nimbus_app.dropbox_directory = (connection, metadata) ->
         subdirectories = []
         for file in resources
           if file.is_dir
-            subdirectories.push(nimbus_app.dropbox_directory(connection, file, this))
+            subdirectories.push(NimbusApp.DropboxDirectory(connection, file, this))
           else
-            constructed_file = nimbus_app.dropbox_file(connection, file)
+            constructed_file = NimbusApp.DropboxFile(connection, file)
             files.push(constructed_file)
         isEnumerated = true
         promise.resolve()
@@ -79,7 +79,7 @@ window.nimbus_app.dropbox_directory = (connection, metadata) ->
 
   upload_callback = (data, promise) ->
     resources.push(data)
-    files.push(nimbus_app.dropbox_file(connection, data))
+    files.push(NimbusApp.DropboxFile(connection, data))
     promise.resolve()
 
 

@@ -1,7 +1,7 @@
 'use strict'
 
 # Construct a google directory from a connection it belongs to and API metadata
-window.nimbus_app.google_directory = (connection, metadata) ->
+window.NimbusApp.GoogleDirectory = (connection, metadata) ->
   isEnumerated = false
   files = []
   subdirectories = []
@@ -35,9 +35,9 @@ window.nimbus_app.google_directory = (connection, metadata) ->
         subdirectories = []
         for file in resources
           if file.mimeType == 'application/vnd.google-apps.folder'
-            subdirectories.push(nimbus_app.google_directory(connection, file, this))
+            subdirectories.push(NimbusApp.GoogleDirectory(connection, file, this))
           else
-            constructed_file = nimbus_app.google_file(connection, file)
+            constructed_file = NimbusApp.GoogleFile(connection, file)
             files.push(constructed_file)
         isEnumerated = true
         promise.resolve()
@@ -80,7 +80,7 @@ window.nimbus_app.google_directory = (connection, metadata) ->
         ]
       success: (data) ->
         resources.push(data)
-        files.push(nimbus_app.google_file(connection, data))
+        files.push(NimbusApp.GoogleFile(connection, data))
         promise.resolve()
       error: (jqXHR, textStatus, errorThrown) ->
         promise.reject('Unable to name uploaded file:' + errorThrown)

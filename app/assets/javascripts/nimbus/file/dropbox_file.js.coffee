@@ -1,8 +1,8 @@
 'use strict'
 
 # Construct a dropbox file from a connection it belongs to and API metadata
-window.nimbus_app.dropbox_file = (connection, metadata) ->
-  that = nimbus_app.file()
+window.NimbusApp.DropboxFile = (connection, metadata) ->
+  that = NimbusApp.File()
   size = metadata.bytes
   time = Date.parse(metadata.modified)
 

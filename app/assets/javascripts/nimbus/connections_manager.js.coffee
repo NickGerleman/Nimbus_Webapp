@@ -1,7 +1,7 @@
 'use strict'
 
 # Initializes and returns the connection manager
-window.nimbus_app.connections_manager = (promise) ->
+window.NimbusApp.ConnectionManager = (promise) ->
 
   connections = {}
 
@@ -16,7 +16,7 @@ window.nimbus_app.connections_manager = (promise) ->
   # Adds a new connection (in API form)
   add = (connection) ->
     id = connection.id
-    new_connection = nimbus_app.connection(connection)
+    new_connection = NimbusApp.Connection(connection)
     connections[id] = new_connection
 
   # Returns an array containing each connection

@@ -1,7 +1,7 @@
 'use strict'
 
 # Construct a skydrive directory from a connection it belongs to and API metadata
-window.nimbus_app.skydrive_directory = (connection, metadata) ->
+window.NimbusApp.SkydriceDirectory = (connection, metadata) ->
   isEnumerated = false
   files = []
   subdirectories = []
@@ -12,9 +12,9 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
     resources = metadata.data
     for file in resources
       if file.type == 'folder'
-        subdirectories.push(nimbus_app.skydrive_directory(connection, file, this))
+        subdirectories.push(NimbusApp.SkydriceDirectory(connection, file, this))
       else if file.type == 'file'
-        constructed_file = nimbus_app.skydrive_file(connection, file)
+        constructed_file = NimbusApp.SkydriveFile(connection, file)
         files.push(constructed_file)
     isEnumerated = true
 
@@ -45,9 +45,9 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
         subdirectories = []
         for file in resources
           if file.type == 'folder'
-            subdirectories.push(nimbus_app.skydrive_directory(connection, file, this))
+            subdirectories.push(NimbusApp.SkydriceDirectory(connection, file, this))
           else if file.type == 'file'
-            constructed_file = nimbus_app.skydrive_file(connection, file)
+            constructed_file = NimbusApp.SkydriveFile(connection, file)
             files.push(constructed_file)
         isEnumerated = true
         promise.resolve()
@@ -80,7 +80,7 @@ window.nimbus_app.skydrive_directory = (connection, metadata) ->
       dataType: 'JSON'
       success: (data) ->
         resources.push(data)
-        files.push(nimbus_app.skydrive_file(data))
+        files.push(NimbusApp.SkydriveFile(data))
         promise.resolve()
       error: (jqXHR, textStatus, errorThrown) ->
         promise.reject('Unable to finalize file upload:' + errorThrown)
