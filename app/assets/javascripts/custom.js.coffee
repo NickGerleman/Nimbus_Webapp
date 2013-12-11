@@ -45,8 +45,8 @@ window.stop_spinner = ->
   $('#spinner-overlay').remove()
 
 window.compatible = ->
-  requestAnimationFrame = requestAnimationFrame || mozRequestAnimationFrame || webkitRequestAnimationFrame || msRequestAnimationFrame
-  cancelAnimationFrame = cancelAnimationFrame || CancelAnimationFrame || webkitCancelAnimationFrame
+  requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame
+  cancelAnimationFrame = window.cancelAnimationFrame || window.CancelAnimationFrame || window.webkitCancelAnimationFrame
   Modernizr.backgroundsize and
   Modernizr.borderradius and
   Modernizr.boxshadow and
