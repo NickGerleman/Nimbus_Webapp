@@ -8,7 +8,7 @@
     <div id="app-container" class="medium-10 columns"></div>
 <script>
     <% socket_url = ENV['HOST'] ? '/api/socket' : 'http://127.0.0.1:8081/api/socket' %>
-    jQuery(function () {
+    window.onload = function () {
         NimbusApp.UI('<%= socket_url %>');
-    });
+    };
 </script>
