@@ -3,21 +3,8 @@
 # jQuery function is shortcut for once DOM is ready
 jQuery ->
   $(document).foundation()
-  refresh_layout()
   init_popups()
-  create_callbacks()
-
-$(window).resize ->
-  refresh_layout()
-
-refresh_layout = ->
-  adjust_footer()
-  NimbusApp.UI.adjust_files_scroll()
-
-# Should eventually move to CSS
-adjust_footer = ->
-  height = $(window).height()
-  $('#content').css('min-height', (height - 200) + 'px')
+  init_spinners()
 
 init_popups = ->
   popup = $('.ajax-popup')
@@ -29,7 +16,7 @@ init_popups = ->
     closeBtnInside: true
   })
 
-create_callbacks = ->
+init_spinners = ->
   $('.spinner-link').click ->
     show_spinner()
 
@@ -58,6 +45,8 @@ window.stop_spinner = ->
   $('#spinner-overlay').remove()
 
 window.compatible = ->
+  requestAnimationFrame = requestAnimationFrame || mozRequestAnimationFrame || webkitRequestAnimationFrame || msRequestAnimationFrame
+  cancelAnimationFrame = cancelAnimationFrame || CancelAnimationFrame || webkitCancelAnimationFrame
   Modernizr.backgroundsize and
   Modernizr.borderradius and
   Modernizr.boxshadow and
@@ -76,9 +65,12 @@ window.compatible = ->
   Modernizr.csstransforms and
   Modernizr.csstransitions and
   Modernizr.svg and
+  window.devicePixelRatio and
   # Check if it correctly parses ISO 8601 time
   Date.parse('2013-07-24T07:24:04-05:00') == 1374668644000 and
   # Check RFC 3339 Time
   Date.parse('2012-07-04T18:10:00.000+09:00') == 1341393000000 and
   # Check strftime
-  Date.parse('Sat, 21 Aug 2010 22:31:20 +0000') == 1282429880000
+  Date.parse('Sat, 21 Aug 2010 22:31:20 +0000') == 1282429880000 and
+  requestAnimationFrame and
+  cancelAnimationFrame

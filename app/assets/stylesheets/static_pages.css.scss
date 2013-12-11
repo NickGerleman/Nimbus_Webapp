@@ -17,6 +17,8 @@
 
 #intro-text {
   font-size: 1.3em;
+  -webkit-text-shadow: 0 5px 10px black;
+  text-shadow: 0 5px 10px black;
   @media only screen and(max-width: 799px) {
     font-size: 1.1em;
   }
@@ -26,8 +28,6 @@
   h1 {
     line-height: 1.2em;
   }
-  -webkit-text-shadow: 0 5px 10px black;
-  text-shadow: 0 5px 10px black;
 }
 
 .wrapper {

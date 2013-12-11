@@ -1,6 +1,7 @@
 # runs the ui for the client
 window.NimbusApp.UI = (socket_uri) ->
   show_spinner()
+  $(window).resize -> NimbusApp.UI.adjust_files_scroll()
   sidebar = $('#app-side')
   extensions_map =
     txt: 'text', epub: 'application-book', mobi: 'application-book', azw: 'application-book',
@@ -67,12 +68,12 @@ window.NimbusApp.UI = (socket_uri) ->
     x = mouseDown.clientX
     y = mouseDown.clientY
     # Change corner at edges
-    width = menu.width()
-    height = menu.height()
+    width = menu.css('width')
+    height = menu.css('height')
     hor_margin = $(window).width() - (width + x)
     vert_margin = $(window).height() - (height + y)
-    x -= width if hor_margin < 20
-    y -= height if vert_margin < 20
+    x -= width if hor_margin < 50
+    y -= height if vert_margin < 50
     menu.css(left: x, top: y)
     $('body').append(menu)
     # Handle exiting menu
@@ -177,14 +178,15 @@ window.NimbusApp.UI = (socket_uri) ->
 
   # Create column for icon
   icon_column = (file) ->
+    suffix = Math.min(Math.round(devicePixelRatio), 3) * 24
     is_file = file.is_file()
     if is_file and extensions_map.hasOwnProperty(file.extension().toLowerCase())
       $("<td class='icon'><img height='32' width='32' alt='icon' src='/icons/" +
-        extensions_map[file.extension().toLowerCase()] + ".svg' ></td>")
+        extensions_map[file.extension().toLowerCase()] + suffix + ".png'></td>")
     else if is_file
-      $("<td class='icon'><img height='32' width='32' alt='icon' src='/icons/blank.svg' ></td>")
+      $("<td class='icon'><img height='32' width='32' alt='icon' src='/icons/blank" + suffix + ".png'></td>")
     else
-      $("<td class='icon'><img height='32' width='32' alt='icon' src='/icons/folder.svg' ></td>")
+      $("<td class='icon'><img height='32' width='32' alt='icon' src='/icons/folder" + suffix + ".png'></td>")
 
   # Creates column for menu button
   menu_button = (file) ->
@@ -229,5 +231,9 @@ window.NimbusApp.UI = (socket_uri) ->
 
 #Adjust scroll area
 window.NimbusApp.UI.adjust_files_scroll = ->
-  $('#files-scroll').height($(window).height() - 130)
-  $('#app-side').height($(window).height() - 133)
+  req = null
+  do ->
+    cancelAnimationFrame(req) unless req == null
+    req = requestAnimationFrame ->
+      $('#files-scroll').height($(window).height() - 130)
+      $('#app-side').height($(window).height() - 133)
