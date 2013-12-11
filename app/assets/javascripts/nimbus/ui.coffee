@@ -68,14 +68,14 @@ window.NimbusApp.UI = (socket_uri) ->
     x = mouseDown.clientX
     y = mouseDown.clientY
     # Change corner at edges
-    width = menu.css('width')
-    height = menu.css('height')
+    $('body').append(menu)
+    width = menu.width()
+    height = menu.height()
     hor_margin = $(window).width() - (width + x)
     vert_margin = $(window).height() - (height + y)
     x -= width if hor_margin < 50
     y -= height if vert_margin < 50
     menu.css(left: x, top: y)
-    $('body').append(menu)
     # Handle exiting menu
     $('body').mousedown (event) ->
       click_x = event.clientX
