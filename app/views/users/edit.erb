@@ -2,7 +2,7 @@
 
 <div class="row">
 
-    <div class="large-8 columns">
+    <div class="medium-8 columns">
         <h1><%= current_user.name %></h1>
         <a href="//gravatar.com">
             <%=
@@ -54,7 +54,7 @@
             %>
         </div>
     </div>
-    <div class="large-4 columns">
+    <div class="medium-4 columns">
         <section id="services" class="panel">
             <h3>Connections</h3>
             <%= render current_user.connections.order('id') %>

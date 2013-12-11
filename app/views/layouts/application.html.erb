@@ -6,12 +6,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <% end %>
     <title><%= title(yield :title_suffix) %></title>
-    <%= stylesheet_link_tag 'application' %>
     <%= jquery_include_tag :google %>
-    <%= javascript_include_tag 'application' %>
     <%= csrf_meta_tags %>
 </head>
 <body>
+<%= stylesheet_link_tag 'application' %>
+<%= javascript_include_tag 'application' %>
 <%= render 'alert_box' %>
 <%= render 'browser_warning' %>
 <%= render 'header' %>

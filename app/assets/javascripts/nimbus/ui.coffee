@@ -178,7 +178,7 @@ window.NimbusApp.UI = (socket_uri) ->
 
   # Create column for icon
   icon_column = (file) ->
-    suffix = Math.min(Math.round(devicePixelRatio), 3) * 24
+    suffix = Math.max(Math.min(Math.round(devicePixelRatio), 3), 1) * 24
     is_file = file.is_file()
     if is_file and extensions_map.hasOwnProperty(file.extension().toLowerCase())
       $("<td class='icon'><img height='32' width='32' alt='icon' src='/icons/" +

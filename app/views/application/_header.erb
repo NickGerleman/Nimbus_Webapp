@@ -1,25 +1,23 @@
-<div class="sticky">
-    <nav class="top-bar">
-        <ul class="title-area">
-            <li class="name">
-                <a href="<%= root_path %>" id="logo">
-                    <div id="logo-image"></div>
-                </a>
-            </li>
-            <li class="toggle-topbar menu-icon">
-                <a href="#">
-                    <span></span>
-                </a>
-            </li>
+<nav class="top-bar">
+    <ul class="title-area">
+        <li class="name">
+            <a href="<%= root_path %>" id="logo">
+                <div id="logo-image"></div>
+            </a>
+        </li>
+        <li class="toggle-topbar menu-icon">
+            <a href="#">
+                <span></span>
+            </a>
+        </li>
+    </ul>
+    <section class="top-bar-section">
+        <ul class="right">
+            <li class="end-divider"></li>
+            <li class="divider"></li>
+            <%= current_user ? render('user_nav_links') : render('nav_links')  %>
+            <li class="divider"></li>
+            <li class="end-divider"></li>
         </ul>
-        <section class="top-bar-section">
-            <ul class="right">
-                <li class="end-divider"></li>
-                <li class="divider"></li>
-                <%= current_user ? render('user_nav_links') : render('nav_links')  %>
-                <li class="divider"></li>
-                <li class="end-divider"></li>
-            </ul>
-        </section>
-    </nav>
-</div>
+    </section>
+</nav>

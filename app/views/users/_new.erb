@@ -11,29 +11,29 @@
     %>
         <section class="forms">
             <div class="row">
-                <div class="large-5 columns">
+                <div class="medium-5 columns">
                     <%= f.label :name, 'Name:', class: 'inline' %>
                 </div>
-                <div class="large-7 columns">
+                <div class="medium-7 columns">
                     <%= f.text_field :name, placeholder: 'John Doe', required: true %>
                 </div>
             </div>
 
             <div class="row">
-                <div class="large-5 columns">
+                <div class="medium-5 columns">
                     <%= f.label :email, 'Email Address:', class: 'inline' %>
                 </div>
 
-                <div class="large-7 columns">
+                <div class="medium-7 columns">
                     <%= f.text_field :email, placeholder: 'name@example.com', required: true %>
                 </div>
             </div>
             <div class="row">
-                <div class="large-5 columns">
+                <div class="medium-5 columns">
                     <%= f.label :email_confirmation, 'Confirm Email Address:', class: 'inline' %>
                 </div>
 
-                <div class="large-7 columns">
+                <div class="medium-7 columns">
                     <%=
                         f.text_field :email_confirmation,
                                      placeholder: 'name@example.com',
@@ -44,19 +44,19 @@
             </div>
 
             <div class="row">
-                <div class="large-5 columns">
+                <div class="medium-5 columns">
                     <%= f.label :password, 'Password:', class: 'inline' %>
                 </div>
-                <div class="large-7 columns">
+                <div class="medium-7 columns">
                     <%= f.password_field :password, required: true %>
                 </div>
             </div>
 
             <div class="row">
-                <div class="large-5 columns">
+                <div class="medium-5 columns">
                     <%= f.label :password_confirmation, 'Confirm Password:', class: 'inline' %>
                 </div>
-                <div class="large-7 columns">
+                <div class="medium-7 columns">
                     <%= f.password_field :password_confirmation, requred: true %>
                 </div>
             </div>

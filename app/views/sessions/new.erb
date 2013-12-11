@@ -1,6 +1,6 @@
 <% provide :title_suffix, 'Login' %>
 <div class="row">
-    <div class="large-5 columns" id="login-container">
+    <div class="medium-5 columns" id="login-container">
         <section id="login" class="panel">
             <%= form_tag session_path, remote: true, onsubmit: 'show_spinner();' do %>
                 <h3>Login</h3>
@@ -23,11 +23,11 @@
                 <div id="links">
                     <%= link_to 'Forgot My Password', new_user_password_reset_path, class: 'ajax-popup' %>
                 </div>
-                <%= submit_tag 'Login', id: 'login-button', class: 'button small submit' %>
+                <%= submit_tag 'Login', id: 'login-button', class: 'small button submit' %>
             <% end %>
         </section>
     </div>
-    <div class="large-6 large-offset-1 columns hide-for-small">
+    <div class="medium-6 medium-offset-1 columns hide-for-small">
         <div id="register-here">
             <h2>Register Now</h2>
 
