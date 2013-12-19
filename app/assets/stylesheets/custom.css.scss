@@ -20,7 +20,7 @@ body {
 }
 
 .top-bar {
-  margin-bottom: 1em !important;
+  margin-bottom: 10px !important;
   box-shadow: 0 0 3px black;
 
   span {
@@ -29,7 +29,6 @@ body {
   .name {
     display: table;
     #logo {
-      display: inline-block;
       display: table-cell;
       vertical-align: middle;
       #logo-image {
@@ -40,7 +39,7 @@ body {
     }
   }
   .right {
-    @media only screen and (max-width: 799px) {
+    @media #{$small-only} {
       font-size: 1.3em;
     }
     .active {
@@ -189,8 +188,4 @@ footer {
 
 .modal figure {
   margin: 0;
-}
-
-svg {
-  shape-rendering: crispEdges;
 }

@@ -1,11 +1,4 @@
-    <div class="medium-2 columns hide-for-small">
-        <ul id="app-side" class="side-nav panel">
-            <li><a>Refresh</a></li>
-            <li class="divider"></li>
-            <li><a>Upload</a></li>
-        </ul>
-    </div>
-    <div id="app-container" class="medium-10 columns"></div>
+<div id="app-container"></div>
 <script>
     <% socket_url = ENV['HOST'] ? '/api/socket' : 'http://127.0.0.1:8081/api/socket' %>
     window.onload = function () {

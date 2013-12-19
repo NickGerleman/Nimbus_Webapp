@@ -42,28 +42,27 @@ window.NimbusApp.UI = (socket_uri) ->
 
   #refresh callback
   refresh = ->
-    container = $('<tbody id="files-body">')
+    app = $('#app-container')
+    app.html("")
+    files_body = $('<tbody id="files-body">')
     table = $('<table id="files-table">')
-    div = $('<div id="files-table-div">')
-    scroll = $('<div id="files-scroll"></div>')
-    scroll.height($(window).height() - 130)
-    sidebar.height($(window).height() - 133)
-    breadcrumbs = create_breadcrumbs(nimbus.current_directory())
-    files = nimbus.current_directory().files();
+    scroll_container = $('<div id="files-scroll"></div>')
+    topbar = create_menubar(nimbus.current_directory())
     folders = nimbus.current_directory().subdirectories()
     for f in folders
-      container.append(create_row(f))
+      files_body.append(create_row(f))
+    files = nimbus.current_directory().files();
     for f in files
-      container.append(create_row(f))
-    div.append(breadcrumbs)
-    table.append(container)
-    scroll.append(table)
-    div.append(scroll)
-    $('#app-container').html(div)
+      files_body.append(create_row(f))
+    table.html(files_body)
+    scroll_container.append(table)
+    app.append(topbar)
+    app.append(scroll_container)
+    NimbusApp.UI.adjust_files_scroll()
     stop_spinner()
 
   # Creates a context menu around the mouse
-  context_menu = (mouseDown, file) ->
+  context_menu = (mouseDown, file, row) ->
     menu = menu_contents(file)
     x = mouseDown.clientX
     y = mouseDown.clientY
@@ -77,22 +76,27 @@ window.NimbusApp.UI = (socket_uri) ->
     y -= height if vert_margin < 50
     menu.css(left: x, top: y)
     # Handle exiting menu
-    $('body').mousedown (event) ->
+    func = (event) ->
       click_x = event.clientX
       click_y = event.clientY
       outside_x = click_x < x or click_x > x + width
       outside_y = click_y < y or click_y > y + height
       if outside_x or outside_y
         menu.remove()
-        $('.selected-row').removeClass('selected-row')
-        $('body').off('mousedown', '**')
+        row.removeClass('selected-row')
+        $('body').off('mousedown', func)
+    $("body").on('mousedown',  func)
 
   #Creates the breadcrumbs
   create_breadcrumbs = (metaDirectory) ->
     breadcrumbs = $('<nav class="breadcrumbs"></nav>')
+    crumb = null
     while(metaDirectory != null)
-      crumb = null
-      if(metaDirectory.parent() == null )
+      if crumb == null and metaDirectory.parent() == null
+        crumb = $('<a class="current">Root</a>')
+      else if crumb == null
+        crumb = $('<a class="current">' + metaDirectory.name() + '</a>')
+      else if(metaDirectory.parent() == null )
         crumb = $('<a>Root</a>')
       else
         crumb = $('<a>' + metaDirectory.name() + '</a>')
@@ -114,15 +118,36 @@ window.NimbusApp.UI = (socket_uri) ->
   create_row = (file) ->
     row = $("<tr></tr>")
     row.on 'contextmenu', (event) ->
-      context_menu(event, file)
+      context_menu(event, file, row)
       event.preventDefault()
       row.addClass('selected-row')
     row.append icon_column(file)
     row.append name_column(file)
     row.append date_column(file)
     row.append size_column(file)
-    row.append menu_button(file)
+    menu = menu_button(file, row)
+    menu.mousedown ->
+      func = -> row.addClass('selected-row')
+      #deal with menu button being reselected (remove and then readd class)
+      setTimeout(func, 5)
+    row.append(menu)
     return row
+
+  create_menubar = (file) ->
+      menubar = $('<div class="panel" id="menubar"></div>')
+      menubar.append(create_breadcrumbs(file))
+      actions = $('<div id="menu-actions"></ul>')
+      refresh_button = $('<a><img alt="refresh" src="<%= image_path 'refresh.svg' %>"></a>')
+      refresh_button.click ->
+          show_spinner()
+          promise = $.Deferred()
+          promise.done -> refresh()
+          file.update(promise)
+      actions.append(refresh_button)
+      actions.append $('<a><img alt="upload" src="<%= image_path 'upload.svg' %>"></a>')
+      actions.append $('<a><img alt = "settings" src="<%= image_path 'settings.svg' %>"></a>')
+      menubar.append(actions)
+      return menubar
 
   # Creates a column for modified date
   date_column = (file) ->
@@ -189,12 +214,12 @@ window.NimbusApp.UI = (socket_uri) ->
       $("<td class='icon'><img height='32' width='32' alt='icon' src='/icons/folder" + suffix + ".png'></td>")
 
   # Creates column for menu button
-  menu_button = (file) ->
+  menu_button = (file, row) ->
     button = $('<td class="menu-button"><a><svg xmlns="http://www.w3.org/2000/svg" height="24" width="12">' +
       '<g class="menu-svg"><rect height="4" width="4" y="2" x="5"/><rect height="4" width="4" y="10" x="5"/>'+
       '<rect height="4" width="4" y="18" x="5"/></g></svg></a></td>')
     button.mousedown (event) ->
-      context_menu(event, file)
+      context_menu(event, file, row)
     return button
 
   # Creates the contents of a context menu
@@ -203,8 +228,10 @@ window.NimbusApp.UI = (socket_uri) ->
     list = $("<ul></ul>")
     del = $("<li>Delete</li>")
     rename = $("<li>Rename</li>")
+    download = $("<li>Download</li>")
     list.append del
     list.append rename
+    list.append download
     div.html list
     return div
 
@@ -235,5 +262,4 @@ window.NimbusApp.UI.adjust_files_scroll = ->
   do ->
     cancelAnimationFrame(req) unless req == null
     req = requestAnimationFrame ->
-      $('#files-scroll').height($(window).height() - 130)
-      $('#app-side').height($(window).height() - 133)
+      $('#files-scroll').height($(window).height() - 125)

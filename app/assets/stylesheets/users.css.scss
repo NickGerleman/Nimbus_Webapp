@@ -17,7 +17,7 @@
   width: 250px;
   height: 350px;
   margin: 40px auto 0 auto;
-  @media only screen and (max-width: "799px") {
+  @media only screen and (max-width: $medium-screen) {
     margin: 0 auto 0 auto;
   }
   padding: 20px;

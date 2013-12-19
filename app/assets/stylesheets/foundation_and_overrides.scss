@@ -1,6 +1,7 @@
 //
 // Foundation Variables
 //
+@import "foundation/functions";
 
 // The default font-size is set to 100% of the browser style sheet (usually 16px)
 // for compatibility with browser-based text zoom or user-set defaults.
@@ -14,12 +15,7 @@ $base-font-size: 100% !default;
 // Since the typical default browser font-size is 16px, that makes the calculation for grid size.
 // If you want your base font-size to be a different size and not have it effect grid size too,
 // set the value of $em-base to $base-font-size ($em-base: $base-font-size;)
-$em-base: 16px !default;
-
-// Working in ems is annoying. Think in pixels by using this handy function, rem-calc(#px)
-@function rem-calc($pxWidth) {
-  @return $pxWidth / $em-base * 1rem;
-}
+$rem-base: 16px !default;
 
 // Change whether or not you include browser prefixes
 // $experimental: true;
@@ -88,10 +84,19 @@ $body-font-color: #222;
 // $include-html-tooltip-classes: $include-html-classes;
 
 // Media Queries
+$screen: "only screen" !default;
 
-$small-screen: 600px;
-$medium-screen: 800px;
-$large-screen: 1024px;
+$small-range: (0px, 600px);
+$medium-range: (601px 800px);
+$large-range: (801px, 1024px);
+
+$small-screen: upper-bound($small-range);
+$medium-screen: upper-bound($medium-range);
+$large-screen: upper-bound($large-range);
+
+$small-up: $screen !default;
+$medium-up: "#{$screen} and (min-width:#{lower-bound($medium-range)})" !default;
+$large-up: "#{$screen} and (min-width:#{lower-bound($large-range)})" !default;
 
 // $screen: "only screen";
 // $small: "only screen and (min-width: #{$small-screen})";
@@ -490,7 +495,6 @@ $alert-padding-opposite-direction: $alert-padding-top;
 
 // $alert-radius: $global-radius;
 
-
 //
 // Breadcrumb Variables
 //
@@ -514,12 +518,12 @@ $alert-padding-opposite-direction: $alert-padding-top;
 
 // Various text styles for breadcrumbs.
 
-// $crumb-font-size: rem-calc(11px);
+$crumb-font-size: rem-calc(14px);
 // $crumb-font-color: $primary-color;
 // $crumb-font-color-current: #333;
 // $crumb-font-color-unavailable: #999;
-// $crumb-font-transform: uppercase;
-// $crumb-link-decor: underline;
+$crumb-font-transform: none;
+$crumb-link-decor: none;
 
 // Slash between breadcrumbs
 
@@ -850,14 +854,14 @@ $alert-padding-opposite-direction: $alert-padding-top;
 
 // Background and border styles
 
-// $panel-bg: darken(#fff, 5%);
+$panel-bg: #f4f4f4;
 // $panel-border-style: solid;
 // $panel-border-size: 1px;
 
 // Control how much we darken things on hover
 
 // $panel-function-factor: 10%;
-// $panel-border-color: darken($panel-bg, $panel-function-factor);
+$panel-border-color: #dadada;
 
 // Inner padding and bottom margin
 
@@ -1256,9 +1260,9 @@ $topbar-menu-icon-color-toggled: #000;
 
 // Transitions and breakpoint styles
 
-// $topbar-transition-speed: 300ms;
-$topbar-breakpoint: rem-calc(800px);
-$topbar-media-query: "only screen and (min-width: #{$topbar-breakpoint})";
+$topbar-transition-speed: 300ms;
+$topbar-breakpoint: #{lower-bound($large-range)} !default;
+$topbar-media-query: $large-up !default;
 
 // Divider Styles
 
@@ -1269,25 +1273,4 @@ $topbar-media-query: "only screen and (min-width: #{$topbar-breakpoint})";
 
 // $topbar-sticky-class: ".sticky";
 
-@import
-"foundation/components/global",
-"foundation/components/grid",
-"foundation/components/visibility",
-"foundation/components/block-grid",
-"foundation/components/type",
-"foundation/components/buttons",
-"foundation/components/forms",
-"foundation/components/button-groups",
-"foundation/components/dropdown-buttons",
-"foundation/components/split-buttons",
-"foundation/components/top-bar",
-"foundation/components/side-nav",
-"foundation/components/alert-boxes",
-"foundation/components/breadcrumbs",
-"foundation/components/labels",
-"foundation/components/inline-lists",
-"foundation/components/pagination",
-"foundation/components/panels",
-"foundation/components/progress-bars",
-"foundation/components/tables",
-"foundation/components/dropdown";
+@import "foundation/components/global", "foundation/components/grid", "foundation/components/visibility", "foundation/components/block-grid", "foundation/components/type", "foundation/components/buttons", "foundation/components/forms", "foundation/components/button-groups", "foundation/components/dropdown-buttons", "foundation/components/split-buttons", "foundation/components/top-bar", "foundation/components/side-nav", "foundation/components/alert-boxes", "foundation/components/breadcrumbs", "foundation/components/labels", "foundation/components/panels", "foundation/components/progress-bars", "foundation/components/tables", "foundation/components/dropdown";

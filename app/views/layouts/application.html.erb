@@ -7,7 +7,7 @@
     <% end %>
     <title><%= title(yield :title_suffix) %></title>
     <%= jquery_include_tag :google, defer: true %>
-    <%= stylesheet_link_tag 'application', defer: true %>
+    <%= stylesheet_link_tag 'application' %>
     <%= javascript_include_tag 'application', defer: true %>
     <%= csrf_meta_tags %>
 </head>
