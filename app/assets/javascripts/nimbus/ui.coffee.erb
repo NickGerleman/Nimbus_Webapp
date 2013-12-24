@@ -2,7 +2,6 @@
 window.NimbusApp.UI = (socket_uri) ->
   show_spinner()
   $(window).resize -> NimbusApp.UI.adjust_files_scroll()
-  sidebar = $('#app-side')
   extensions_map =
     txt: 'text', epub: 'application-book', mobi: 'application-book', azw: 'application-book',
     zip: 'package-x-generic', rar: 'package-x-generic', '7z': 'package-x-generic', cab: 'package-x-generic',
@@ -32,33 +31,42 @@ window.NimbusApp.UI = (socket_uri) ->
     wmv: 'video-x-generic', mkv: 'video-x-generic', vob: 'video-x-generic', webm: 'video-x-generic'
 
   nimbus = NimbusApp.Core(socket_uri, refresh);
+  topbar = null
+  files_body = null
   init_done = $.Deferred();
   init_done.fail (error) ->
     stop_spinner()
-    alert(error || 'Something went wrong')
+    $('#app-container').html(error || 'Something went wrong')
   init_done.done ->
+    init()
     refresh()
   nimbus.initialize(init_done)
 
-  #refresh callback
-  refresh = ->
+  #initializes UI
+  init = ->
     app = $('#app-container')
-    app.html("")
+    topbar = $('<div class="panel" id="menubar"></div>')
     files_body = $('<tbody id="files-body">')
     table = $('<table id="files-table">')
     scroll_container = $('<div id="files-scroll"></div>')
-    topbar = create_menubar(nimbus.current_directory())
+    table.html(files_body)
+    scroll_container.append(table)
+    app.append(topbar)
+    app.append(scroll_container)
+    NimbusApp.UI.adjust_files_scroll()
+
+  #refresh callback
+  refresh = ->
+    new_bar = create_menubar(nimbus.current_directory())
+    topbar.replaceWith(new_bar)
+    topbar = new_bar
+    files_body.empty()
     folders = nimbus.current_directory().subdirectories()
     for f in folders
       files_body.append(create_row(f))
     files = nimbus.current_directory().files();
     for f in files
       files_body.append(create_row(f))
-    table.html(files_body)
-    scroll_container.append(table)
-    app.append(topbar)
-    app.append(scroll_container)
-    NimbusApp.UI.adjust_files_scroll()
     stop_spinner()
 
   # Creates a context menu around the mouse
@@ -258,6 +266,9 @@ window.NimbusApp.UI = (socket_uri) ->
 
 #Adjust scroll area
 window.NimbusApp.UI.adjust_files_scroll = ->
+  unless cancelAnimationFrame and requestAnimationFrame
+    $('#files-scroll').height($(window).height() - 125)
+    return
   req = null
   do ->
     cancelAnimationFrame(req) unless req == null

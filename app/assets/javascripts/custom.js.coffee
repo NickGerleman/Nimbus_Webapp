@@ -45,8 +45,6 @@ window.stop_spinner = ->
   $('#spinner-overlay').remove()
 
 window.compatible = ->
-  window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame
-  window.cancelAnimationFrame = window.cancelAnimationFrame || window.CancelAnimationFrame || window.webkitCancelAnimationFrame
   Modernizr.backgroundsize and
   Modernizr.borderradius and
   Modernizr.boxshadow and
@@ -71,6 +69,4 @@ window.compatible = ->
   # Check RFC 3339 Time
   Date.parse('2012-07-04T18:10:00.000+09:00') == 1341393000000 and
   # Check strftime
-  Date.parse('Sat, 21 Aug 2010 22:31:20 +0000') == 1282429880000 and
-  window.requestAnimationFrame and
-  window.cancelAnimationFrame
+  Date.parse('Sat, 21 Aug 2010 22:31:20 +0000') == 1282429880000

@@ -63,19 +63,16 @@ The following are the Cryptographic keys used for OAuth on the various providers
 
 
 ## Deployment Information
-Nimbus is deployed on [Digital Ocean][11] on two servers, each running Centos 6.4. Deployment is handled using Capistrano, but that script is not included as it it deployment specific and also contains sensitive information.  
+Nimbus is deployed on [Digital Ocean][1] on two servers, each running Centos 6.4. Deployment is handled using Capistrano, but that script is not included as it it deployment specific and also contains sensitive information.
 
-One runs Clockwork, Redis, Sidekiq, and Nginx as a reverse proxy / load balancer / SSL terminator.  
+One runs Clockwork, Redis, Postgres, Sidekiq, and Nginx as a reverse proxy / load balancer / SSL terminator.
 
 A second server runs the rails app using Unicorn, as well as the node.js app using Faye.  
 
 
-[11]: https://www.digitalocean.com/?refcode=1206d329a7f0
 
 
-
-
-## Technologies Used
+## Technologies and Third Party Libraries Used
 
  - [Ruby on Rails][2]
  - [Sidekiq][3]
@@ -85,6 +82,12 @@ A second server runs the rails app using Unicorn, as well as the node.js app usi
  - [node.js][8]
  - [Faye][9]
  - [Zurb Foundation][10]
+ - [jQuery][11]
+ - [Elementary Icons][12]
+ - [bcrypt][13]
+ - [Unicorn][14]
+ - [PostgreSQL][15]
+ - A ton of Gems listed in the Gemfile
 
 
   [1]: https://www.digitalocean.com/?refcode=1206d329a7f0
@@ -96,4 +99,9 @@ A second server runs the rails app using Unicorn, as well as the node.js app usi
   [7]: http://jnicklas.github.io/capybara/
   [8]: http://nodejs.org/
   [9]: http://faye.jcoglan.com/
-  [10]: http://foundation.zurb.com/    
+  [10]: http://foundation.zurb.com/
+  [11]: http://jquery.com/
+  [12]: https://launchpad.net/elementaryicons
+  [13]: http://bcrypt.sourceforge.net/
+  [14]: http://unicorn.bogomips.org/
+  [15]: http://www.postgresql.org/
