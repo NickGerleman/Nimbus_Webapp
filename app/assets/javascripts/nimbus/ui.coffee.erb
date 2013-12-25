@@ -82,6 +82,8 @@ window.NimbusApp.UI = (socket_uri) ->
     vert_margin = $(window).height() - (height + y)
     x -= width if hor_margin < 50
     y -= height if vert_margin < 50
+    x = Math.max(x, 0)
+    y = Math.max(y, 0)
     menu.css(left: x, top: y)
     # Handle exiting menu
     func = (event) ->
@@ -145,8 +147,10 @@ window.NimbusApp.UI = (socket_uri) ->
       menubar = $('<div class="panel" id="menubar"></div>')
       menubar.append(create_breadcrumbs(file))
       actions = $('<div id="menu-actions"></ul>')
-      refresh_button = $('<a><img alt="refresh" src="<%= image_path 'refresh.svg' %>"></a>')
+      refresh_img = $('<img alt="refresh" src="<%= image_path 'refresh.svg' %>">')
+      refresh_button = $('<a>').append(refresh_img)
       refresh_button.click ->
+          transition_opacity(refresh_img)
           show_spinner()
           promise = $.Deferred()
           promise.done -> refresh()
@@ -168,7 +172,7 @@ window.NimbusApp.UI = (socket_uri) ->
       minutes = date.getMinutes()
       minutes++ if date.getSeconds() > 30
       minute_string = if minutes < 10 then '0' + minutes else minutes + ''
-      timeString = "<span class='time'>" + hours + ':' + minute_string + suffix + "</span>"
+      timeString = hours + ':' + minute_string + suffix
       dateString = date.getMonth() + '/' + date.getDay() + '/' + date.getFullYear()
       $("<td class='date-column'>" + timeString + " " + dateString + "</td>")
     else
@@ -180,18 +184,23 @@ window.NimbusApp.UI = (socket_uri) ->
     is_image = false
     if ["png", "gif", "jpg", "jpeg", "bmp"].indexOf(file.extension().toLowerCase()) != -1
       is_image = true
+    url = null
+    link = $('<a>' + file.full_name() + '</a>')
+    data.html(link)
     if(file.hasOwnProperty("download_url"))
-      link = $('<a href="' + file.download_url() + '">' + file.full_name() + '</a>')
-      if is_image
-        link.magnificPopup
-          mainClass: 'modal',
-          type: 'image',
-          preloader: true,
-          removalDelay: 200,
-          closeBtnInside: false
-      data.html(link)
+      url = file.download_url()
     else if(file.hasOwnProperty("view_url"))
-      data.html $('<a href="' + file.view_url() + '">' + file.full_name() + '</a>')
+      url = file.view_url()
+    if is_image
+      data.attr(href: url)
+      data.magnificPopup
+        mainClass: 'modal',
+        type: 'image',
+        preloader: true,
+        removalDelay: 200,
+        closeBtnInside: false
+    else
+      data.click -> window.location = url
     return data
 
   # Creates column for a folder link
@@ -203,7 +212,7 @@ window.NimbusApp.UI = (socket_uri) ->
       refresh()
     promise.fail (error) ->
       alert(error)
-    link.click ->
+    folder.click ->
       nimbus.change_directory(file, promise)
       show_spinner() unless file.is_enumerated()
     folder.html(link)
@@ -236,10 +245,8 @@ window.NimbusApp.UI = (socket_uri) ->
     list = $("<ul></ul>")
     del = $("<li>Delete</li>")
     rename = $("<li>Rename</li>")
-    download = $("<li>Download</li>")
     list.append del
     list.append rename
-    list.append download
     div.html list
     return div
 
@@ -263,6 +270,10 @@ window.NimbusApp.UI = (socket_uri) ->
       $("<td class='size-column'>" + sizeString(file.size()) + "</td>")
     else
       $("<td class='size-column'>--</td>")
+
+  transition_opacity = (element) ->
+      element.css(opacity: 1)
+      element.fadeTo(200, 0.3)
 
 #Adjust scroll area
 window.NimbusApp.UI.adjust_files_scroll = ->
