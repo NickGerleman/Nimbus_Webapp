@@ -17,8 +17,8 @@ init_popups = ->
   })
 
 init_spinners = ->
-  $('.spinner-link').click ->
-    show_spinner()
+  $(window).resize -> $('#spinner-box').css("height", $(window).height())
+  $('.spinner-link').click -> show_spinner()
 
 window.show_spinner = ->
   spin_box = $('<div id="spinner-box">')

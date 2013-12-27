@@ -38,12 +38,22 @@ window.NimbusApp.UI = (socket_uri) ->
     stop_spinner()
     $('#app-container').html(error || 'Something went wrong')
   init_done.done ->
-    init()
+    window.onpopstate = (event) ->
+     if (event.state == '' or event.state == nimbus.current_directory().name()) and nimbus.current_directory().parent()
+       change_directory(nimbus.current_directory().parent())
+     else
+       for dir in nimbus.current_directory().subdirectories()
+         if dir.name() == event.state
+           change_directory(dir)
+           break;
+    dir = nimbus.current_directory().name()
+    history.pushState(dir, dir, '')
+    create_ui()
     refresh()
   nimbus.initialize(init_done)
 
   #initializes UI
-  init = ->
+  create_ui = ->
     app = $('#app-container')
     topbar = $('<div class="panel" id="menubar"></div>')
     files_body = $('<tbody id="files-body">')
@@ -68,6 +78,16 @@ window.NimbusApp.UI = (socket_uri) ->
     for f in files
       files_body.append(create_row(f))
     stop_spinner()
+
+  # Changes the directory and refreshes
+  change_directory = (directory) ->
+    promise = $.Deferred()
+    promise.done ->
+        history.pushState(directory.name(), directory.name(), '')
+        refresh()
+    promise.fail (error) -> alert(error)
+    nimbus.change_directory(directory, promise)
+    show_spinner() unless directory.is_enumerated()
 
   # Creates a context menu around the mouse
   context_menu = (mouseDown, file, row) ->
@@ -119,7 +139,7 @@ window.NimbusApp.UI = (socket_uri) ->
           alert(error)
         dir = metaDirectory
         crumb.click ->
-          nimbus.change_directory(dir, promise)
+          change_directory(dir)
       breadcrumbs.prepend(crumb)
       metaDirectory = metaDirectory.parent()
     return breadcrumbs
@@ -207,14 +227,7 @@ window.NimbusApp.UI = (socket_uri) ->
   folder_column = (file) ->
     link = $("<a>" + file.name() + "</a>")
     folder = $("<td class='filename'></td>")
-    promise = $.Deferred()
-    promise.done ->
-      refresh()
-    promise.fail (error) ->
-      alert(error)
-    folder.click ->
-      nimbus.change_directory(file, promise)
-      show_spinner() unless file.is_enumerated()
+    folder.click -> change_directory(file)
     folder.html(link)
     return folder
 
@@ -277,11 +290,4 @@ window.NimbusApp.UI = (socket_uri) ->
 
 #Adjust scroll area
 window.NimbusApp.UI.adjust_files_scroll = ->
-  unless cancelAnimationFrame and requestAnimationFrame
-    $('#files-scroll').height($(window).height() - 125)
-    return
-  req = null
-  do ->
-    cancelAnimationFrame(req) unless req == null
-    req = requestAnimationFrame ->
-      $('#files-scroll').height($(window).height() - 125)
+  $('#files-scroll').height($(window).height() - 125)
