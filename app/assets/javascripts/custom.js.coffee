@@ -63,6 +63,7 @@ window.compatible = ->
   Modernizr.csstransforms and
   Modernizr.csstransitions and
   Modernizr.svg and
+  Modernizr.history and
   window.devicePixelRatio and
   # Check if it correctly parses ISO 8601 time
   Date.parse('2013-07-24T07:24:04-05:00') == 1374668644000 and
