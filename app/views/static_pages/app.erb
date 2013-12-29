@@ -2,10 +2,13 @@
 <script>
     <% socket_url = ENV['HOST'] ? '/api/socket' : 'http://127.0.0.1:8081/api/socket' %>
     var initialDirectory;
-    window.onpopstate = function(event) {
+    window.onpopstate = function (event) {
         initialDirectory = event.state;
     };
     window.onload = function () {
-        NimbusApp.UI('<%= socket_url %>', initialDirectory);
+        //Delay for popstate
+        setTimeout(function () {
+            NimbusApp.UI('<%= socket_url %>', initialDirectory);
+        }, 16);
     };
 </script>

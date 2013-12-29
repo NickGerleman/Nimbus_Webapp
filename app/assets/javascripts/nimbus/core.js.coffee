@@ -62,10 +62,16 @@ window.NimbusApp.Core = (socket_uri, refresh_callback) ->
           if dir.name() == dir_name
             dir_found = true
             directory = dir
+            internal_promise = $.Deferred()
+            internal_promise.fail (reason) -> promise.reject(reason)
+            dir.enumerate(internal_promise)
         unless dir_found
           promise.reject("Unable to find directory " + dir_name)
           return
-      promise.resolve(directory)
+      internal_promise = $.Deferred()
+      internal_promise.fail (reason) -> promise.reject(reason)
+      internal_promise.done -> promise.resolve(directory)
+      dir.enumerate(internal_promise)
 
     # Rebuilds all directories until it reaches the path of the current directory, it then replaces
     # current_directory
@@ -128,11 +134,10 @@ window.NimbusApp.Core = (socket_uri, refresh_callback) ->
           internal_promise.fail (reason) -> promise.reject(reason)
           internal_promise.done (dir) ->
             current_directory = dir
-            promise.resolve
+            promise.resolve()
           get_directory(initial_directory, internal_promise)
         else
           promise.resolve()
-
         user = NimbusApp.User(user_retrieved)
         user_retrieved.done ->
           faye_loaded = $.Deferred()
