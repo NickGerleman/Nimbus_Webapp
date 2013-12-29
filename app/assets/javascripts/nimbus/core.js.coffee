@@ -71,7 +71,7 @@ window.NimbusApp.Core = (socket_uri, refresh_callback) ->
       internal_promise = $.Deferred()
       internal_promise.fail (reason) -> promise.reject(reason)
       internal_promise.done -> promise.resolve(directory)
-      dir.enumerate(internal_promise)
+      directory.enumerate(internal_promise)
 
     # Rebuilds all directories until it reaches the path of the current directory, it then replaces
     # current_directory
