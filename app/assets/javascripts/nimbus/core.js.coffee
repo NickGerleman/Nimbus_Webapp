@@ -47,6 +47,26 @@ window.NimbusApp.Core = (socket_uri, refresh_callback) ->
           directory.enumerate(enumerated_promise)
         connection.create_root_directory(internal_promise)
 
+    # Enumerates and returns the metadirectory corresponding to a given path in the promise
+    get_directory = (name, promise) ->
+      directory = current_directory
+      while directory.parent()
+        directory = directory.parent()
+      path = name.split('/')
+      #remove root directory
+      path.shift()
+      while path.length > 0
+        dir_found = false
+        dir_name = path.shift()
+        for dir in directory.subdirectories()
+          if dir.name() == dir_name
+            dir_found = true
+            directory = dir
+        unless dir_found
+          promise.reject("Unable to find directory " + dir_name)
+          return
+      promise.resolve(directory)
+
     # Rebuilds all directories until it reaches the path of the current directory, it then replaces
     # current_directory
     rebuild_directories = (promise) ->
@@ -90,7 +110,7 @@ window.NimbusApp.Core = (socket_uri, refresh_callback) ->
         add_connection(connection)
 
     # Initializes the application and enumerates the current directory
-    initialize = (promise) ->
+    initialize = (promise, initial_directory) ->
       user_retrieved = $.Deferred()
       connections_retrieved = $.Deferred()
       connections_retrieved.fail -> (error) promise.reject(error)
@@ -102,7 +122,17 @@ window.NimbusApp.Core = (socket_uri, refresh_callback) ->
 
       root_created.done (root) ->
         current_directory = root
-        promise.resolve()
+
+        if initial_directory
+          internal_promise = $.Deferred()
+          internal_promise.fail (reason) -> promise.reject(reason)
+          internal_promise.done (dir) ->
+            current_directory = dir
+            promise.resolve
+          get_directory(initial_directory, internal_promise)
+        else
+          promise.resolve()
+
         user = NimbusApp.User(user_retrieved)
         user_retrieved.done ->
           faye_loaded = $.Deferred()
@@ -121,4 +151,5 @@ window.NimbusApp.Core = (socket_uri, refresh_callback) ->
     # the current metadirectory
     current_directory: -> current_directory
     change_directory: change_directory
+    get_directory: get_directory
     initialize: initialize

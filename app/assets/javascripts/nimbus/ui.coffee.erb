@@ -1,5 +1,5 @@
 # runs the ui for the client
-window.NimbusApp.UI = (socket_uri) ->
+window.NimbusApp.UI = (socket_uri, initial_directory) ->
   show_spinner()
   $(window).resize -> NimbusApp.UI.adjust_files_scroll()
   extensions_map =
@@ -39,18 +39,15 @@ window.NimbusApp.UI = (socket_uri) ->
     $('#app-container').html(error || 'Something went wrong')
   init_done.done ->
     window.onpopstate = (event) ->
-     if (event.state == '' or event.state == nimbus.current_directory().name()) and nimbus.current_directory().parent()
-       change_directory(nimbus.current_directory().parent())
-     else
-       for dir in nimbus.current_directory().subdirectories()
-         if dir.name() == event.state
-           change_directory(dir)
-           break;
-    dir = nimbus.current_directory().name()
-    history.pushState(dir, dir, '')
+     promise = $.Deferred()
+     promise.fail (reason) -> console.log(reason)
+     promise.done (directory) -> change_directory(directory, true)
+     nimbus.get_directory(event.state, promise)
+    dir = nimbus.current_directory()
+    history.replaceState(dir.path(), dir.name(), '')
     create_ui()
     refresh()
-  nimbus.initialize(init_done)
+  nimbus.initialize(init_done, initial_directory)
 
   #initializes UI
   create_ui = ->
@@ -80,10 +77,10 @@ window.NimbusApp.UI = (socket_uri) ->
     stop_spinner()
 
   # Changes the directory and refreshes
-  change_directory = (directory) ->
+  change_directory = (directory, ignore_state) ->
     promise = $.Deferred()
     promise.done ->
-        history.pushState(directory.name(), directory.name(), '')
+        history.pushState(directory.path(), directory.name(), '') unless ignore_state
         refresh()
     promise.fail (error) -> alert(error)
     nimbus.change_directory(directory, promise)

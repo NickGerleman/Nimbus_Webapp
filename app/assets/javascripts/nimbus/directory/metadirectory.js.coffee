@@ -85,18 +85,19 @@ window.NimbusApp.MetaDirectory = (parent, directories) ->
     isEnumerated = false
     enumerate(promise, true)
 
-  # Whether the metadirectory has been enumerated
-  is_enumerated: -> isEnumerated
-  # Whether the directory is a file
-  is_file: -> false
-  # The name of the directory
-  name: -> name
-  # The parent metadirectory(null if current metadirectory is root)
-  parent: -> parent
-  # The path of the metadirectory
-  destroy: destroy
-  enumerate: enumerate
-  files: files
-  path: path
-  subdirectories: subdirectories
-  update: update
+  to_return =
+    # Whether the metadirectory has been enumerated
+    is_enumerated: -> isEnumerated
+    # Whether the directory is a file
+    is_file: -> false
+    # The name of the directory
+    name: -> name
+    # The parent metadirectory(null if current metadirectory is root)
+    parent: -> parent
+    # The path of the metadirectory
+    destroy: destroy
+    enumerate: enumerate
+    files: files
+    path: path
+    subdirectories: subdirectories
+    update: update
