@@ -213,9 +213,7 @@ window.NimbusApp.UI = (socket_uri, initial_directory) ->
       data.magnificPopup
         mainClass: 'modal',
         type: 'image',
-        preloader: true,
-        removalDelay: 200,
-        closeBtnInside: false
+        removalDelay: 200
     else
       data.click -> window.location = url
     return data
