@@ -33,6 +33,7 @@ window.NimbusApp.UI = (socket_uri, initial_directory) ->
   nimbus = NimbusApp.Core(socket_uri, refresh);
   topbar = null
   files_body = null
+  modal = null
   init_done = $.Deferred();
   init_done.fail (error) ->
     stop_spinner()
@@ -56,10 +57,12 @@ window.NimbusApp.UI = (socket_uri, initial_directory) ->
     files_body = $('<tbody id="files-body">')
     table = $('<table id="files-table">')
     scroll_container = $('<div id="files-scroll"></div>')
+    modal = $('<div class="mfp-hide popup"></div>')
     table.html(files_body)
     scroll_container.append(table)
     app.append(topbar)
     app.append(scroll_container)
+    app.append(modal)
     NimbusApp.UI.adjust_files_scroll()
 
   #refresh callback
@@ -87,10 +90,13 @@ window.NimbusApp.UI = (socket_uri, initial_directory) ->
     show_spinner() unless directory.is_enumerated()
 
   # Creates a context menu around the mouse
-  context_menu = (mouseDown, file, row) ->
+  context_menu = (event, file, row) ->
+    # Handle touch events
+    if event.originalEvent
+      event = event.originalEvent.changedTouches[0]
     menu = menu_contents(file)
-    x = mouseDown.clientX
-    y = mouseDown.clientY
+    x = event.screenX
+    y = event.screenY
     # Change corner at edges
     $('body').append(menu)
     width = menu.width()
@@ -104,15 +110,18 @@ window.NimbusApp.UI = (socket_uri, initial_directory) ->
     menu.css(left: x, top: y)
     # Handle exiting menu
     func = (event) ->
-      click_x = event.clientX
-      click_y = event.clientY
+      # Handle touch events
+      if event.originalEvent
+        event = event.originalEvent.changedTouches[0]
+      click_x = event.screenX
+      click_y = event.screenY
       outside_x = click_x < x or click_x > x + width
       outside_y = click_y < y or click_y > y + height
       if outside_x or outside_y
         menu.remove()
         row.removeClass('selected-row')
-        $('body').off('mousedown', func)
-    $("body").on('mousedown',  func)
+        $('body').off('mousedown touchstart', func)
+    $("body").on('mousedown touchstart',  func)
 
   #Creates the breadcrumbs
   create_breadcrumbs = (metaDirectory) ->
@@ -153,20 +162,23 @@ window.NimbusApp.UI = (socket_uri, initial_directory) ->
     row.append date_column(file)
     row.append size_column(file)
     menu = menu_button(file, row)
-    menu.mousedown ->
+    menu.on 'mouseup touchend', ->
       func = -> row.addClass('selected-row')
       #deal with menu button being reselected (remove and then readd class)
       setTimeout(func, 5)
     row.append(menu)
     return row
 
+  # creates the menu bar in the topbar
   create_menubar = (file) ->
       menubar = $('<div class="panel" id="menubar"></div>')
       menubar.append(create_breadcrumbs(file))
       actions = $('<div id="menu-actions"></ul>')
       refresh_img = $('<img alt="refresh" src="<%= image_path 'refresh.svg' %>">')
       refresh_button = $('<a>').append(refresh_img)
-      refresh_button.click ->
+      refresh_button.on  'mousedown touchstart', ->
+          refresh_img.css(opacity: 1)
+      refresh_button.on 'mouseup touchend' , ->
           transition_opacity(refresh_img)
           show_spinner()
           promise = $.Deferred()
@@ -194,6 +206,29 @@ window.NimbusApp.UI = (socket_uri, initial_directory) ->
       $("<td class='date-column'>" + timeString + " " + dateString + "</td>")
     else
       $("<td class='date-column'>--</td> ")
+
+  # Shows modal to confirm deletion of a file
+  delete_confirmation = (file) ->
+      header = $('<header><h3>Delete File</h3></header>')
+      body = $('<p>Are you sure you would like to delete this file?<p>')
+      delete_button = $('<button class="alert button">Delete</button>')
+      delete_button.click ->
+          promise = $.Deferred()
+          promise.done ->
+            internal_promise = $.Deferred()
+            internal_promise.done -> refresh()
+            internal_promise.fail (reason) -> console.log(reason)
+            nimbus.current_directory().update(internal_promise)
+          promise.fail -> console.log('unable to delete')
+          file.destroy(promise)
+          $.magnificPopup.close()
+          show_spinner()
+      footer = $('<footer>')
+      footer.append(delete_button)
+      modal.html(header)
+      modal.append(body)
+      modal.append(footer)
+      show_modal()
 
   # Creates column for a file link
   file_column = (file) ->
@@ -243,7 +278,7 @@ window.NimbusApp.UI = (socket_uri, initial_directory) ->
     button = $('<td class="menu-button"><a><svg xmlns="http://www.w3.org/2000/svg" height="24" width="12">' +
       '<g class="menu-svg"><rect height="4" width="4" y="2" x="5"/><rect height="4" width="4" y="10" x="5"/>'+
       '<rect height="4" width="4" y="18" x="5"/></g></svg></a></td>')
-    button.mousedown (event) ->
+    button.on 'mouseup touchend', (event) ->
       context_menu(event, file, row)
     return button
 
@@ -252,6 +287,7 @@ window.NimbusApp.UI = (socket_uri, initial_directory) ->
     div = $('<div class="context-menu"></div>')
     list = $("<ul></ul>")
     del = $("<li>Delete</li>")
+    del.click -> delete_confirmation(file)
     rename = $("<li>Rename</li>")
     list.append del
     list.append rename
@@ -264,6 +300,17 @@ window.NimbusApp.UI = (socket_uri, initial_directory) ->
       file_column(file)
     else
       folder_column(file)
+
+  #shows the modal
+  show_modal = ->
+    $.magnificPopup.open
+      items:
+        src: modal
+        type: 'inline'
+        mainClass: 'modal'
+        tLoading: ''
+        removalDelay: 200
+        closeBtnInside: true
 
   # Create column for size
   size_column = (file) ->
@@ -280,7 +327,6 @@ window.NimbusApp.UI = (socket_uri, initial_directory) ->
       $("<td class='size-column'>--</td>")
 
   transition_opacity = (element) ->
-      element.css(opacity: 1)
       element.fadeTo(200, 0.3)
 
 #Adjust scroll area
