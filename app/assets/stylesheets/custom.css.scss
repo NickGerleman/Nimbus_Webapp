@@ -103,6 +103,7 @@ footer {
 .modal.mfp-bg {
   opacity: 0;
   transition: all 0.2s ease-out;
+  -webkit-transition: all 0.2s ease-out;
 }
 
 // Modal BG while animating in
@@ -119,7 +120,9 @@ footer {
 .modal.mfp-wrap .mfp-content {
   opacity: 0;
   transform: scale(.7);
+  -webkit-transform: scale(.7);
   transition: all 0.2s ease-out;
+  -webkit-transition: all 0.2s ease-out;
 }
 
 //Modal Styling
@@ -144,7 +147,7 @@ footer {
 // Modal while animating in
 .modal.mfp-wrap.mfp-ready .mfp-content {
   opacity: 1;
-  transform: scale(1);
+  -webkit-transform: scale(1);
 }
 
 // modal while animating out
