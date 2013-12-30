@@ -244,3 +244,18 @@
         }
     }
 }
+
+#mobile-ready {
+    width: 80px;
+    height: 120px;
+    margin: auto;
+    background: image_url('mobile80.png');
+    @media (min-resolution: 1.5dppx) {
+      background: image_url('mobile160.png');
+      background-size: cover;
+    }
+    @media (min-resolution: 2.5dppx) {
+        background: image_url('mobile320.png');
+        background-size: cover;
+    }
+}

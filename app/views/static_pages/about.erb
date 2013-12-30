@@ -1,8 +1,22 @@
 <% provide :title_suffix, 'About Us' %>
 <div class="row">
-    <p>
-        Nimbus is the creation of <%= link_to 'Nick Gerleman(Me)', 'http://www.nickgerleman.com' %>
-        a sophomore at Iowa State University. I have been working on this project in my spare time
-        because I couldn't find anything like it.
-    </p>
+    <div class="medium-4 columns hide-for-small">
+        <%= image_tag 'http://www.gravatar.com/avatar/b2da1f70fbab5c01ede3688c06f4023c?s=300&r=pg',
+                      id: 'gravatar',
+                      alt: 'Gravatar',
+                      height: '300',
+                      width: '300'%>
+    </div>
+    <div class="medium-8 small-12 columns">
+        <p>
+            Nimbus is the creation of <%= link_to 'Nick Gerleman', 'http://www.nickgerleman.com' %>. Nimbus started out
+            as a project for me to learn web development. Some time later it has actually become useful. Some
+            information about me:
+        </p>
+        <ul>
+            <li>Sophomore At Iowa State University</li>
+            <li>Enthusiastic about any new technology</li>
+            <li>Feel free to contact me for job opportunities</li>
+        </ul>
+    </div>
 </div>
