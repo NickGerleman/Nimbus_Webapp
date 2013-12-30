@@ -20,7 +20,7 @@ init_spinners = ->
   $(window).resize ->
     spinner = $('#spinner-overlay')
     if(spinner.length)
-      spin_overlay.css("height", $(window).height())
+      spinner.css("height", $(window).height())
   $('.spinner-link').click -> show_spinner()
 
 window.show_spinner = ->

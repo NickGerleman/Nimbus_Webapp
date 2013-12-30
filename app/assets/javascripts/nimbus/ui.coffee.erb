@@ -92,11 +92,11 @@ window.NimbusApp.UI = (socket_uri, initial_directory) ->
   # Creates a context menu around the mouse
   context_menu = (event, file, row) ->
     # Handle touch events
-    if event.originalEvent
+    if event.type == 'touchend'
       event = event.originalEvent.changedTouches[0]
     menu = menu_contents(file)
-    x = event.screenX
-    y = event.screenY
+    x = event.clientX
+    y = event.clientY
     # Change corner at edges
     $('body').append(menu)
     width = menu.width()
@@ -111,10 +111,10 @@ window.NimbusApp.UI = (socket_uri, initial_directory) ->
     # Handle exiting menu
     func = (event) ->
       # Handle touch events
-      if event.originalEvent
+      if  event.type == 'toucstart'
         event = event.originalEvent.changedTouches[0]
-      click_x = event.screenX
-      click_y = event.screenY
+      click_x = event.clientX
+      click_y = event.clientY
       outside_x = click_x < x or click_x > x + width
       outside_y = click_y < y or click_y > y + height
       if outside_x or outside_y
