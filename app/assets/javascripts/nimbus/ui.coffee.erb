@@ -91,6 +91,7 @@ window.NimbusApp.UI = (socket_uri, initial_directory) ->
 
   # Creates a context menu around the mouse
   context_menu = (event, file, row) ->
+    body = $('body')
     # Handle touch events
     if event.type == 'touchend'
       event = event.originalEvent.changedTouches[0]
@@ -98,7 +99,7 @@ window.NimbusApp.UI = (socket_uri, initial_directory) ->
     x = event.clientX
     y = event.clientY
     # Change corner at edges
-    $('body').append(menu)
+    body.append(menu)
     width = menu.width()
     height = menu.height()
     hor_margin = $(window).width() - (width + x)
@@ -111,7 +112,7 @@ window.NimbusApp.UI = (socket_uri, initial_directory) ->
     # Handle exiting menu
     func = (event) ->
       # Handle touch events
-      if  event.type == 'toucstart'
+      if  event.type == 'touchstart'
         event = event.originalEvent.changedTouches[0]
       click_x = event.clientX
       click_y = event.clientY
@@ -120,8 +121,12 @@ window.NimbusApp.UI = (socket_uri, initial_directory) ->
       if outside_x or outside_y
         menu.remove()
         row.removeClass('selected-row')
-        $('body').off('mousedown touchstart', func)
-    $("body").on('mousedown touchstart',  func)
+        body.off('mousedown touchstart', func)
+    body.on('mousedown touchstart',  func)
+    $('#files-scroll').scroll ->
+      menu.remove()
+      row.removeClass('selected-row')
+      $('body').off('mousedown touchstart', func)
 
   #Creates the breadcrumbs
   create_breadcrumbs = (metaDirectory) ->
@@ -208,7 +213,7 @@ window.NimbusApp.UI = (socket_uri, initial_directory) ->
       $("<td class='date-column'>--</td> ")
 
   # Shows modal to confirm deletion of a file
-  delete_confirmation = (file) ->
+  delete_dialog = (file) ->
       header = $('<header><h3>Delete File</h3></header>')
       body = $('<p>Are you sure you would like to delete this file?<p>')
       delete_button = $('<button class="alert button">Delete</button>')
@@ -287,7 +292,7 @@ window.NimbusApp.UI = (socket_uri, initial_directory) ->
     div = $('<div class="context-menu"></div>')
     list = $("<ul></ul>")
     del = $("<li>Delete</li>")
-    del.click -> delete_confirmation(file)
+    del.click -> delete_dialog(file)
     rename = $("<li>Rename</li>")
     list.append del
     list.append rename
