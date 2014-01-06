@@ -7,6 +7,7 @@ window.NimbusApp.Core = (socket_uri, refresh_callback) ->
 
     faye = null
     connections_manager = null
+    contains_expired = false
     current_directory = null
     user = null
 
@@ -124,6 +125,7 @@ window.NimbusApp.Core = (socket_uri, refresh_callback) ->
       root_created.fail (error) -> promise.reject(error)
 
       connections_retrieved.done ->
+        contains_expired = connections_manager.contains_expired()
         create_root_metadirectory(root_created)
 
       root_created.done (root) ->
@@ -153,6 +155,8 @@ window.NimbusApp.Core = (socket_uri, refresh_callback) ->
       connections_manager = NimbusApp.ConnectionManager(connections_retrieved)
 
 
+    # whether there are expired connections
+    contains_expired: -> contains_expired
     # the current metadirectory
     current_directory: -> current_directory
     change_directory: change_directory

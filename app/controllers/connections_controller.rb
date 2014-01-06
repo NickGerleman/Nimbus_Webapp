@@ -144,7 +144,7 @@ class ConnectionsController < ApplicationController
       render status: :not_found, text: 'User Not Logged In'
       return
     end
-    connections = current_user.connections.where(state: 'success')
+    connections = current_user.connections
     render json: connections, each_serializer: ConnectionSerializer, root: false
   end
 

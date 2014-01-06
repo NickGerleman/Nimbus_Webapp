@@ -16,6 +16,7 @@
         </a>
         <% if current_user.verified %>
             <h4>Your email address has been verified.</h4>
+
             <div class="settings-link">
                 <%=
                     link_to 'Change My Email Address',
@@ -26,6 +27,7 @@
             </div>
         <% else %>
             <h4>Your email address has not been verified.</h4>
+
             <div class="settings-link">
                 <%=
                     link_to 'Resend Verification',
@@ -55,9 +57,10 @@
         </div>
     </div>
     <div class="medium-4 columns">
-        <section id="services" class="panel">
+        <section id="services-panel" class="panel">
             <h3>Connections</h3>
-            <%= render current_user.connections.order('id') %>
+
+            <div id="services"> Connections Loading...</div>
             <% unless current_user.has_max_connections %>
                 <a href="#" class="button" data-dropdown="dropdown">Link a New Account</a>
                 <ul id="dropdown" class="f-dropdown" data-dropdown-content>
@@ -97,4 +100,33 @@
             <% end %>
         </section>
     </div>
+    <script>
+        window.onload = function () {
+            var connectionsPanel = $('#services');
+            var promise;
+            var refresh = function (connections) {
+                connectionsPanel.empty();
+                var inProgress = false;
+                var i;
+                for (i = 0; i < connections.length; i++) {
+                    inProgress |= connections[i].state == 'in_progress';
+                    connectionsPanel.append(render_connection(connections[i]));
+                }
+                if (inProgress) {
+                    setTimeout(function () {
+                        getConnections();
+                    }, 500);
+                }
+            };
+            var getConnections = function () {
+                promise = $.Deferred();
+                promise.fail(function (reason) {
+                    connectionsPanel.append('<p>' + reason + '</p>');
+                });
+                promise.done(refresh);
+                get_connections(promise);
+            }
+            getConnections();
+        };
+    </script>
 </div>

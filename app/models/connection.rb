@@ -17,10 +17,6 @@ class Connection < ActiveRecord::Base
     where("type != 'DropboxConnection' AND expires_at < ?", Time.now.since(50.minutes))
   end
 
-  # Used so a single partial can be used with STI
-  def to_partial_path
-    'connections/connection'
-  end
 
   # Updates the OAuth access and refresh tokens
   def update_token

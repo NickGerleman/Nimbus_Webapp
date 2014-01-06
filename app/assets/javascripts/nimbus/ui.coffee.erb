@@ -63,6 +63,7 @@ window.NimbusApp.UI = (socket_uri, initial_directory) ->
     app.append(topbar)
     app.append(scroll_container)
     app.append(modal)
+    expired_warning() if nimbus.contains_expired()
     NimbusApp.UI.adjust_files_scroll()
 
   #refresh callback
@@ -214,28 +215,39 @@ window.NimbusApp.UI = (socket_uri, initial_directory) ->
 
   # Shows modal to confirm deletion of a file
   delete_dialog = (file) ->
-      header = $('<header><h3>Delete File</h3></header>')
-      body = $('<p>Are you sure you would like to delete this file?<p>')
-      delete_button = $('<button class="alert button">Delete</button>')
-      delete_button.click ->
-          promise = $.Deferred()
-          promise.done ->
-            internal_promise = $.Deferred()
-            internal_promise.done -> refresh()
-            internal_promise.fail (reason) -> console.log(reason)
-            nimbus.current_directory().update(internal_promise)
-          promise.fail -> console.log('unable to delete')
-          file.destroy(promise)
-          $.magnificPopup.close()
-          show_spinner()
-      footer = $('<footer>')
-      footer.append(delete_button)
-      modal.html(header)
-      modal.append(body)
-      modal.append(footer)
-      show_modal()
+    header = $('<header><h3>Delete File</h3></header>')
+    body = $('<p>Are you sure you would like to delete this file?<p>')
+    delete_button = $('<button class="alert button">Delete</button>')
+    delete_button.click ->
+      promise = $.Deferred()
+      promise.done ->
+        internal_promise = $.Deferred()
+        internal_promise.done -> refresh()
+        internal_promise.fail (reason) -> console.log(reason)
+        nimbus.current_directory().update(internal_promise)
+      promise.fail -> console.log('unable to delete')
+      file.destroy(promise)
+      $.magnificPopup.close()
+      show_spinner()
+    footer = $('<footer>')
+    footer.append(delete_button)
+    modal.html(header)
+    modal.append(body)
+    modal.append(footer)
+    show_modal()
 
-  # Creates column for a file link
+  # shows a warning about Expired Connections
+  expired_warning = ->
+    header = $('<header><h3>Check Your Settings</h3></header>')
+    body = $('<p>Some Connections have expired or are not ready, please check your settings.<p>')
+    footer = $('<footer>')
+    modal.html(header)
+    modal.append(body)
+    modal.append(footer)
+    show_modal()
+
+
+    # Creates column for a file link
   file_column = (file) ->
     data = $("<td class='filename'></td>")
     is_image = false

@@ -1,4 +1,12 @@
 <li>
+    <% if (yield :title_suffix).blank? %>
+        <%= link_to 'Home', root_path, class: 'active' %>
+    <% else %>
+        <%= link_to 'Home', root_path %>
+    <% end  %>
+</li>
+<li class="divider"></li>
+<li>
     <% if (yield :title_suffix)=='Contribute' %>
         <%= link_to 'Contribute', contribute_path, class: 'active' %>
     <% else %>

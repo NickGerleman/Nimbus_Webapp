@@ -1,6 +1,6 @@
 class ConnectionSerializer < ActiveModel::Serializer
   root false
-  attributes :name, :id, :type, :access_token, :last_updated
+  attributes :name, :id, :type, :access_token, :last_updated, :state
 
   def type
     object.short_service_name
