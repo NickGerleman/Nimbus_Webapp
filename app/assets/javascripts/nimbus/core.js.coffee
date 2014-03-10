@@ -56,23 +56,28 @@ window.NimbusApp.Core = (socket_uri, refresh_callback) ->
       path = name.split('/')
       #remove root directory
       path.shift()
-      while path.length > 0
+      navigate_dirs = (navigate_promise) ->
+        unless path.length
+          navigate_promise.resolve()
+          return
         dir_found = false
         dir_name = path.shift()
         for dir in directory.subdirectories()
           if dir.name() == dir_name
             dir_found = true
             directory = dir
-            internal_promise = $.Deferred()
-            internal_promise.fail (reason) -> promise.reject(reason)
-            dir.enumerate(internal_promise)
+            console.log(directory.name())
+            enumerate_promise = $.Deferred()
+            enumerate_promise.done -> navigate_dirs(navigate_promise)
+            enumerate_promise.fail (reason) -> promise.reject(reason)
+            dir.enumerate(enumerate_promise)
         unless dir_found
-          promise.reject("Unable to find directory " + dir_name)
+          navigate_promise.reject("Unable to find directory " + dir_name)
           return
       internal_promise = $.Deferred()
       internal_promise.fail (reason) -> promise.reject(reason)
       internal_promise.done -> promise.resolve(directory)
-      directory.enumerate(internal_promise)
+      navigate_dirs(internal_promise)
 
     # Rebuilds all directories until it reaches the path of the current directory, it then replaces
     # current_directory

@@ -222,10 +222,13 @@ window.NimbusApp.UI = (socket_uri, initial_directory) ->
       promise = $.Deferred()
       promise.done ->
         internal_promise = $.Deferred()
-        internal_promise.done -> refresh()
-        internal_promise.fail (reason) -> console.log(reason)
+        internal_promise.done(refresh)
+        internal_promise.fail (reason) ->
+          console.log(reason)
+          refresh()
         nimbus.current_directory().update(internal_promise)
-      promise.fail -> console.log('unable to delete')
+      promise.fail(reason) -> console.log(reason)
+
       file.destroy(promise)
       $.magnificPopup.close()
       show_spinner()
