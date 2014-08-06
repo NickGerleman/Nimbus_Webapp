@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.0.1'
+gem 'rails', '4.0.5'
 gem 'redis-rails', '~> 4.0.0'
 gem 'bcrypt-ruby', '~> 3.1.2'
 gem 'recaptcha', require: 'recaptcha/rails'
@@ -11,6 +11,7 @@ gem 'sidekiq'
 gem 'browser'
 gem 'signet', '0.4.5', require: 'signet/oauth_2/client'
 gem 'sass-rails', '~> 4.0.1'
+gem 'sprockets', '2.11.0'
 gem 'uglifier', '>= 2.1.1'
 gem 'foundation-rails'
 gem 'magnific-popup-rails', '>= 0.8.9'
@@ -23,6 +24,7 @@ gem 'active_model_serializers'
 gem 'gibberish'
 gem 'spinjs-rails'
 gem 'jquery-fileupload-rails'
+gem 'jwt', '~> 0.1.4'
 
 group :test, :development do
   gem 'sqlite3'
